@@ -1,0 +1,16 @@
+# Frameworks under test
+multivon-eval>=0.5.0
+deepeval>=2.0.0
+ragas>=0.2.0
+
+# Judge backend (all three frameworks call OpenAI under the hood for this benchmark)
+openai>=1.50.0
+
+# Dataset I/O
+datasets>=2.18.0
+requests>=2.31.0
+
+# Analysis
+numpy>=1.26.0
+pandas>=2.2.0
+scikit-learn>=1.4.0
