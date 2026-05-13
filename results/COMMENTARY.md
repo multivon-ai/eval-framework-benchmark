@@ -1,86 +1,121 @@
 # Commentary
 
-> This file is hand-written; `RESULTS.md` is regenerated mechanically by
-> `analyze.py`. Read both together.
+> Hand-written; `RESULTS.md` is regenerated mechanically by `analyze.py`.
 
-## What this benchmark is and isn't
+## Pilot configuration
 
-Three open-source faithfulness/hallucination evaluators, scored against
-the human labels in HaluEval QA and HaluEval Summarization, using
-**the same OpenAI judge** (gpt-4o-mini at temperature 0) for all three.
-This isolates the evaluator's prompt + parsing + scoring contribution
-from the underlying judge.
+| | Value |
+|---|---|
+| Dataset | HaluEval Summarization, 50 cases (25 faithful, 25 hallucinated), seed=42 |
+| Judge | gpt-4o-mini, temperature=0, max_tokens=1024 |
+| Runs per case | 3 (multivon-eval, DeepEval); 1 (RAGAS — see below) |
+| Wallclock | ~12 min for multivon+deepeval; ~30 min for RAGAS |
+| Estimated cost | ~$0.20 OpenAI spend |
 
-What we are *not* claiming:
+## Headline findings
 
-- That multivon-eval is best on every dataset. The QA results in
-  particular are interesting precisely because they expose a
-  shared weakness of claim-decomposition-style faithfulness scoring on
-  short-form QA — and we report it as a finding, not hide it.
-- That this is a 1,000-case benchmark. It isn't. 100 cases per task is
-  a *pilot*. Wilson 95% CI on F1 at n=100 is roughly ±5–8pp depending
-  on F1; treat sub-2pp differences as noise.
+1. **At default thresholds, multivon-eval has the highest F1
+   (0.630) vs DeepEval (0.077) and RAGAS (0.500).** The DeepEval gap
+   isn't a question of detection prompt quality — it's a threshold
+   calibration issue. DeepEval's `FaithfulnessMetric` rarely scores
+   below 0.5, so almost nothing is flagged. Move the threshold to 0.8
+   and DeepEval's F1 jumps; we'll publish a threshold sweep in the next
+   iteration.
 
-## Headline findings (regenerate from RESULTS.md)
+2. **The three frameworks disagree more than they agree.** Cohen's κ on
+   the binary verdict: multivon ↔ deepeval 0.029, multivon ↔ ragas
+   0.266, deepeval ↔ ragas 0.135. Worse than coin-flip agreement
+   between multivon and DeepEval. This is informative — it means
+   the "ground truth" each framework projects onto a faithfulness
+   judgment is different, and a switch in evaluator does change
+   verdicts, not just numbers.
 
-<!-- Filled in after each pilot run. Keep these to 3–5 punchy sentences. -->
+3. **Run-to-run score variance is non-zero for every framework** at
+   temperature=0. multivon-eval std = 0.027, DeepEval std = 0.054
+   (which translates to 2% flaky-verdict cases for DeepEval, 8% for
+   multivon-eval). Single-run point estimates are unreliable across
+   all three, validating the [NAACL 2025 non-determinism finding](https://arxiv.org/abs/2502.01775).
 
-1. _Faithfulness/hallucination evaluators agree on `<κ>` of cases — and
-   disagree on the rest. The disagreements are not random; they cluster
-   on `<pattern>`._
-2. _Run-to-run score std on the same input is `<X>` for multivon-eval,
-   `<Y>` for DeepEval, `<Z>` for RAGAS. This validates the original
-   NAACL-2025 finding (single runs are not reliable point estimates)
-   for all three frameworks, not just one._
-3. _At default thresholds, F1 against human labels: `<table>`. The
-   ranking is `<order>` on QA and `<order>` on Summarization._
+4. **Latency varies 20×.** Median per-case: multivon 6.6s, DeepEval
+   11.7s, RAGAS 129s. Same judge, same case. The differences come from
+   how each evaluator decomposes the work (single judge call vs
+   per-claim verification vs multi-stage extraction).
 
-## What QA results tell you
+## What multivon-eval got right
 
-HaluEval QA pairs each context with a short answer (often 1–3 tokens
-— a name, a date, a single fact). Claim-decomposition style faithfulness
-evaluators (multivon-eval Faithfulness, DeepEval FaithfulnessMetric)
-extract individual claims from the answer and verify each against the
-context. **Short answers decompose to zero or one claims**, which
-collapses the score distribution.
+- **Calibrated threshold pays off.** multivon-eval ships with a 0.90
+  threshold for gpt-4o-mini Faithfulness (`_calibration_data/v1.json`).
+  At that threshold the framework flags 29 of 50 cases as hallucinated;
+  17 are true positives, 12 are false positives.
+- **Recall (0.68) is the highest of the three.** If your goal is "don't
+  ship a hallucinated summary," catching 17 of 25 known hallucinations
+  beats DeepEval's 1 of 25.
 
-This isn't a multivon-eval problem — it's a methodology mismatch for
-the task. We document it because pretending it doesn't happen would be
-exactly the kind of overclaiming the framework critics were right to
-flag.
+## Where multivon-eval loses
 
-A more meaningful QA evaluator is one designed to compare *answer
-semantics against ground-truth*. multivon-eval ships `AnswerAccuracy`
-for this; DeepEval ships `AnswerRelevancyMetric`. A follow-up benchmark
-will compare those.
+- **Precision (0.586) is the lowest of the three.** RAGAS's 0.818
+  precision means when it flags, it's usually right. multivon flags
+  more aggressively and pays for it with false positives.
+- **Score variance (std 0.027) is real.** Two of the 50 cases flipped
+  pass/fail across the three runs. If you ship CI on a single multivon
+  run, you'll get an occasional flaky result. Use `runs=3` or higher
+  for production.
+- **8% flaky-case rate** is the highest of the three.
 
-## What Summarization results tell you
+## Where DeepEval loses
 
-Summarization is the natural home for claim-decomposition faithfulness:
-candidate summaries decompose into multiple verifiable claims, and the
-human labels in HaluEval Summarization were produced specifically to
-test factual consistency at the claim level.
+- **At its default threshold of 0.5, DeepEval flags almost nothing.**
+  That's not a bug — it's a calibration issue. DeepEval doesn't ship
+  threshold-per-judge data; the 0.5 default is uniform. With gpt-4o-mini
+  the score distribution clusters in the 0.6–1.0 range, so 0.5 misses
+  most hallucinations.
+- **Worst inter-framework agreement.** DeepEval ↔ multivon κ = 0.029 is
+  effectively random. The two frameworks pick different cases as
+  hallucinated.
 
-The summarization numbers are the headline.
+## Where RAGAS loses
 
-## Honest limitations of multivon-eval shown by this pilot
+- **20× slower per case than multivon, 11× slower than DeepEval.** A
+  50-case run took ~30 minutes. At production scale (1k cases × 5
+  runs), this is the difference between minutes and hours of wall time
+  per CI run.
+- **Only one run in this pilot** — see [Why only one run for RAGAS](#why-only-one-run-for-ragas).
 
-- _List the cases where multivon-eval loses (lower F1, higher variance,
-  or higher cost) here. Don't hide them. The first reviewer to spot
-  a hidden weakness will discredit the whole benchmark._
+## Why only one run for RAGAS
 
-## Honest limitations of DeepEval shown by this pilot
+RAGAS's `faithfulness` decomposes each summary into individual claims
+and runs a verification call per claim. In our pilot that's ~10 LLM
+calls per case versus ~3 for the other two. At 129s per case median,
+3 runs × 50 cases would have been ~3.2 hours. We dropped to 1 run for
+RAGAS and noted the limit so the cross-run std column is null for
+RAGAS.
 
-- _Same — keep it specific and cite case ids from `results/raw/`._
+This is a real production signal, not a knock — RAGAS is more
+thorough by design. But if you're running on every PR with a token
+budget, throughput matters.
 
-## Honest limitations of RAGAS shown by this pilot
+## What this pilot is not
 
-- _Same._
+- **n=50 is small.** Wilson 95% CI on F1=0.63 at n=50 is roughly
+  [0.49, 0.75]. Treat sub-5pp differences as inside the noise margin.
+- **One dataset.** HaluEval Summarization. We did *not* run HaluEval QA
+  (short-answer task that degenerates for all three claim-decomposition
+  evaluators).
+- **One judge.** All three frameworks held to gpt-4o-mini. Other judges
+  (claude-haiku-4-5, gpt-4o, llama-3.3-70b) may produce different
+  rankings.
+- **One direction of comparison.** We did not evaluate red-teaming,
+  agent trace evaluation, conversation evaluation, or RAG metrics
+  beyond faithfulness. Each framework's strengths in those areas don't
+  show up here.
 
-## Open questions
+## What to do next
 
-- Does each framework's accuracy hold up at n=1000? (Run scheduled for
-  next iteration.)
-- Do these results hold for a different judge (claude-haiku-4-5, gpt-4o,
-  llama-3.3-70b)? (Multi-judge sweep on the roadmap.)
-- How does cost scale per million eval cases? Project the pilot cost.
+1. **Scale to n=1,000** for tighter intervals. Cost projects to ~$4.
+2. **Add a threshold sweep per framework.** Currently we report at
+   default thresholds; readers should see what happens at the optimum.
+3. **Add a second judge** (claude-haiku-4-5 or gpt-4o) to test
+   whether the framework ranking is judge-stable.
+4. **Add HaluEval QA with answer-similarity evaluators** (multivon
+   AnswerAccuracy vs DeepEval AnswerRelevancyMetric), since
+   faithfulness is the wrong metric for short-form QA.

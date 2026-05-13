@@ -3,3 +3,4 @@ __pycache__/
 results/raw/
 data/halueval_qa_full.json
 data/halueval_sum_full.json
+.venv/

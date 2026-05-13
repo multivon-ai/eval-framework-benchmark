@@ -102,6 +102,9 @@ def analyze_task(results_dir: Path, task: str, cases: list[Case]) -> dict:
             out["by_framework"][fw] = {"status": "no-runs"}
             continue
         per_case = _aggregate_run(runs, by_id)
+        if not per_case:
+            out["by_framework"][fw] = {"status": "no-completed-cases", "runs": len(runs)}
+            continue
         ids_in_order = [c.id for c in cases if c.id in per_case]
 
         actuals = [label_by_id[i] for i in ids_in_order]
@@ -146,8 +149,9 @@ def analyze_task(results_dir: Path, task: str, cases: list[Case]) -> dict:
             "errors": errors,
         }
 
-    # Inter-framework kappa on the verdict columns.
+    # Inter-framework kappa AND raw disagreement count on the verdict columns.
     kappa: dict[str, float] = {}
+    disagree_pct: dict[str, str] = {}
     for a, b in combinations(framework_verdicts.keys(), 2):
         common_ids = sorted(set(framework_verdicts[a]) & set(framework_verdicts[b]))
         if not common_ids:
@@ -155,8 +159,49 @@ def analyze_task(results_dir: Path, task: str, cases: list[Case]) -> dict:
         av = [framework_verdicts[a][i] for i in common_ids]
         bv = [framework_verdicts[b][i] for i in common_ids]
         kappa[f"{a} ↔ {b}"] = round(_cohen_kappa(av, bv), 4)
+        n_disagree = sum(1 for x, y in zip(av, bv) if x != y)
+        disagree_pct[f"{a} ↔ {b}"] = f"{n_disagree}/{len(common_ids)} ({100*n_disagree/len(common_ids):.0f}%)"
     out["pairwise_kappa"] = kappa
+    out["pairwise_disagreement"] = disagree_pct
+
+    # Threshold sweep per framework — compute F1/P/R at a fixed set of thresholds
+    # so the blog post / RESULTS.md can show all three at apples-to-apples cutoffs.
+    out["threshold_sweep"] = _threshold_sweep(results_dir, task, label_by_id)
     return out
+
+
+def _threshold_sweep(results_dir: Path, task: str, label_by_id: dict[str, bool]) -> dict:
+    """For each framework, compute F1/P/R at thresholds 0.3, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95.
+
+    Uses the mean score across all available runs as the per-case score.
+    A case is flagged hallucinated when ``mean_score < threshold``.
+    """
+    thresholds = [0.3, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95]
+    sweep: dict[str, dict] = {}
+    for fw in FRAMEWORKS:
+        # Collect per-case mean scores across all runs.
+        scores: dict[str, list[float]] = {}
+        for p in sorted(results_dir.glob(f"raw/{fw}_{task}_run*.jsonl")):
+            for line in p.read_text().splitlines():
+                row = json.loads(line)
+                if row.get("error"):
+                    continue
+                scores.setdefault(row["case_id"], []).append(row["score"])
+        if not scores:
+            continue
+        mean_score = {cid: statistics.fmean(s) for cid, s in scores.items()}
+        ids = sorted(mean_score.keys() & label_by_id.keys())
+        actl = [label_by_id[i] for i in ids]
+        fw_sweep = []
+        for t in thresholds:
+            pred = [mean_score[i] < t for i in ids]
+            precision, recall, f1 = _precision_recall_f1(pred, actl)
+            fw_sweep.append({
+                "threshold": t, "f1": round(f1, 4),
+                "precision": round(precision, 4), "recall": round(recall, 4),
+            })
+        sweep[fw] = fw_sweep
+    return sweep
 
 
 def _format_md(report: dict) -> str:
@@ -183,12 +228,28 @@ def _format_md(report: dict) -> str:
                 f"| {f.get('errors', '—')} |"
             )
         rows.append("")
-        if task.get("pairwise_kappa"):
-            rows.append("### Inter-framework verdict agreement (Cohen's κ)")
+        if task.get("pairwise_disagreement"):
+            rows.append("### Inter-framework verdict disagreement")
             rows.append("")
-            for k, v in task["pairwise_kappa"].items():
-                rows.append(f"- **{k}** — κ = {v}")
+            rows.append("| Pair | Cases flipped | Cohen's κ |")
+            rows.append("|---|---|---|")
+            for k in task["pairwise_disagreement"]:
+                rows.append(f"| {k} | {task['pairwise_disagreement'][k]} | {task['pairwise_kappa'][k]} |")
             rows.append("")
+        sweep = task.get("threshold_sweep", {})
+        if sweep:
+            rows.append("### Threshold sweep")
+            rows.append("")
+            rows.append("F1, precision, recall for each framework over a fixed set of thresholds. A case is flagged hallucinated when its mean score across runs falls below the threshold.")
+            rows.append("")
+            for fw, rowset in sweep.items():
+                rows.append(f"**{fw}**")
+                rows.append("")
+                rows.append("| Threshold | F1 | Precision | Recall |")
+                rows.append("|---|---|---|---|")
+                for r in rowset:
+                    rows.append(f"| {r['threshold']:.2f} | {r['f1']:.3f} | {r['precision']:.3f} | {r['recall']:.3f} |")
+                rows.append("")
     return "\n".join(rows)
 
 
