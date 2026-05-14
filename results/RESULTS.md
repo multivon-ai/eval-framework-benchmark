@@ -4,7 +4,7 @@
 
 | Framework | Threshold | F1 | Precision | Recall | Score std (cross-run) | Flaky case rate | Median latency (ms) | Errors |
 |---|---|---|---|---|---|---|---|---|
-| multivon-eval | 0.9 | 0.6755 | 0.51 | 1.0 | None | 0.0 | 361.8 | 0 |
+| multivon-eval | 0.9 | 0.6957 | 0.625 | 0.7843 | None | 0.0 | 9808.1 | 0 |
 | deepeval | 0.5 | 0.0 | 0.0 | 0.0 | None | 0.0 | None | 100 |
 | ragas | — | _no runs_ | — | — | — | — | — | — |
 
@@ -12,7 +12,7 @@
 
 | Pair | Cases flipped | Cohen's κ |
 |---|---|---|
-| multivon-eval ↔ deepeval | 100/100 (100%) | 0.0 |
+| multivon-eval ↔ deepeval | 64/100 (64%) | 0.0 |
 
 ### Threshold sweep
 
@@ -22,13 +22,13 @@ F1, precision, recall for each framework over a fixed set of thresholds. A case 
 
 | Threshold | F1 | Precision | Recall |
 |---|---|---|---|
-| 0.30 | 0.675 | 0.510 | 1.000 |
-| 0.50 | 0.675 | 0.510 | 1.000 |
-| 0.60 | 0.675 | 0.510 | 1.000 |
-| 0.70 | 0.675 | 0.510 | 1.000 |
-| 0.80 | 0.675 | 0.510 | 1.000 |
-| 0.90 | 0.675 | 0.510 | 1.000 |
-| 0.95 | 0.675 | 0.510 | 1.000 |
+| 0.30 | 0.000 | 0.000 | 0.000 |
+| 0.50 | 0.109 | 0.750 | 0.059 |
+| 0.60 | 0.200 | 0.667 | 0.118 |
+| 0.70 | 0.447 | 0.680 | 0.333 |
+| 0.80 | 0.637 | 0.725 | 0.569 |
+| 0.90 | 0.696 | 0.625 | 0.784 |
+| 0.95 | 0.710 | 0.603 | 0.863 |
 
 ## ragtruth-sum (n=100)  ·  judge: `gpt-4o-mini`
 
