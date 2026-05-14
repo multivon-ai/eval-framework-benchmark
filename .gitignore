@@ -4,3 +4,5 @@ results/raw/
 data/halueval_qa_full.json
 data/halueval_sum_full.json
 .venv/
+data/ragtruth_responses_full.jsonl
+data/ragtruth_sources_full.jsonl

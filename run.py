@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Callable
 
 from data.loader import Case, load_qa, load_sum
+from data.ragtruth_loader import load_ragtruth_summary
 from frameworks.base import FrameworkResult, FrameworkRunner
 
 
@@ -72,11 +73,14 @@ def run_benchmark(
     only: list[str] | None,
     workers: int,
     out_dir: Path,
+    judge_tag: str | None = None,
 ) -> None:
     if task == "qa":
         cases = load_qa(n=n)
     elif task == "sum":
         cases = load_sum(n=n)
+    elif task == "ragtruth-sum":
+        cases = load_ragtruth_summary(n=n)
     else:
         raise ValueError(task)
 
@@ -86,6 +90,12 @@ def run_benchmark(
         if not factories:
             raise SystemExit(f"No matching frameworks in {only!r}")
 
+    # When sweeping multiple judges, write to a per-judge subdirectory so
+    # results don't overwrite each other.
+    judge_subdir = judge_tag or _judge_tag(judge_model)
+    raw_dir = out_dir / "raw" / judge_subdir
+    raw_dir.mkdir(parents=True, exist_ok=True)
+
     for name, factory in factories:
         try:
             runner = factory()
@@ -93,7 +103,7 @@ def run_benchmark(
             print(f"[skip] {name} not installed ({exc}); pip install -r requirements.txt", file=sys.stderr)
             continue
         for run_idx in range(runs):
-            out_path = out_dir / "raw" / f"{name}_{task}_run{run_idx}.jsonl"
+            out_path = raw_dir / f"{name}_{task}_run{run_idx}.jsonl"
             if out_path.exists():
                 print(f"[skip] {out_path} already exists; delete to re-run", file=sys.stderr)
                 continue
@@ -101,18 +111,29 @@ def run_benchmark(
             _stream_run(
                 runner, cases, out_path,
                 workers=workers,
-                progress_label=f"{name} {task} run {run_idx + 1}/{runs}",
+                progress_label=f"[{judge_subdir}] {name} {task} run {run_idx + 1}/{runs}",
             )
             elapsed = time.time() - t0
-            print(f"[done] {name} {task} run {run_idx + 1}/{runs} → {out_path} ({elapsed:.0f}s)", file=sys.stderr)
+            print(f"[done] [{judge_subdir}] {name} {task} run {run_idx + 1}/{runs} → {out_path} ({elapsed:.0f}s)", file=sys.stderr)
+
+
+def _judge_tag(judge_model: str) -> str:
+    """Produce a filesystem-safe judge tag from a model id."""
+    return judge_model.replace("/", "_").replace(":", "_")
 
 
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("--task", choices=["qa", "sum", "both"], default="both")
+    p.add_argument("--task", choices=["qa", "sum", "ragtruth-sum", "both"],
+                   default="both",
+                   help="Which task: HaluEval QA, HaluEval Summarization, RAGTruth Summary, "
+                        "or 'both' (HaluEval QA + Sum). RAGTruth is the cross-dataset test that "
+                        "removes the v1 calibration-circularity caveat.")
     p.add_argument("--n", type=int, default=100, help="pilot size; must be even")
     p.add_argument("--runs", type=int, default=5, help="repeated runs to measure variance")
-    p.add_argument("--judge-model", default="gpt-4o-mini")
+    p.add_argument("--judge-model", "--judge", dest="judge_models",
+                   action="append", default=None,
+                   help="Judge model(s) to sweep. Pass once per judge to compare across providers.")
     p.add_argument("--only", nargs="*", default=None, choices=["multivon-eval", "deepeval", "ragas"])
     p.add_argument("--workers", type=int, default=4, help="concurrent judge calls")
     p.add_argument("--out", default="results", help="output directory root")
@@ -123,19 +144,27 @@ def main() -> int:
         args.n = 4
         args.runs = 1
 
+    # Default judge if none specified.
+    judge_models = args.judge_models or ["gpt-4o-mini"]
+
     out_dir = Path(args.out).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     if not os.environ.get("OPENAI_API_KEY"):
         print("WARN: OPENAI_API_KEY not set; framework calls will fail.", file=sys.stderr)
 
-    tasks = ["qa", "sum"] if args.task == "both" else [args.task]
-    for t in tasks:
-        run_benchmark(
-            task=t, n=args.n, runs=args.runs,
-            judge_model=args.judge_model, only=args.only,
-            workers=args.workers, out_dir=out_dir,
-        )
+    if args.task == "both":
+        tasks = ["qa", "sum"]
+    else:
+        tasks = [args.task]
+
+    for judge in judge_models:
+        for t in tasks:
+            run_benchmark(
+                task=t, n=args.n, runs=args.runs,
+                judge_model=judge, only=args.only,
+                workers=args.workers, out_dir=out_dir,
+            )
     return 0
 
 
