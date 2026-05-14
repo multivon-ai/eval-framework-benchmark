@@ -66,6 +66,16 @@ def load_ragtruth_summary(n: int = 200, *, seed: int = 42,
     if pilot_path.exists() and not refresh_pilot:
         return [Case(**row) for row in json.loads(pilot_path.read_text())]
 
+    # If a larger cached pilot exists, slice deterministically from it
+    # (cheaper than re-downloading + re-sampling for sub-sizes).
+    for candidate in (200, 500, 1000):
+        if candidate > n:
+            larger = DataDir / f"ragtruth_sum_pilot_{candidate}.json"
+            if larger.exists():
+                rows = json.loads(larger.read_text())[:n]
+                pilot_path.write_text(json.dumps(rows, indent=2))
+                return [Case(**row) for row in rows]
+
     _download_if_missing(RESPONSES_URL, RESPONSES_FULL)
     _download_if_missing(SOURCES_URL, SOURCES_FULL)
 

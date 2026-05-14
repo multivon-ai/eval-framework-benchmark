@@ -16,11 +16,32 @@ from multivon_eval.evaluators.llm_judge import Faithfulness
 from .base import FrameworkResult, FrameworkRunner
 
 
+def _infer_provider(judge_model: str) -> str:
+    """Auto-detect provider from a model id so callers can pass --judge
+    claude-haiku-4-5 without also specifying --provider anthropic.
+
+    Falls through to ``openai`` for unknown prefixes so OpenAI-compatible
+    local endpoints (vLLM/Ollama serving llama-*, qwen-*, ...) keep
+    working when paired with ``--judge-base-url``.
+    """
+    m = judge_model.lower()
+    if m.startswith(("claude-", "anthropic/")):
+        return "anthropic"
+    if m.startswith(("gpt-", "openai/")):
+        return "openai"
+    if m.startswith(("gemini-", "google/")):
+        return "litellm"  # via LiteLLM
+    return "openai"
+
+
 class MultivonFaithfulness(FrameworkRunner):
     name = "multivon-eval"
 
     def __init__(self, judge_model: str = "gpt-4o-mini"):
-        self._judge = JudgeConfig(provider="openai", model=judge_model, temperature=0.0).resolve()
+        provider = _infer_provider(judge_model)
+        self._judge = JudgeConfig(
+            provider=provider, model=judge_model, temperature=0.0,
+        ).resolve()
         self._threshold = calibrated_threshold("faithfulness", self._judge)
         self._evaluator = Faithfulness(threshold=self._threshold, judge=self._judge)
 
