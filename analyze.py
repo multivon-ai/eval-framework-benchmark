@@ -29,13 +29,36 @@ from data.loader import Case, load_qa, load_sum
 FRAMEWORKS = ["multivon-eval", "deepeval", "ragas"]
 
 
-def _load_runs(results_dir: Path, framework: str, task: str) -> list[list[dict]]:
+def _load_runs(results_dir: Path, framework: str, task: str,
+               judge: str | None = None) -> list[list[dict]]:
+    """Load all runs for (framework, task), optionally filtered by judge.
+
+    v1 layout: ``results/raw/{framework}_{task}_run*.jsonl``
+    v2 layout: ``results/raw/{judge}/{framework}_{task}_run*.jsonl``
+
+    Both work — we glob the v2 layout when ``judge`` is set, else fall
+    back to v1.
+    """
     runs = []
-    paths = sorted(results_dir.glob(f"raw/{framework}_{task}_run*.jsonl"))
+    if judge is not None:
+        paths = sorted(results_dir.glob(f"raw/{judge}/{framework}_{task}_run*.jsonl"))
+    else:
+        paths = sorted(results_dir.glob(f"raw/{framework}_{task}_run*.jsonl"))
+        if not paths:
+            # Try any judge subdirectory if no flat-layout files exist.
+            paths = sorted(results_dir.glob(f"raw/*/{framework}_{task}_run*.jsonl"))
     for p in paths:
         rows = [json.loads(l) for l in p.read_text().splitlines() if l.strip()]
         runs.append(rows)
     return runs
+
+
+def _detect_judges(results_dir: Path) -> list[str]:
+    """Return the list of judge subdirectories present in results/raw."""
+    raw = results_dir / "raw"
+    if not raw.exists():
+        return []
+    return sorted(p.name for p in raw.iterdir() if p.is_dir())
 
 
 def _cases_by_id(cases: list[Case]) -> dict[str, Case]:
@@ -89,7 +112,8 @@ def _cohen_kappa(a: list[bool], b: list[bool]) -> float:
     return (agree - p_e) / (1 - p_e)
 
 
-def analyze_task(results_dir: Path, task: str, cases: list[Case]) -> dict:
+def analyze_task(results_dir: Path, task: str, cases: list[Case],
+                 judge: str | None = None) -> dict:
     by_id = _cases_by_id(cases)
     label_by_id = {c.id: c.label == "hallucinated" for c in cases}
     out: dict = {"task": task, "n_cases": len(cases), "by_framework": {}}
@@ -97,7 +121,7 @@ def analyze_task(results_dir: Path, task: str, cases: list[Case]) -> dict:
     framework_verdicts: dict[str, dict[str, bool]] = {}
 
     for fw in FRAMEWORKS:
-        runs = _load_runs(results_dir, fw, task)
+        runs = _load_runs(results_dir, fw, task, judge=judge)
         if not runs:
             out["by_framework"][fw] = {"status": "no-runs"}
             continue
@@ -166,11 +190,12 @@ def analyze_task(results_dir: Path, task: str, cases: list[Case]) -> dict:
 
     # Threshold sweep per framework — compute F1/P/R at a fixed set of thresholds
     # so the blog post / RESULTS.md can show all three at apples-to-apples cutoffs.
-    out["threshold_sweep"] = _threshold_sweep(results_dir, task, label_by_id)
+    out["threshold_sweep"] = _threshold_sweep(results_dir, task, label_by_id, judge=judge)
     return out
 
 
-def _threshold_sweep(results_dir: Path, task: str, label_by_id: dict[str, bool]) -> dict:
+def _threshold_sweep(results_dir: Path, task: str, label_by_id: dict[str, bool],
+                     judge: str | None = None) -> dict:
     """For each framework, compute F1/P/R at thresholds 0.3, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95.
 
     Uses the mean score across all available runs as the per-case score.
@@ -181,7 +206,13 @@ def _threshold_sweep(results_dir: Path, task: str, label_by_id: dict[str, bool])
     for fw in FRAMEWORKS:
         # Collect per-case mean scores across all runs.
         scores: dict[str, list[float]] = {}
-        for p in sorted(results_dir.glob(f"raw/{fw}_{task}_run*.jsonl")):
+        if judge is not None:
+            globpat = f"raw/{judge}/{fw}_{task}_run*.jsonl"
+        else:
+            globpat = f"raw/{fw}_{task}_run*.jsonl"
+            if not list(results_dir.glob(globpat)):
+                globpat = f"raw/*/{fw}_{task}_run*.jsonl"
+        for p in sorted(results_dir.glob(globpat)):
             for line in p.read_text().splitlines():
                 row = json.loads(line)
                 if row.get("error"):
@@ -207,7 +238,9 @@ def _threshold_sweep(results_dir: Path, task: str, label_by_id: dict[str, bool])
 def _format_md(report: dict) -> str:
     rows = []
     for task in report["tasks"]:
-        rows.append(f"## {task['task']} (n={task['n_cases']})")
+        judge = task.get("judge") or ""
+        suffix = f"  ·  judge: `{judge}`" if judge and judge != "(flat layout)" else ""
+        rows.append(f"## {task['task']} (n={task['n_cases']}){suffix}")
         rows.append("")
         rows.append("| Framework | Threshold | F1 | Precision | Recall | Score std (cross-run) | Flaky case rate | Median latency (ms) | Errors |")
         rows.append("|---|---|---|---|---|---|---|---|---|")
@@ -258,15 +291,36 @@ def main() -> int:
     p.add_argument("--results-dir", default="results")
     p.add_argument("--out", default="results/RESULTS.md")
     p.add_argument("--n", type=int, default=100)
-    p.add_argument("--task", choices=["qa", "sum", "both"], default="both")
+    p.add_argument("--task", choices=["qa", "sum", "ragtruth-sum", "both"],
+                   default="both")
+    p.add_argument("--judges", nargs="*", default=None,
+                   help="Restrict to specific judge subdirectories. "
+                        "Default: auto-detect all judges in results/raw/.")
     args = p.parse_args()
 
     results_dir = Path(args.results_dir).resolve()
-    report = {"tasks": []}
-    tasks = ["qa", "sum"] if args.task == "both" else [args.task]
-    for t in tasks:
-        cases = load_qa(n=args.n) if t == "qa" else load_sum(n=args.n)
-        report["tasks"].append(analyze_task(results_dir, t, cases))
+    judges = args.judges if args.judges else _detect_judges(results_dir) or [None]
+    report: dict = {"judges": [], "tasks": []}
+
+    if args.task == "both":
+        tasks = ["qa", "sum"]
+    else:
+        tasks = [args.task]
+
+    for judge in judges:
+        for t in tasks:
+            if t == "ragtruth-sum":
+                from data.ragtruth_loader import load_ragtruth_summary
+                cases = load_ragtruth_summary(n=args.n)
+            elif t == "qa":
+                cases = load_qa(n=args.n)
+            else:
+                cases = load_sum(n=args.n)
+            task_report = analyze_task(results_dir, t, cases, judge=judge)
+            task_report["judge"] = judge or "(flat layout)"
+            report["tasks"].append(task_report)
+        if judge:
+            report["judges"].append(judge)
 
     md = "# Results\n\n" + _format_md(report) + "\n"
     Path(args.out).write_text(md)
