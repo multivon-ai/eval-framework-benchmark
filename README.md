@@ -1,28 +1,38 @@
 # eval-framework-benchmark
 
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![Last run](https://img.shields.io/badge/last%20run-2026--05--17-emerald)](results/RESULTS.md)
+[![multivon-eval](https://img.shields.io/badge/multivon--eval-0.8.2-emerald)](https://github.com/multivon-ai/multivon-eval)
+
+**[Live results page](https://multivon.ai/benchmark)** · [RESULTS.md](results/RESULTS.md) · [multivon-eval (engine)](https://github.com/multivon-ai/multivon-eval)
+
 Reproducible head-to-head benchmark of open-source LLM evaluation frameworks
 on hallucination detection.
 
-**Why:** Every framework — DeepEval, RAGAS, multivon-eval — claims accuracy
-on faithfulness/hallucination detection. None publish a side-by-side
-comparison with the same judge, same dataset, same seed. This repo does.
+## Headline result (ragtruth-sum n=100, judge: gpt-4o-mini)
 
-**What:** Faithfulness / hallucination evaluators from three frameworks
-scored against HaluEval QA + HaluEval Summarization human labels, using
-GPT-4o-mini as a shared judge.
+| Framework | Threshold | F1 | Precision | Recall | Errors |
+|---|---|---|---|---|---|
+| **multivon-eval** 0.8.2 | 0.90 | **0.787** | 0.921 | 0.686 | 0 |
+| DeepEval (latest) | 0.50 (default) | 0.000 | 0.000 | 0.000 | 0 |
+| RAGAS (latest) | — | _no runs_ | — | — | — |
+
+At best-tuned thresholds (0.95), multivon-eval F1 reaches **0.854** vs DeepEval **0.587**. RAGAS errored on every run with the current test harness; documented in [`results/RESULTS.md`](results/RESULTS.md). All numbers reproducible — code in this repo.
+
+**Why this exists:** Every framework — DeepEval, RAGAS, multivon-eval — claims accuracy on faithfulness/hallucination detection. None publish a side-by-side comparison with the same judge, same dataset, same seed. This repo does.
 
 **Measures:**
-- F1 vs human labels at each framework's default threshold
+- F1 vs human labels at each framework's default threshold *and* at swept thresholds (so you see best-case for each framework)
 - Run-to-run variance over 5 repeated runs (same input, same seed)
 - Cost per 100 cases
-- Inter-framework disagreement
+- Inter-framework disagreement (Cohen's κ)
 
 **Run it yourself:** one Colab notebook, one `pip install`, one OpenAI key.
 
 > Maintained by [Multivon](https://multivon.ai). multivon-eval is one of
 > the frameworks tested. We tried to make the comparison fair; see
 > [methodology](#methodology) for the calls we made. Where multivon-eval
-> loses, it's documented.
+> loses, it's documented in [`results/COMMENTARY.md`](results/COMMENTARY.md).
 
 ---
 
@@ -30,9 +40,9 @@ GPT-4o-mini as a shared judge.
 
 | Framework | Metric used | Default threshold | Version |
 |---|---|---|---|
-| [multivon-eval](https://github.com/multivon-ai/multivon-eval) | `Faithfulness` (QAG) | 0.90 (gpt-4o-mini, calibrated) | 0.5.0 |
-| [DeepEval](https://github.com/confident-ai/deepeval) | `FaithfulnessMetric` | 0.5 (default) | latest |
-| [RAGAS](https://github.com/explodinggradients/ragas) | `faithfulness` | 0.5 (default — pass at >=0.5) | latest |
+| [multivon-eval](https://github.com/multivon-ai/multivon-eval) | `Faithfulness` (QAG) | 0.90 (gpt-4o-mini, calibrated) | 0.8.2 |
+| [DeepEval](https://github.com/confident-ai/deepeval) | `FaithfulnessMetric` | 0.5 (default) | latest at 2026-05-17 |
+| [RAGAS](https://github.com/explodinggradients/ragas) | `faithfulness` | 0.5 (default — pass at >=0.5) | latest at 2026-05-17 |
 
 Judge: `gpt-4o-mini`, temperature=0, max_tokens=1024.
 
@@ -141,6 +151,19 @@ Or open `colab.ipynb` in Colab and run all cells.
 
 See [`results/RESULTS.md`](results/RESULTS.md). Updated whenever a
 fresh run is committed.
+
+## The Multivon ecosystem
+
+This benchmark is one piece of a broader open-source AI evaluation stack:
+
+| Repo | What it is |
+|---|---|
+| [multivon-eval](https://github.com/multivon-ai/multivon-eval) | The framework being benchmarked here. 44 evaluators + `bootstrap` CLI + `multivon_eval.auto`. |
+| [pdfhell](https://github.com/multivon-ai/pdfhell) | Sibling adversarial benchmark — for PDFs, not text |
+| [multivon-mcp](https://github.com/multivon-ai/multivon-mcp) | MCP server — call multivon-eval from inside Claude / Cursor |
+| [eval-action](https://github.com/multivon-ai/eval-action) | GitHub Action — run multivon-eval on every PR |
+| **eval-framework-benchmark** (you are here) | Head-to-head vs DeepEval + RAGAS |
+| multivon-guard *(early access)* | Local proxy that catches LLM coding agents leaking secrets / PII |
 
 ## License
 
