@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Last run](https://img.shields.io/badge/last%20run-2026--05--17-emerald)](results/RESULTS.md)
-[![multivon-eval](https://img.shields.io/badge/multivon--eval-0.8.2-emerald)](https://github.com/multivon-ai/multivon-eval)
+[![multivon-eval](https://img.shields.io/badge/multivon--eval-0.9.0-emerald)](https://github.com/multivon-ai/multivon-eval)
 
 **[Live results page](https://multivon.ai/benchmark)** · [RESULTS.md](results/RESULTS.md) · [multivon-eval (engine)](https://github.com/multivon-ai/multivon-eval)
 
@@ -28,6 +28,17 @@ At best-tuned thresholds (0.95), multivon-eval F1 reaches **0.854** vs DeepEval 
 - Inter-framework disagreement (Cohen's κ)
 
 **Run it yourself:** one Colab notebook, one `pip install`, one OpenAI key.
+
+**Fastest reproduction of just our number** (skips DeepEval + RAGAS install, ~30s + ~$0.01 for 10 cases):
+
+```bash
+pip install -r requirements.txt   # or just: pip install multivon-eval datasets pandas scikit-learn
+export OPENAI_API_KEY=sk-...
+python run.py --task ragtruth-sum --n 10 --only multivon-eval --judge gpt-4o-mini --out /tmp/repro
+python analyze.py --results-dir /tmp/repro --task ragtruth-sum --n 10
+```
+
+For the full head-to-head you need DeepEval + RAGAS too (heavier installs with their own dependency trees); drop `--only multivon-eval` from the command above.
 
 > Maintained by [Multivon](https://multivon.ai). multivon-eval is one of
 > the frameworks tested. We tried to make the comparison fair; see
