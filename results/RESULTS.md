@@ -50,3 +50,19 @@ F1, precision, recall for each framework over a fixed set of thresholds. A case 
 | 0.90 | 0.000 | 0.000 | 0.000 |
 | 0.95 | 0.000 | 0.000 | 0.000 |
 
+## qa (n=100)  ·  judge: `claude-haiku-4-5`
+
+| Framework | Threshold | F1 | Precision | Recall | Score std (cross-run) | Flaky case rate | Median latency (ms) | Errors |
+|---|---|---|---|---|---|---|---|---|
+| multivon-eval | — | _no runs_ | — | — | — | — | — | — |
+| deepeval | — | _no runs_ | — | — | — | — | — | — |
+| ragas | — | _no runs_ | — | — | — | — | — | — |
+
+## sum (n=100)  ·  judge: `claude-haiku-4-5`
+
+| Framework | Threshold | F1 | Precision | Recall | Score std (cross-run) | Flaky case rate | Median latency (ms) | Errors |
+|---|---|---|---|---|---|---|---|---|
+| multivon-eval | — | _no runs_ | — | — | — | — | — | — |
+| deepeval | — | _no runs_ | — | — | — | — | — | — |
+| ragas | — | _no runs_ | — | — | — | — | — | — |
+
