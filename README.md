@@ -19,13 +19,18 @@ on hallucination detection.
 
 At best-tuned thresholds (0.95), multivon-eval F1 reaches **0.833** vs DeepEval **0.631**. At its default threshold DeepEval flags almost nothing (recall 0.02) — F1 0.04, not a literal zero, but effectively no signal until you tune it. RAGAS errored on every run with the current test harness; documented in [`results/RESULTS.md`](results/RESULTS.md). All numbers reproducible — code in this repo. n=100, single run; Wilson 95% CI on F1 at this size is ≈ ±10pp.
 
+Snapshot: multivon-eval 0.9.8 / DeepEval 4.0.5, run 2026-06-05 (git tag `results-0.9.8-2026-06-05`). multivon-eval is now 0.12.0 — a refresh is planned before any new headline claims.
+
 **Why this exists:** Every framework — DeepEval, RAGAS, multivon-eval — claims accuracy on faithfulness/hallucination detection. None publish a side-by-side comparison with the same judge, same dataset, same seed. This repo does.
 
-**Measures:**
+**Measures (published today):**
 - F1 vs human labels at each framework's default threshold *and* at swept thresholds (so you see best-case for each framework)
+- Inter-framework disagreement (Cohen's κ)
+- Median per-case latency
+
+**Designed but not yet in the published results** (the harness supports them via `--runs`; the 0.9.8 snapshot is single-run, and cost tracking is not implemented yet):
 - Run-to-run variance over 5 repeated runs (same input, same seed)
 - Cost per 100 cases
-- Inter-framework disagreement (Cohen's κ)
 
 **Run it yourself:** one Colab notebook, one `pip install`, one OpenAI key.
 
@@ -61,6 +66,18 @@ Judge: `gpt-4o-mini`, temperature=0, max_tokens=1024.
 
 ## Datasets
 
+- **RAGTruth Summarization** (headline dataset) — 100-case sample
+  (51 hallucinated, 49 faithful) from the Summary-task test split of
+  [RAGTruth](https://github.com/ParticleMedia/RAGTruth) (Niu et al.,
+  ACL 2024; Apache 2.0). Each case: a source document, a model-generated
+  summary, and human span-level hallucination annotations collapsed to a
+  binary label (`hallucinated` = any annotated span, `faithful` = none).
+  Drawn deterministically with seed=42 by `data/ragtruth_loader.py`; the
+  exact sample is committed as `data/ragtruth_sum_pilot_100.json`.
+  RAGTruth is the **cross-dataset test**: multivon-eval's 0.90 threshold
+  was calibrated on HaluEval Sum, never on RAGTruth, which removes the
+  v1 calibration-circularity caveat.
+
 - **HaluEval QA** — 100-case stratified sample (50 hallucinated, 50 faithful)
   from [HaluEval](https://github.com/RUCAIBox/HaluEval). Each case: a
   Wikipedia knowledge snippet, a question, a candidate answer, and a
@@ -78,14 +95,14 @@ the full dataset to `data/`.
 
 For each (framework × dataset):
 
-| Metric | Definition |
-|---|---|
-| **F1** | F1 of "framework says hallucinated" vs human label, at the framework's default threshold |
-| **Precision / Recall** | At the same threshold |
-| **Std of score across 5 runs** | Same input, same seed, same temperature; quantifies judge stochasticity |
-| **Flaky case rate** | Fraction of cases where the binary verdict (pass/fail) changed across the 5 runs |
-| **Cost ($)** | Total OpenAI spend for 100 cases × 5 runs |
-| **Median latency (ms)** | Per case, single-threaded |
+| Metric | Definition | In 0.9.8 results? |
+|---|---|---|
+| **F1** | F1 of "framework says hallucinated" vs human label, at the framework's default threshold | Yes |
+| **Precision / Recall** | At the same threshold | Yes |
+| **Median latency (ms)** | Per case | Yes |
+| **Std of score across repeated runs** | Same input, same seed, same temperature; quantifies judge stochasticity | No — snapshot is single-run; the v1 pilot (`results/COMMENTARY.md`) has 3-run variance |
+| **Flaky case rate** | Fraction of cases where the binary verdict (pass/fail) changed across runs | No — single-run |
+| **Cost ($)** | Total OpenAI spend per benchmark run | No — not yet instrumented (token counts are not captured) |
 
 We also report **pairwise agreement** between frameworks (Cohen's κ) so
 readers can see whether different scores actually disagree on which cases
@@ -105,18 +122,23 @@ The fair-comparison calls we made:
    evaluator builds its own internal prompt. We don't override these —
    that *is* the framework's contribution. We document what each one
    sends to the judge in `frameworks/`.
-3. **5 runs per case.** Hosted-API judges have measurable variance even
-   at temperature=0 (Atil et al., ACL 2025). 5 runs is a balance between
-   signal and cost.
+3. **Repeated runs where budget allows.** Hosted-API judges have
+   measurable variance even at temperature=0 (Atil et al., ACL 2025).
+   The harness defaults to 5 runs per case (`--runs 5`); the published
+   0.9.8 snapshot is **1 run per case** to keep cost down, and the v1
+   pilot used 3 runs.
 4. **Default thresholds.** Each framework is scored at its own default.
    We also publish a threshold sweep so readers can see what F1 looks
    like at the optimum for each framework. multivon-eval ships with
    calibrated thresholds per judge (`0.90` for gpt-4o-mini on
-   HaluEval Sum); the other two do not.
+   HaluEval Sum); the other two do not. That threshold was calibrated
+   on HaluEval and the headline is measured on RAGTruth — a
+   cross-dataset test, not an in-distribution one.
 5. **Same dataset split.** All three frameworks see the same 100 cases
    in the same order, drawn deterministically with seed=42.
-6. **Cost includes all retries** (none of these frameworks expose
-   retry costs separately).
+6. **Cost, once instrumented, will include all retries** (none of
+   these frameworks expose retry costs separately). Cost tracking is
+   not yet implemented — see [What we report](#what-we-report).
 
 ### Caveats and what this benchmark does NOT measure
 
@@ -135,8 +157,12 @@ The fair-comparison calls we made:
 ### Reproducibility
 
 Every cell in `colab.ipynb` produces a deterministic intermediate
-artifact. Raw judge responses are saved to `results/raw/` (gitignored to
-keep the public repo small; included in archive releases).
+artifact. Raw judge responses are saved to `results/raw/`. The raw
+files behind the headline ragtruth-sum result are committed in this
+repo (`results/raw/{gpt-4o-mini,claude-haiku-4-5}/*_ragtruth-sum_run0.jsonl`,
+~240 KB total); the run snapshot itself is marked by the git tag
+`results-0.9.8-2026-06-05`. Other raw outputs from local re-runs are
+gitignored to keep the repo small.
 
 If you re-run and get different numbers, please open an issue with your
 versions of openai, deepeval, ragas, multivon-eval, your OS, and the
@@ -150,8 +176,9 @@ exact diff against `results/`.
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 export OPENAI_API_KEY=sk-...
-python run.py --pilot
-python analyze.py
+python run.py --smoke                                  # fast sanity check: 4 cases × 1 run
+python run.py --task ragtruth-sum --n 100 --runs 1     # the headline configuration
+python analyze.py --task ragtruth-sum --n 100
 ```
 
 Or open `colab.ipynb` in Colab and run all cells.

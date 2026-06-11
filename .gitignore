@@ -1,6 +1,10 @@
 .env
 __pycache__/
-results/raw/
+# Raw judge outputs: gitignore local re-runs, but keep the small
+# ragtruth-sum files behind the headline result committed.
+results/raw/**
+!results/raw/*/
+!results/raw/*/*_ragtruth-sum_run0.jsonl
 data/halueval_qa_full.json
 data/halueval_sum_full.json
 .venv/

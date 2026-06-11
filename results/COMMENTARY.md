@@ -2,6 +2,40 @@
 
 > Hand-written; `RESULTS.md` is regenerated mechanically by `analyze.py`.
 
+> **Status:** everything below the "v2" section is the **v1 pilot** —
+> HaluEval Sum, n=50, 3 runs, multivon-eval 0.8.x, 2026-05-13 —
+> **superseded by the ragtruth-sum v2 results** (multivon-eval 0.9.8,
+> 2026-06-05, tag `results-0.9.8-2026-06-05`). In the v1 pilot RAGAS
+> ran successfully (F1 0.500 at 129 s/case); in the v2 0.9.8 harness
+> RAGAS errored on every case — see `RESULTS.md`.
+
+## v2 (ragtruth-sum, 0.9.8): where multivon-eval loses
+
+- **Recall is the weak spot (0.627).** At its calibrated 0.90
+  threshold with gpt-4o-mini, multivon-eval misses 19 of the 51
+  human-annotated hallucinated summaries — and on 11 of those it
+  scores a perfect 1.0, i.e. confidently wrong, not borderline.
+  Concrete example: `ragtruth_sum_1239_hallucinated` — RAGTruth
+  annotators flagged "the bike was recovered by police just days
+  later" as Evident Baseless Info (the source never says how long
+  recovery took), but multivon's claim decomposition listed "The bike
+  was recovered by police days later" and the judge verified all 8/8
+  claims as grounded. Plausible-sounding fabricated specifics slip
+  through claim-level verification. (DeepEval at its default caught
+  none of these 19 either.)
+- **The 0.90 calibration is not the RAGTruth optimum.** The sweep
+  peaks at 0.95: F1 0.833 vs 0.744, trading precision 0.914 → 0.889
+  for recall 0.627 → 0.784. Cross-dataset, the shipped threshold
+  leaves ~9 F1 points on the table.
+- **Precision is judge-sensitive.** Swap the judge to
+  claude-haiku-4-5 and precision drops 0.914 → 0.613 (24 false
+  positives vs 3), F1 0.744 → 0.673. The framework ranking holds, but
+  the headline precision does not transfer across judges.
+
+---
+
+# v1 pilot commentary (superseded)
+
 ## Pilot configuration
 
 | | Value |
