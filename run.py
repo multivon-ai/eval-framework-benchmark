@@ -143,6 +143,11 @@ def main() -> int:
     if args.smoke:
         args.n = 4
         args.runs = 1
+        # Keep smoke outputs away from the committed headline raw files —
+        # results/raw/<judge>/<fw>_<task>_run0.jsonl would silently
+        # overwrite the published run0 data (release-readiness finding).
+        if args.out == "results":
+            args.out = "results/smoke"
 
     # Default judge if none specified.
     judge_models = args.judge_models or ["gpt-4o-mini"]
