@@ -11,11 +11,11 @@
 
 ## v2 (ragtruth-sum, 0.9.8): where multivon-eval loses
 
-- **Recall is the weak spot (0.627).** At its calibrated 0.90
+- Recall is the weak spot (0.627). At its calibrated 0.90
   threshold with gpt-4o-mini, multivon-eval misses 19 of the 51
-  human-annotated hallucinated summaries — and on 11 of those it
-  scores a perfect 1.0, i.e. confidently wrong, not borderline.
-  Concrete example: `ragtruth_sum_1239_hallucinated` — RAGTruth
+  human-annotated hallucinated summaries, and on 11 of those it
+  scores a perfect 1.0 — confidently wrong, not borderline.
+  Concrete example: `ragtruth_sum_1239_hallucinated`. RAGTruth
   annotators flagged "the bike was recovered by police just days
   later" as Evident Baseless Info (the source never says how long
   recovery took), but multivon's claim decomposition listed "The bike
@@ -23,11 +23,11 @@
   claims as grounded. Plausible-sounding fabricated specifics slip
   through claim-level verification. (DeepEval at its default caught
   none of these 19 either.)
-- **The 0.90 calibration is not the RAGTruth optimum.** The sweep
+- The 0.90 calibration is not the RAGTruth optimum; the sweep
   peaks at 0.95: F1 0.833 vs 0.744, trading precision 0.914 → 0.889
   for recall 0.627 → 0.784. Cross-dataset, the shipped threshold
   leaves ~9 F1 points on the table.
-- **Precision is judge-sensitive.** Swap the judge to
+- Precision is judge-sensitive. Swap the judge to
   claude-haiku-4-5 and precision drops 0.914 → 0.613 (24 false
   positives vs 3), F1 0.744 → 0.673. The framework ranking holds, but
   the headline precision does not transfer across judges.
@@ -56,7 +56,7 @@
    and DeepEval's F1 jumps; we'll publish a threshold sweep in the next
    iteration.
 
-2. **The three frameworks disagree more than they agree.** Cohen's κ on
+2. The three frameworks disagree more than they agree. Cohen's κ on
    the binary verdict: multivon ↔ deepeval 0.029, multivon ↔ ragas
    0.266, deepeval ↔ ragas 0.135. Worse than coin-flip agreement
    between multivon and DeepEval. This is informative — it means
@@ -64,13 +64,13 @@
    judgment is different, and a switch in evaluator does change
    verdicts, not just numbers.
 
-3. **Run-to-run score variance is non-zero for every framework** at
+3. Run-to-run score variance is non-zero for every framework at
    temperature=0. multivon-eval std = 0.027, DeepEval std = 0.054
    (which translates to 2% flaky-verdict cases for DeepEval, 8% for
    multivon-eval). Single-run point estimates are unreliable across
    all three, validating the [NAACL 2025 non-determinism finding](https://arxiv.org/abs/2502.01775).
 
-4. **Latency varies 20×.** Median per-case: multivon 6.6s, DeepEval
+4. Latency varies 20×: median per-case is multivon 6.6s, DeepEval
    11.7s, RAGAS 129s. Same judge, same case. The differences come from
    how each evaluator decomposes the work (single judge call vs
    per-claim verification vs multi-stage extraction).
@@ -87,33 +87,33 @@
 
 ## Where multivon-eval loses
 
-- **Precision (0.586) is the lowest of the three.** RAGAS's 0.818
-  precision means when it flags, it's usually right. multivon flags
+- Precision (0.586) is the lowest of the three. RAGAS's 0.818
+  precision means when it flags, it's usually right; multivon flags
   more aggressively and pays for it with false positives.
-- **Score variance (std 0.027) is real.** Two of the 50 cases flipped
+- Score variance (std 0.027) is real — two of the 50 cases flipped
   pass/fail across the three runs. If you ship CI on a single multivon
   run, you'll get an occasional flaky result. Use `runs=3` or higher
   for production.
-- **8% flaky-case rate** is the highest of the three.
+- The 8% flaky-case rate is the highest of the three.
 
 ## Where DeepEval loses
 
-- **At its default threshold of 0.5, DeepEval flags almost nothing.**
-  That's not a bug — it's a calibration issue. DeepEval doesn't ship
+- At its default threshold of 0.5, DeepEval flags almost nothing.
+  That's a calibration issue, not a bug: DeepEval doesn't ship
   threshold-per-judge data; the 0.5 default is uniform. With gpt-4o-mini
   the score distribution clusters in the 0.6–1.0 range, so 0.5 misses
   most hallucinations.
-- **Worst inter-framework agreement.** DeepEval ↔ multivon κ = 0.029 is
-  effectively random. The two frameworks pick different cases as
+- Worst inter-framework agreement. DeepEval ↔ multivon κ = 0.029 is
+  effectively random; the two frameworks pick different cases as
   hallucinated.
 
 ## Where RAGAS loses
 
-- **20× slower per case than multivon, 11× slower than DeepEval.** A
+- 20× slower per case than multivon, 11× slower than DeepEval. A
   50-case run took ~30 minutes. At production scale (1k cases × 5
   runs), this is the difference between minutes and hours of wall time
   per CI run.
-- **Only one run in this pilot** — see [Why only one run for RAGAS](#why-only-one-run-for-ragas).
+- Only one run in this pilot — see [Why only one run for RAGAS](#why-only-one-run-for-ragas).
 
 ## Why only one run for RAGAS
 

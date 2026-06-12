@@ -17,11 +17,11 @@ on hallucination detection.
 | DeepEval 4.0.5 | 0.50 (default) | 0.038 | 1.000 | 0.020 | 0 |
 | RAGAS (latest) | — | _no runs_ | — | — | — |
 
-At best-tuned thresholds (0.95), multivon-eval F1 reaches **0.833** vs DeepEval **0.631**. At its default threshold DeepEval flags almost nothing (recall 0.02) — F1 0.04, not a literal zero, but effectively no signal until you tune it. RAGAS errored on every run with the current test harness; documented in [`results/RESULTS.md`](results/RESULTS.md). All numbers reproducible — code in this repo. n=100, single run; Wilson 95% CI on F1 at this size is ≈ ±10pp.
+At best-tuned thresholds (0.95), multivon-eval F1 reaches **0.833** vs DeepEval **0.631**. At its default threshold DeepEval flags almost nothing (recall 0.02): F1 0.04, not a literal zero, but effectively no signal until you tune it. RAGAS errored on every run with the current test harness; documented in [`results/RESULTS.md`](results/RESULTS.md). All numbers are reproducible from the code in this repo. n=100, single run; Wilson 95% CI on F1 at this size is ≈ ±10pp.
 
 Snapshot: multivon-eval 0.9.8 / DeepEval 4.0.5, run 2026-06-05 (git tag `results-0.9.8-2026-06-05`). multivon-eval is now 0.12.0 — a refresh is planned before any new headline claims.
 
-**Why this exists:** Every framework — DeepEval, RAGAS, multivon-eval — claims accuracy on faithfulness/hallucination detection. None publish a side-by-side comparison with the same judge, same dataset, same seed. This repo does.
+**Why this exists:** every framework (DeepEval, RAGAS, multivon-eval included) claims accuracy on faithfulness/hallucination detection, and none publishes a side-by-side comparison with the same judge, same dataset, same seed. This repo is that comparison.
 
 **Measures (published today):**
 - F1 vs human labels at each framework's default threshold *and* at swept thresholds (so you see best-case for each framework)
@@ -32,7 +32,7 @@ Snapshot: multivon-eval 0.9.8 / DeepEval 4.0.5, run 2026-06-05 (git tag `results
 - Run-to-run variance over 5 repeated runs (same input, same seed)
 - Cost per 100 cases
 
-**Run it yourself:** one Colab notebook, one `pip install`, one OpenAI key.
+**Run it yourself:** all you need is an OpenAI key and either the Colab notebook or a `pip install`.
 
 **Fastest reproduction of just our number** (skips DeepEval + RAGAS install, ~30s + ~$0.01 for 10 cases):
 
@@ -122,10 +122,10 @@ The fair-comparison calls we made:
    evaluator builds its own internal prompt. We don't override these —
    that *is* the framework's contribution. We document what each one
    sends to the judge in `frameworks/`.
-3. **Repeated runs where budget allows.** Hosted-API judges have
+3. Repeated runs where budget allows. Hosted-API judges have
    measurable variance even at temperature=0 (Atil et al., ACL 2025).
    The harness defaults to 5 runs per case (`--runs 5`); the published
-   0.9.8 snapshot is **1 run per case** to keep cost down, and the v1
+   0.9.8 snapshot is 1 run per case to keep cost down, and the v1
    pilot used 3 runs.
 4. **Default thresholds.** Each framework is scored at its own default.
    We also publish a threshold sweep so readers can see what F1 looks
@@ -134,25 +134,25 @@ The fair-comparison calls we made:
    HaluEval Sum); the other two do not. That threshold was calibrated
    on HaluEval and the headline is measured on RAGTruth — a
    cross-dataset test, not an in-distribution one.
-5. **Same dataset split.** All three frameworks see the same 100 cases
+5. Same dataset split: all three frameworks see the same 100 cases
    in the same order, drawn deterministically with seed=42.
-6. **Cost, once instrumented, will include all retries** (none of
+6. Cost, once instrumented, will include all retries (none of
    these frameworks expose retry costs separately). Cost tracking is
    not yet implemented — see [What we report](#what-we-report).
 
 ### Caveats and what this benchmark does NOT measure
 
-- **Not a benchmark of judge model accuracy.** We're comparing the
+- This is not a benchmark of judge model accuracy. We're comparing the
   *evaluator's prompt + parsing + scoring logic*, holding the judge
   constant. Some frameworks may perform better with their default
-  judge — that's a different study.
-- **Not all the metrics each framework offers.** DeepEval has 40+
-  evaluators; we're testing one (faithfulness). RAGAS has more than
-  faithfulness too. This is the most directly comparable triple.
-- **100 cases is a pilot scale.** Wilson 95% CI on F1=0.80 at n=100 is
+  judge; that's a different study.
+- Nor is it a survey of every metric each framework offers. DeepEval has
+  40+ evaluators and we're testing one (faithfulness); RAGAS has more
+  than faithfulness too. This is the most directly comparable triple.
+- 100 cases is pilot scale. Wilson 95% CI on F1=0.80 at n=100 is
   roughly [0.71, 0.87]. Useful for direction, not for sub-2pp claims.
   A 1,000-case run is on the roadmap.
-- **No agent / multi-turn / structured-output coverage.** Out of scope.
+- Agent, multi-turn, and structured-output evaluation are out of scope.
 
 ### Reproducibility
 
