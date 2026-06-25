@@ -2,24 +2,26 @@
 
 > Snapshot: multivon-eval 0.15.1 / DeepEval 4.0.2 / RAGAS 0.4.3, run 2026-06-26
 > (git tag `results-0.15.1-2026-06-26`). Single run (`run0`) per framework
-> x task, judge `gpt-4o-mini`, temperature 0 -- so the cross-run std and
-> flaky-rate columns are empty. Raw judge responses are under
-> `results/raw/gpt-4o-mini/`.
+> x task, temperature 0 -- so the cross-run std and flaky-rate columns are
+> empty. Raw judge responses are under `results/raw/{judge}/`.
 >
-> Regenerate: `python analyze.py --task ragtruth-sum --n 100 --judges gpt-4o-mini`
+> Regenerate: `python analyze.py --task ragtruth-sum --n 100 --judges gpt-4o-mini claude-haiku-4-5`
 > (headline) and `python analyze.py --task sum --n 50 --judges gpt-4o-mini`
 > (the HaluEval Sum / inter-framework-agreement section).
 
 **RAGAS now completes.** It errored on every case in the 0.9.8 / 2026-06-05
-harness; with ragas 0.4.3 it runs. A few cases still error per task (4/100
-on ragtruth-sum, 8/50 on sum) and it is ~13x slower than the others
+harness; with ragas 0.4.3 it runs (gpt-4o-mini). A few cases still error
+(4/100 on ragtruth-sum, 8/50 on sum) and it is ~13x slower than the others
 (~130 s/case). At its default 0.5 threshold it flags almost nothing on
 ragtruth-sum (F1 0.038), the same failure mode as DeepEval; swept to 0.95 it
 reaches F1 0.812.
 
-**Judge scope.** The prior 0.9.8 snapshot also reported a `claude-haiku-4-5`
-judge; this refresh covers `gpt-4o-mini` only (the headline judge every
-published claim cites). A haiku re-run on 0.15.1 is pending.
+**Judge scope.** `gpt-4o-mini` is the headline judge and carries the full
+three-way comparison. `claude-haiku-4-5` is reported for multivon-eval only:
+DeepEval still errors on every case with a non-OpenAI judge in this harness
+(its 65/100 "disagreement" row is an artifact of errored cases scored as
+not-hallucinated -- ignore it), and RAGAS on haiku is not run (it is too slow
+at ~130 s/case to be worth it for a secondary judge).
 
 ## ragtruth-sum (n=100)  ·  judge: `gpt-4o-mini`
 
@@ -76,6 +78,36 @@ F1, precision, recall for each framework over a fixed set of thresholds. A case 
 | 0.80 | 0.500 | 0.850 | 0.354 |
 | 0.90 | 0.736 | 0.821 | 0.667 |
 | 0.95 | 0.812 | 0.774 | 0.854 |
+
+## ragtruth-sum (n=100)  ·  judge: `claude-haiku-4-5`
+
+| Framework | Threshold | F1 | Precision | Recall | Score std (cross-run) | Flaky case rate | Median latency (ms) | Errors |
+|---|---|---|---|---|---|---|---|---|
+| multivon-eval | 0.9 | 0.6897 | 0.6154 | 0.7843 | None | 0.0 | 10065.5 | 0 |
+| deepeval | 0.5 | 0.0 | 0.0 | 0.0 | None | 0.0 | None | 100 |
+| ragas | — | _no runs_ | — | — | — | — | — | — |
+
+### Inter-framework verdict disagreement
+
+| Pair | Cases flipped | Cohen's κ |
+|---|---|---|
+| multivon-eval ↔ deepeval | 65/100 (65%) | 0.0 |
+
+### Threshold sweep
+
+F1, precision, recall for each framework over a fixed set of thresholds. A case is flagged hallucinated when its mean score across runs falls below the threshold.
+
+**multivon-eval**
+
+| Threshold | F1 | Precision | Recall |
+|---|---|---|---|
+| 0.30 | 0.000 | 0.000 | 0.000 |
+| 0.50 | 0.038 | 0.500 | 0.020 |
+| 0.60 | 0.191 | 0.500 | 0.118 |
+| 0.70 | 0.351 | 0.565 | 0.255 |
+| 0.80 | 0.587 | 0.658 | 0.529 |
+| 0.90 | 0.690 | 0.615 | 0.784 |
+| 0.95 | 0.703 | 0.584 | 0.882 |
 
 ## sum (n=50)  ·  judge: `gpt-4o-mini`
 
