@@ -2,12 +2,15 @@
 
 > Hand-written; `RESULTS.md` is regenerated mechanically by `analyze.py`.
 
-> **Status:** everything below the "v2" section is the **v1 pilot** —
-> HaluEval Sum, n=50, 3 runs, multivon-eval 0.8.x, 2026-05-13 —
-> **superseded by the ragtruth-sum v2 results** (multivon-eval 0.9.8,
-> 2026-06-05, tag `results-0.9.8-2026-06-05`). In the v1 pilot RAGAS
-> ran successfully (F1 0.500 at 129 s/case); in the v2 0.9.8 harness
-> RAGAS errored on every case — see `RESULTS.md`.
+> **Status:** the current headline numbers live in
+> [`RESULTS.md`](RESULTS.md) (multivon-eval 0.15.1 / DeepEval 4.0.2 /
+> RAGAS 0.4.3, run 2026-06-26, tag `results-0.15.1-2026-06-26`). On that
+> refresh RAGAS **completes** (it errored on every case in the older 0.9.8
+> harness; ragas 0.4.3 fixed that), and multivon-eval's headline F1 on
+> ragtruth-sum is unchanged at 0.744. The hand-written notes below are kept
+> for history: the "v2" section is the ragtruth-sum 0.9.8 run (2026-06-05),
+> and everything under it is the **v1 pilot** (HaluEval Sum, n=50, 3 runs,
+> multivon-eval 0.8.x, 2026-05-13, where RAGAS ran at F1 0.500).
 
 ## v2 (ragtruth-sum, 0.9.8): where multivon-eval loses
 

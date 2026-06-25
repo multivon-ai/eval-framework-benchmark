@@ -10,3 +10,4 @@ data/halueval_sum_full.json
 .venv/
 data/ragtruth_responses_full.jsonl
 data/ragtruth_sources_full.jsonl
+results/smoke/

@@ -1,8 +1,8 @@
 # eval-framework-benchmark
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Last run](https://img.shields.io/badge/last%20run-2026--06--05-emerald)](results/RESULTS.md)
-[![multivon-eval](https://img.shields.io/badge/multivon--eval-0.9.8-emerald)](https://github.com/multivon-ai/multivon-eval)
+[![Last run](https://img.shields.io/badge/last%20run-2026--06--26-emerald)](results/RESULTS.md)
+[![multivon-eval](https://img.shields.io/badge/multivon--eval-0.15.1-emerald)](https://github.com/multivon-ai/multivon-eval)
 
 **[Live results page](https://multivon.ai/benchmark)** · [RESULTS.md](results/RESULTS.md) · [multivon-eval (engine)](https://github.com/multivon-ai/multivon-eval)
 
@@ -13,13 +13,13 @@ on hallucination detection.
 
 | Framework | Threshold | F1 | Precision | Recall | Errors |
 |---|---|---|---|---|---|
-| **multivon-eval** 0.9.8 | 0.90 | **0.744** | 0.914 | 0.628 | 0 |
-| DeepEval 4.0.5 | 0.50 (default) | 0.038 | 1.000 | 0.020 | 0 |
-| RAGAS (latest) | — | _no runs_ | — | — | — |
+| **multivon-eval** 0.15.1 | 0.90 | **0.729** | 0.912 | 0.608 | 0 |
+| DeepEval 4.0.2 | 0.50 (default) | 0.038 | 1.000 | 0.020 | 0 |
+| RAGAS 0.4.3 | 0.50 (default) | 0.038 | 1.000 | 0.020 | 4 |
 
-At best-tuned thresholds (0.95), multivon-eval F1 reaches **0.833** vs DeepEval **0.631**. At its default threshold DeepEval flags almost nothing (recall 0.02): F1 0.04, not a literal zero, but effectively no signal until you tune it. RAGAS errored on every run with the current test harness; documented in [`results/RESULTS.md`](results/RESULTS.md). All numbers are reproducible from the code in this repo. n=100, single run; Wilson 95% CI on F1 at this size is ≈ ±10pp.
+At best-tuned thresholds (0.95), multivon-eval F1 reaches **0.837** vs DeepEval **0.609** vs RAGAS **0.812**. At their default 0.5 threshold both DeepEval and RAGAS flag almost nothing (recall 0.02): F1 0.04, not a literal zero, but effectively no signal until you tune the threshold. multivon-eval ships a calibrated default (0.90) and needs no tuning. All numbers are reproducible from the code in this repo. n=100, single run; Wilson 95% CI on F1 at this size is ≈ ±10pp.
 
-Snapshot: multivon-eval 0.9.8 / DeepEval 4.0.5, run 2026-06-05 (git tag `results-0.9.8-2026-06-05`). multivon-eval is now 0.12.0 — a refresh is planned before any new headline claims.
+Snapshot: multivon-eval 0.15.1 / DeepEval 4.0.2 / RAGAS 0.4.3, run 2026-06-26 (git tag `results-0.15.1-2026-06-26`). RAGAS errored on every case in the prior 0.9.8 harness; with ragas 0.4.3 it now completes (4/100 cases still error, and it runs ~15x slower than the others).
 
 **Why this exists:** every framework (DeepEval, RAGAS, multivon-eval included) claims accuracy on faithfulness/hallucination detection, and none publishes a side-by-side comparison with the same judge, same dataset, same seed. This repo is that comparison.
 
@@ -28,7 +28,7 @@ Snapshot: multivon-eval 0.9.8 / DeepEval 4.0.5, run 2026-06-05 (git tag `results
 - Inter-framework disagreement (Cohen's κ)
 - Median per-case latency
 
-**Designed but not yet in the published results** (the harness supports them via `--runs`; the 0.9.8 snapshot is single-run, and cost tracking is not implemented yet):
+**Designed but not yet in the published results** (the harness supports them via `--runs`; the 0.15.1 snapshot is single-run, and cost tracking is not implemented yet):
 - Run-to-run variance over 5 repeated runs (same input, same seed)
 - Cost per 100 cases
 
@@ -56,9 +56,9 @@ For the full head-to-head you need DeepEval + RAGAS too (heavier installs with t
 
 | Framework | Metric used | Default threshold | Version |
 |---|---|---|---|
-| [multivon-eval](https://github.com/multivon-ai/multivon-eval) | `Faithfulness` (QAG) | 0.90 (gpt-4o-mini, calibrated) | 0.9.8 |
-| [DeepEval](https://github.com/confident-ai/deepeval) | `FaithfulnessMetric` | 0.5 (default) | 4.0.5 (2026-06-05) |
-| [RAGAS](https://github.com/explodinggradients/ragas) | `faithfulness` | 0.5 (default — pass at >=0.5) | latest at 2026-06-05 (errors) |
+| [multivon-eval](https://github.com/multivon-ai/multivon-eval) | `Faithfulness` (QAG) | 0.90 (gpt-4o-mini, calibrated) | 0.15.1 |
+| [DeepEval](https://github.com/confident-ai/deepeval) | `FaithfulnessMetric` | 0.5 (default) | 4.0.2 |
+| [RAGAS](https://github.com/explodinggradients/ragas) | `faithfulness` | 0.5 (default — pass at >=0.5) | 0.4.3 |
 
 Judge: `gpt-4o-mini`, temperature=0, max_tokens=1024.
 
@@ -95,7 +95,7 @@ the full dataset to `data/`.
 
 For each (framework × dataset):
 
-| Metric | Definition | In 0.9.8 results? |
+| Metric | Definition | In 0.15.1 results? |
 |---|---|---|
 | **F1** | F1 of "framework says hallucinated" vs human label, at the framework's default threshold | Yes |
 | **Precision / Recall** | At the same threshold | Yes |
@@ -125,7 +125,7 @@ The fair-comparison calls we made:
 3. Repeated runs where budget allows. Hosted-API judges have
    measurable variance even at temperature=0 (Atil et al., ACL 2025).
    The harness defaults to 5 runs per case (`--runs 5`); the published
-   0.9.8 snapshot is 1 run per case to keep cost down, and the v1
+   0.15.1 snapshot is 1 run per case to keep cost down, and the v1
    pilot used 3 runs.
 4. **Default thresholds.** Each framework is scored at its own default.
    We also publish a threshold sweep so readers can see what F1 looks
@@ -161,7 +161,7 @@ artifact. Raw judge responses are saved to `results/raw/`. The raw
 files behind the headline ragtruth-sum result are committed in this
 repo (`results/raw/{gpt-4o-mini,claude-haiku-4-5}/*_ragtruth-sum_run0.jsonl`,
 ~240 KB total); the run snapshot itself is marked by the git tag
-`results-0.9.8-2026-06-05`. Other raw outputs from local re-runs are
+`results-0.15.1-2026-06-26`. Other raw outputs from local re-runs are
 gitignored to keep the repo small.
 
 If you re-run and get different numbers, please open an issue with your
