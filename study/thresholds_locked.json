@@ -1,0 +1,315 @@
+{
+  "_meta": {
+    "dev_files": "study/runs/raw/{judge}/{task}_dev/{framework}_run0.jsonl",
+    "flag_rules": {
+      "deepeval": "score < t",
+      "multivon-eval": "score < t",
+      "opik": "score <= t",
+      "ragas": "score < t",
+      "trulens": "score < t"
+    },
+    "labels_via": "analyze_study.load_hidden_labels_dev (tag-gated, dev ids only)",
+    "score_direction": "all frameworks: FrameworkResult.score in [0,1], higher = more faithful; LOW = flagged",
+    "spec": "plan \u00a74 Condition B: one scalar threshold per framework x judge x task, fitted on dev only; candidates = midpoints between consecutive unique dev scores + extremes 0.0/1.0; max dev F1 (hallucinated=positive); ties -> higher (stricter) threshold; errored dev records excluded from fitting (disclosed as n_errored)."
+  },
+  "deepeval": {
+    "claude-haiku-4-5": {
+      "halueval-qa": {
+        "default_dev_f1": 0.5429,
+        "default_threshold": 0.5,
+        "dev_f1": 0.6216,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "halueval-sum": {
+        "default_dev_f1": 0.0392,
+        "default_threshold": 0.5,
+        "dev_f1": 0.6923,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "ragtruth-sum": {
+        "default_dev_f1": 0.0392,
+        "default_threshold": 0.5,
+        "dev_f1": 0.4444,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 0.9045454545
+      }
+    },
+    "gpt-4o-mini": {
+      "halueval-qa": {
+        "default_dev_f1": 0.6575,
+        "default_threshold": 0.5,
+        "dev_f1": 0.75,
+        "flag_rule": "score < t",
+        "n_errored": 17,
+        "n_used": 83,
+        "threshold": 1.0
+      },
+      "halueval-sum": {
+        "default_dev_f1": 0.0,
+        "default_threshold": 0.5,
+        "dev_f1": 0.6341,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "ragtruth-sum": {
+        "default_dev_f1": 0.0,
+        "default_threshold": 0.5,
+        "dev_f1": 0.5133,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 0.9258241758
+      }
+    }
+  },
+  "multivon-eval": {
+    "claude-haiku-4-5": {
+      "halueval-qa": {
+        "default_dev_f1": 0.8367,
+        "default_threshold": 0.9,
+        "dev_f1": 0.8367,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "halueval-sum": {
+        "default_dev_f1": 0.6789,
+        "default_threshold": 0.9,
+        "dev_f1": 0.6909,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "ragtruth-sum": {
+        "default_dev_f1": 0.7455,
+        "default_threshold": 0.9,
+        "dev_f1": 0.7521,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      }
+    },
+    "gpt-4o-mini": {
+      "halueval-qa": {
+        "default_dev_f1": 0.7742,
+        "default_threshold": 0.9,
+        "dev_f1": 0.7742,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "halueval-sum": {
+        "default_dev_f1": 0.6735,
+        "default_threshold": 0.9,
+        "dev_f1": 0.6735,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "ragtruth-sum": {
+        "default_dev_f1": 0.5952,
+        "default_threshold": 0.9,
+        "dev_f1": 0.6374,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      }
+    }
+  },
+  "opik": {
+    "claude-haiku-4-5": {
+      "halueval-qa": {
+        "default_dev_f1": 0.8936,
+        "default_threshold": 0.5,
+        "dev_f1": 0.94,
+        "flag_rule": "score <= t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 0.925
+      },
+      "halueval-sum": {
+        "default_dev_f1": 0.5333,
+        "default_threshold": 0.5,
+        "dev_f1": 0.7333,
+        "flag_rule": "score <= t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 0.875
+      },
+      "ragtruth-sum": {
+        "default_dev_f1": 0.1786,
+        "default_threshold": 0.5,
+        "dev_f1": 0.8108,
+        "flag_rule": "score <= t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 0.9
+      }
+    },
+    "gpt-4o-mini": {
+      "halueval-qa": {
+        "default_dev_f1": 0.8791,
+        "default_threshold": 0.5,
+        "dev_f1": 0.8913,
+        "flag_rule": "score <= t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 0.9
+      },
+      "halueval-sum": {
+        "default_dev_f1": 0.7292,
+        "default_threshold": 0.5,
+        "dev_f1": 0.7292,
+        "flag_rule": "score <= t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 0.55
+      },
+      "ragtruth-sum": {
+        "default_dev_f1": 0.3051,
+        "default_threshold": 0.5,
+        "dev_f1": 0.6667,
+        "flag_rule": "score <= t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      }
+    }
+  },
+  "ragas": {
+    "claude-haiku-4-5": {
+      "halueval-qa": {
+        "default_dev_f1": 0.5783,
+        "default_threshold": 0.5,
+        "dev_f1": 0.8319,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "halueval-sum": {
+        "default_dev_f1": 0.2963,
+        "default_threshold": 0.5,
+        "dev_f1": 0.699,
+        "flag_rule": "score < t",
+        "n_errored": 4,
+        "n_used": 96,
+        "threshold": 1.0
+      },
+      "ragtruth-sum": {
+        "default_dev_f1": 0.0,
+        "default_threshold": 0.5,
+        "dev_f1": 0.7931,
+        "flag_rule": "score < t",
+        "n_errored": 35,
+        "n_used": 65,
+        "threshold": 0.8660714286
+      }
+    },
+    "gpt-4o-mini": {
+      "halueval-qa": {
+        "default_dev_f1": 0.6593,
+        "default_threshold": 0.5,
+        "dev_f1": 0.7719,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "halueval-sum": {
+        "default_dev_f1": 0.4127,
+        "default_threshold": 0.5,
+        "dev_f1": 0.6726,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "ragtruth-sum": {
+        "default_dev_f1": 0.0,
+        "default_threshold": 0.5,
+        "dev_f1": 0.7143,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      }
+    }
+  },
+  "trulens": {
+    "claude-haiku-4-5": {
+      "halueval-qa": {
+        "default_dev_f1": 0.8211,
+        "default_threshold": 0.5,
+        "dev_f1": 0.8381,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "halueval-sum": {
+        "default_dev_f1": 0.4375,
+        "default_threshold": 0.5,
+        "dev_f1": 0.7304,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 1.0
+      },
+      "ragtruth-sum": {
+        "default_dev_f1": 0.0392,
+        "default_threshold": 0.5,
+        "dev_f1": 0.8376,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 0.9553571429
+      }
+    },
+    "gpt-4o-mini": {
+      "halueval-qa": {
+        "default_dev_f1": 0.7609,
+        "default_threshold": 0.5,
+        "dev_f1": 0.7609,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 0.5
+      },
+      "halueval-sum": {
+        "default_dev_f1": 0.3051,
+        "default_threshold": 0.5,
+        "dev_f1": 0.7368,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 0.7888888889
+      },
+      "ragtruth-sum": {
+        "default_dev_f1": 0.0,
+        "default_threshold": 0.5,
+        "dev_f1": 0.7087,
+        "flag_rule": "score < t",
+        "n_errored": 0,
+        "n_used": 100,
+        "threshold": 0.9027777778
+      }
+    }
+  }
+}

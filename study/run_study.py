@@ -60,8 +60,19 @@ is passed to any adapter whose constructor accepts a ``seed`` kwarg
 the record's "seed" field is null unless an adapter grows support).
 
 Other modes:
-    --cell-list   print all 120 cells with pending/partial/done status
-    --estimate    remaining evals + projected $ from the §8 measured table
+    --cell-list      print all 120 cells with pending/partial/done status
+    --estimate       remaining evals + projected $ from the §8 measured table
+    --repair-errors  ONE documented repair pass for a cell: re-attempt ONLY
+                     records with error != null, replacing them in place.
+                     The pre-repair file is moved to a .bak (nothing
+                     deleted), every replacement is logged to
+                     study/runs/logs/repairs.jsonl, and each replacement
+                     record carries a "repaired" audit stamp. A cell that
+                     already contains repaired records is REFUSED — the
+                     repair pass is single-shot by design (triage protocol
+                     in PREREG_ADDENDUM.md §12: transient errors only;
+                     systematic errors stay as data, errors-as-failures
+                     being the preregistered primary).
 
 Env:  set -a; . ~/Documents/.env.local; set +a
 Run:  .venv-study/bin/python study/run_study.py ...
@@ -342,6 +353,64 @@ def mode_estimate() -> int:
     return 0
 
 
+def make_eval_fn(runner, seed_passed: bool, *, task: str, split: str,
+                 framework: str, judge: str, run: int, retries: int,
+                 limit: int | None):
+    """Per-item evaluation closure shared by run_cell and repair_cell."""
+
+    def _eval_one(case) -> dict:
+        attempts = 0
+        while True:
+            _TLS.calls = []
+            t0 = time.perf_counter()
+            try:
+                result = runner.run(case)
+            finally:
+                calls, _TLS.calls = _TLS.calls, None
+            latency_ms = (time.perf_counter() - t0) * 1000
+            if not result.error or attempts >= retries:
+                break
+            attempts += 1
+            time.sleep(min(2 ** attempts, 10))
+        ok = [c for c in calls if 200 <= c["status"] < 300]
+        models = sorted({c["model"] for c in ok if c["model"]})
+        pt = (sum(c["prompt_tokens"] for c in ok)
+              if ok and all(c["prompt_tokens"] is not None for c in ok) else None)
+        ct = (sum(c["completion_tokens"] for c in ok)
+              if ok and all(c["completion_tokens"] is not None for c in ok) else None)
+        # Fall back to adapter-reported tokens when interception saw nothing.
+        pt = pt if pt is not None else result.prompt_tokens
+        ct = ct if ct is not None else result.completion_tokens
+        rec = {
+            "item_id": case.id,
+            "task": task, "split": split,
+            "framework": framework,
+            "judge": judge,
+            "judge_snapshot": (models[0] if len(models) == 1
+                               else (models or None)),
+            "run": run,
+            "score": result.score,
+            "threshold": result.threshold,
+            "verdict": "hallucinated" if result.flagged_hallucinated else "faithful",
+            "flagged_hallucinated": result.flagged_hallucinated,
+            "error": result.error,
+            "retries": attempts,
+            "latency_ms": round(latency_ms, 1),
+            "prompt_tokens": pt,
+            "completion_tokens": ct,
+            "judge_calls": len(ok) or None,
+            "cost_usd": _cost_usd(judge, pt, ct),
+            "seed": SEED if seed_passed else None,
+            "raw": result.to_dict().get("raw"),
+            "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        }
+        if limit is not None:
+            rec["limit"] = limit
+        return rec
+
+    return _eval_one
+
+
 def run_cell(args: argparse.Namespace) -> int:
     task, split, framework, judge, run = (
         args.task, args.split, args.framework, args.judge, args.run)
@@ -394,56 +463,9 @@ def run_cell(args: argparse.Namespace) -> int:
     path.parent.mkdir(parents=True, exist_ok=True)
     write_lock = threading.Lock()
     t_start = time.time()
-
-    def _eval_one(case) -> dict:
-        attempts = 0
-        while True:
-            _TLS.calls = []
-            t0 = time.perf_counter()
-            try:
-                result = runner.run(case)
-            finally:
-                calls, _TLS.calls = _TLS.calls, None
-            latency_ms = (time.perf_counter() - t0) * 1000
-            if not result.error or attempts >= args.retries:
-                break
-            attempts += 1
-            time.sleep(min(2 ** attempts, 10))
-        ok = [c for c in calls if 200 <= c["status"] < 300]
-        models = sorted({c["model"] for c in ok if c["model"]})
-        pt = (sum(c["prompt_tokens"] for c in ok)
-              if ok and all(c["prompt_tokens"] is not None for c in ok) else None)
-        ct = (sum(c["completion_tokens"] for c in ok)
-              if ok and all(c["completion_tokens"] is not None for c in ok) else None)
-        # Fall back to adapter-reported tokens when interception saw nothing.
-        pt = pt if pt is not None else result.prompt_tokens
-        ct = ct if ct is not None else result.completion_tokens
-        rec = {
-            "item_id": case.id,
-            "task": task, "split": split,
-            "framework": framework,
-            "judge": judge,
-            "judge_snapshot": (models[0] if len(models) == 1
-                               else (models or None)),
-            "run": run,
-            "score": result.score,
-            "threshold": result.threshold,
-            "verdict": "hallucinated" if result.flagged_hallucinated else "faithful",
-            "flagged_hallucinated": result.flagged_hallucinated,
-            "error": result.error,
-            "retries": attempts,
-            "latency_ms": round(latency_ms, 1),
-            "prompt_tokens": pt,
-            "completion_tokens": ct,
-            "judge_calls": len(ok) or None,
-            "cost_usd": _cost_usd(judge, pt, ct),
-            "seed": SEED if seed_passed else None,
-            "raw": result.to_dict().get("raw"),
-            "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        }
-        if args.limit is not None:
-            rec["limit"] = args.limit
-        return rec
+    _eval_one = make_eval_fn(runner, seed_passed, task=task, split=split,
+                             framework=framework, judge=judge, run=run,
+                             retries=args.retries, limit=args.limit)
 
     n_err = 0
     with open(path, "a", encoding="utf-8") as f, \
@@ -471,6 +493,109 @@ def run_cell(args: argparse.Namespace) -> int:
     return 0
 
 
+def repair_cell(args: argparse.Namespace) -> int:
+    """ONE documented repair pass for a cell (triage protocol,
+    PREREG_ADDENDUM.md §12): re-attempt ONLY records with error != null and
+    replace them in place.
+
+    Guarantees:
+      * single-shot — refuses to run if ANY record in the cell already
+        carries a "repaired" stamp (a second pass would be undocumented
+        selection pressure on errors);
+      * nothing deleted — the pre-repair file is moved to
+        <file>.jsonl.bak-repair-<ts> before the rewrite;
+      * fully audited — every replacement (including still-errored
+        re-attempts, which are kept as data) appends a line to
+        study/runs/logs/repairs.jsonl and stamps the replacement record
+        with {"repaired": {"pass": 1, "prev_error": ..., "prev_ts": ...}};
+      * order-preserving — the rewritten file keeps the original record
+        order, with non-errored records byte-identical.
+    """
+    task, split, framework, judge, run = (
+        args.task, args.split, args.framework, args.judge, args.run)
+    if args.limit is not None or args.fresh:
+        raise SystemExit("ABORT: --repair-errors is incompatible with "
+                         "--limit/--fresh.")
+    path = cell_path(task, split, framework, judge, run)
+    cell_label = f"{task}/{split} {framework} x {judge} run{run}"
+    records = read_cell_records(path)
+    if not records:
+        raise SystemExit(f"ABORT: no records in {path} — nothing to repair.")
+    all_ids = {c.id for c in load_study_items(task, split)}
+    validate_records(records, path=path, task=task, split=split,
+                     framework=framework, judge=judge, run=run,
+                     item_ids=all_ids)
+    stamped = [r["item_id"] for r in records if r.get("repaired")]
+    if stamped:
+        raise SystemExit(
+            f"ABORT: {cell_label} already contains {len(stamped)} repaired "
+            f"record(s) (e.g. {stamped[0]}). The repair pass is single-shot "
+            f"by design; a second pass is refused.")
+    errored = {r["item_id"]: r for r in records if r.get("error")}
+    if not errored:
+        print(f"{cell_label}: no errored records — nothing to repair.",
+              file=sys.stderr)
+        return 0
+
+    by_id = {c.id: c for c in load_study_items(task, split)}
+    todo = [by_id[i] for i in errored]
+    print(f"### REPAIR PASS {cell_label}: re-attempting {len(todo)} errored "
+          f"record(s)", file=sys.stderr)
+
+    runner, seed_passed = make_runner(framework, judge)
+    install_interceptor()
+    _eval_one = make_eval_fn(runner, seed_passed, task=task, split=split,
+                             framework=framework, judge=judge, run=run,
+                             retries=args.retries, limit=None)
+
+    repair_ts = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    new_recs: dict[str, dict] = {}
+    with ThreadPoolExecutor(max_workers=args.workers) as pool:
+        futures = {pool.submit(_eval_one, c): c for c in todo}
+        for i, fut in enumerate(as_completed(futures), start=1):
+            rec = fut.result()
+            old = errored[rec["item_id"]]
+            rec["repaired"] = {"pass": 1, "repair_ts": repair_ts,
+                               "prev_error": (old.get("error") or "")[:300],
+                               "prev_ts": old.get("ts")}
+            new_recs[rec["item_id"]] = rec
+            print(f"  repair {cell_label}: {i}/{len(todo)} "
+                  f"({rec['item_id']}: "
+                  f"{'STILL ERRORED' if rec['error'] else 'ok'})",
+                  file=sys.stderr)
+
+    # Audit log — one line per replacement, before touching the cell file.
+    log_path = RAW_ROOT.parent / "logs" / "repairs.jsonl"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(log_path, "a", encoding="utf-8") as lf:
+        for iid in sorted(new_recs):
+            old, new = errored[iid], new_recs[iid]
+            lf.write(json.dumps({
+                "cell": {"task": task, "split": split, "framework": framework,
+                         "judge": judge, "run": run},
+                "item_id": iid, "repair_ts": repair_ts,
+                "prev_error": (old.get("error") or "")[:300],
+                "prev_ts": old.get("ts"),
+                "new_error": (new.get("error") or None)
+                             and new["error"][:300],
+                "new_verdict": new["verdict"], "new_score": new["score"],
+            }) + "\n")
+
+    bak = path.with_suffix(
+        f".jsonl.bak-repair-{time.strftime('%Y%m%d-%H%M%S')}")
+    path.rename(bak)
+    with open(path, "w", encoding="utf-8") as f:
+        for r in records:
+            f.write(json.dumps(new_recs.get(r["item_id"], r)) + "\n")
+
+    still = sum(1 for r in new_recs.values() if r["error"])
+    print(f"[repair done] {cell_label}: {len(new_recs)} re-attempted, "
+          f"{len(new_recs) - still} now ok, {still} still errored (kept as "
+          f"data). Pre-repair file: {bak.name}; audit: {log_path}",
+          file=sys.stderr)
+    return 0
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -488,6 +613,12 @@ def main() -> int:
     p.add_argument("--fresh", action="store_true",
                    help="explicitly redo the cell: existing file is moved to "
                         ".bak (default behaviour is append-mode resume)")
+    p.add_argument("--repair-errors", action="store_true",
+                   help="ONE documented repair pass: re-attempt ONLY records "
+                        "with error != null in the addressed cell, replacing "
+                        "them in place (audited in study/runs/logs/"
+                        "repairs.jsonl; pre-repair file kept as .bak; a "
+                        "second pass on the same cell is refused)")
     p.add_argument("--cell-list", action="store_true",
                    help="print every cell of the full design with status")
     p.add_argument("--estimate", action="store_true",
@@ -504,6 +635,8 @@ def main() -> int:
     if missing:
         p.error(f"cell address incomplete: missing --{', --'.join(missing)} "
                 f"(or use --cell-list / --estimate)")
+    if args.repair_errors:
+        return repair_cell(args)
     return run_cell(args)
 
 

@@ -397,3 +397,44 @@ calibration data). Both will be re-confirmed and recorded from response
 metadata during the Day-1 smoke run. **Confirmed at the §8 smoke
 (2026-07-13): every recorded judge call reported exactly these two
 snapshot ids.**
+
+## §10 — Dev closeout: error triage, repair, Condition-B thresholds (locked)
+
+**Triage (68 errored dev records):** deepeval×gpt-4o-mini 27 `RetryError` timeouts (transient class); ragas×claude-haiku-4-5 41 `InstructorRetryException` structured-output parse failures (systematic class — the framework's parser degrading against a cross-provider judge is a framework property and is retained as data). One documented repair pass re-attempted exactly the errored ids: deepeval 27→17 recovered 10; ragas 41→39 recovered 2. Final dev error census: 56/3,000 (1.9%); errored records carry no score and are excluded from threshold fitting with counts disclosed below (errors-as-failures remains the preregistered primary for test analysis).
+
+**Dev-label carve-out:** `analyze_study.py --unblind-dev` loads dev-split labels only (requires the `study-freeze-*` tag; refuses any test id). Test labels remain gated on the FREEZE manifest.
+
+**Condition-B fit (preregistered algorithm):** candidates = midpoints between consecutive unique dev scores + extremes; max dev-F1 (hallucinated = positive); ties toward the stricter gate. Deterministic (double-run hash-identical: cef43eac…). Early observation recorded verbatim, no test implication: Opik's shipped 0.5 default vs fitted on ragtruth-sum×claude-haiku moves dev-F1 0.179→0.811 — the default-threshold collapse observed for DeepEval in the pilot appears in a second framework.
+
+| framework | judge | task | default τ | fitted τ | default dev-F1 | fitted dev-F1 | n errored |
+|---|---|---|---|---|---|---|---|
+| deepeval | claude-haiku-4-5 | halueval-qa | — | 1 | nan | 0.622 | 0 |
+| deepeval | claude-haiku-4-5 | halueval-sum | — | 1 | nan | 0.692 | 0 |
+| deepeval | claude-haiku-4-5 | ragtruth-sum | — | 0.9045 | nan | 0.444 | 0 |
+| deepeval | gpt-4o-mini | halueval-qa | — | 1 | nan | 0.750 | 17 |
+| deepeval | gpt-4o-mini | halueval-sum | — | 1 | nan | 0.634 | 0 |
+| deepeval | gpt-4o-mini | ragtruth-sum | — | 0.9258 | nan | 0.513 | 0 |
+| multivon-eval | claude-haiku-4-5 | halueval-qa | — | 1 | nan | 0.837 | 0 |
+| multivon-eval | claude-haiku-4-5 | halueval-sum | — | 1 | nan | 0.691 | 0 |
+| multivon-eval | claude-haiku-4-5 | ragtruth-sum | — | 1 | nan | 0.752 | 0 |
+| multivon-eval | gpt-4o-mini | halueval-qa | — | 1 | nan | 0.774 | 0 |
+| multivon-eval | gpt-4o-mini | halueval-sum | — | 1 | nan | 0.673 | 0 |
+| multivon-eval | gpt-4o-mini | ragtruth-sum | — | 1 | nan | 0.637 | 0 |
+| opik | claude-haiku-4-5 | halueval-qa | — | 0.925 | nan | 0.940 | 0 |
+| opik | claude-haiku-4-5 | halueval-sum | — | 0.875 | nan | 0.733 | 0 |
+| opik | claude-haiku-4-5 | ragtruth-sum | — | 0.9 | nan | 0.811 | 0 |
+| opik | gpt-4o-mini | halueval-qa | — | 0.9 | nan | 0.891 | 0 |
+| opik | gpt-4o-mini | halueval-sum | — | 0.55 | nan | 0.729 | 0 |
+| opik | gpt-4o-mini | ragtruth-sum | — | 1 | nan | 0.667 | 0 |
+| ragas | claude-haiku-4-5 | halueval-qa | — | 1 | nan | 0.832 | 0 |
+| ragas | claude-haiku-4-5 | halueval-sum | — | 1 | nan | 0.699 | 4 |
+| ragas | claude-haiku-4-5 | ragtruth-sum | — | 0.8661 | nan | 0.793 | 35 |
+| ragas | gpt-4o-mini | halueval-qa | — | 1 | nan | 0.772 | 0 |
+| ragas | gpt-4o-mini | halueval-sum | — | 1 | nan | 0.673 | 0 |
+| ragas | gpt-4o-mini | ragtruth-sum | — | 1 | nan | 0.714 | 0 |
+| trulens | claude-haiku-4-5 | halueval-qa | — | 1 | nan | 0.838 | 0 |
+| trulens | claude-haiku-4-5 | halueval-sum | — | 1 | nan | 0.730 | 0 |
+| trulens | claude-haiku-4-5 | ragtruth-sum | — | 0.9554 | nan | 0.838 | 0 |
+| trulens | gpt-4o-mini | halueval-qa | — | 0.5 | nan | 0.761 | 0 |
+| trulens | gpt-4o-mini | halueval-sum | — | 0.7889 | nan | 0.737 | 0 |
+| trulens | gpt-4o-mini | ragtruth-sum | — | 0.9028 | nan | 0.709 | 0 |
