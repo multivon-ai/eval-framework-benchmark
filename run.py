@@ -37,10 +37,20 @@ def _safe_runner_factories(judge_model: str) -> list[tuple[str, Callable[[], Fra
         from frameworks.ragas import RagasFaithfulness
         return RagasFaithfulness(judge_model=judge_model)
 
+    def _mk_trulens() -> FrameworkRunner:
+        from frameworks.trulens import TruLensGroundedness
+        return TruLensGroundedness(judge_model=judge_model)
+
+    def _mk_opik() -> FrameworkRunner:
+        from frameworks.opik import OpikHallucination
+        return OpikHallucination(judge_model=judge_model)
+
     return [
         ("multivon-eval", _mk_multivon),
         ("deepeval", _mk_deepeval),
         ("ragas", _mk_ragas),
+        ("trulens", _mk_trulens),
+        ("opik", _mk_opik),
     ]
 
 
@@ -134,7 +144,7 @@ def main() -> int:
     p.add_argument("--judge-model", "--judge", dest="judge_models",
                    action="append", default=None,
                    help="Judge model(s) to sweep. Pass once per judge to compare across providers.")
-    p.add_argument("--only", nargs="*", default=None, choices=["multivon-eval", "deepeval", "ragas"])
+    p.add_argument("--only", nargs="*", default=None, choices=["multivon-eval", "deepeval", "ragas", "trulens", "opik"])
     p.add_argument("--workers", type=int, default=4, help="concurrent judge calls")
     p.add_argument("--out", default="results", help="output directory root")
     p.add_argument("--smoke", action="store_true", help="run on n=4 cases × 1 run for a fast smoke test")
