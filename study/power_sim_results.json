@@ -1,0 +1,422 @@
+{
+  "seed": 42,
+  "replicates": 10000,
+  "alpha": 0.05,
+  "effects": {
+    "dependent_kappa_difference": 0.15,
+    "paired_f1_gap": 0.1
+  },
+  "kappa_diff": [
+    {
+      "n": 300,
+      "pos_rate": 0.2,
+      "kappa_hi": 0.35,
+      "kappa_lo": 0.2,
+      "power": 0.3817
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.2,
+      "kappa_hi": 0.5,
+      "kappa_lo": 0.35,
+      "power": 0.4173
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.2,
+      "kappa_hi": 0.7,
+      "kappa_lo": 0.55,
+      "power": 0.5363
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.35,
+      "kappa_hi": 0.35,
+      "kappa_lo": 0.2,
+      "power": 0.4781
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.35,
+      "kappa_hi": 0.5,
+      "kappa_lo": 0.35,
+      "power": 0.5329
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.35,
+      "kappa_hi": 0.7,
+      "kappa_lo": 0.55,
+      "power": 0.697
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.5,
+      "kappa_hi": 0.35,
+      "kappa_lo": 0.2,
+      "power": 0.4975
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.5,
+      "kappa_hi": 0.5,
+      "kappa_lo": 0.35,
+      "power": 0.5606
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.5,
+      "kappa_hi": 0.7,
+      "kappa_lo": 0.55,
+      "power": 0.727
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.65,
+      "kappa_hi": 0.35,
+      "kappa_lo": 0.2,
+      "power": 0.473
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.65,
+      "kappa_hi": 0.5,
+      "kappa_lo": 0.35,
+      "power": 0.5228
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.65,
+      "kappa_hi": 0.7,
+      "kappa_lo": 0.55,
+      "power": 0.6873
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.8,
+      "kappa_hi": 0.35,
+      "kappa_lo": 0.2,
+      "power": 0.3898
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.8,
+      "kappa_hi": 0.5,
+      "kappa_lo": 0.35,
+      "power": 0.4211
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.8,
+      "kappa_hi": 0.7,
+      "kappa_lo": 0.55,
+      "power": 0.5408
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.2,
+      "kappa_hi": 0.35,
+      "kappa_lo": 0.2,
+      "power": 0.5712
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.2,
+      "kappa_hi": 0.5,
+      "kappa_lo": 0.35,
+      "power": 0.6105
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.2,
+      "kappa_hi": 0.7,
+      "kappa_lo": 0.55,
+      "power": 0.766
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.35,
+      "kappa_hi": 0.35,
+      "kappa_lo": 0.2,
+      "power": 0.6794
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.35,
+      "kappa_hi": 0.5,
+      "kappa_lo": 0.35,
+      "power": 0.7463
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.35,
+      "kappa_hi": 0.7,
+      "kappa_lo": 0.55,
+      "power": 0.8879
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.5,
+      "kappa_hi": 0.35,
+      "kappa_lo": 0.2,
+      "power": 0.7101
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.5,
+      "kappa_hi": 0.5,
+      "kappa_lo": 0.35,
+      "power": 0.7832
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.5,
+      "kappa_hi": 0.7,
+      "kappa_lo": 0.55,
+      "power": 0.91
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.65,
+      "kappa_hi": 0.35,
+      "kappa_lo": 0.2,
+      "power": 0.6874
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.65,
+      "kappa_hi": 0.5,
+      "kappa_lo": 0.35,
+      "power": 0.7558
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.65,
+      "kappa_hi": 0.7,
+      "kappa_lo": 0.55,
+      "power": 0.8901
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.8,
+      "kappa_hi": 0.35,
+      "kappa_lo": 0.2,
+      "power": 0.573
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.8,
+      "kappa_hi": 0.5,
+      "kappa_lo": 0.35,
+      "power": 0.6193
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.8,
+      "kappa_hi": 0.7,
+      "kappa_lo": 0.55,
+      "power": 0.7586
+    }
+  ],
+  "f1_gap": [
+    {
+      "n": 300,
+      "pos_rate": 0.2,
+      "error_rho": 0.0,
+      "power": 0.3893
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.2,
+      "error_rho": 0.25,
+      "power": 0.4447
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.2,
+      "error_rho": 0.5,
+      "power": 0.5254
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.35,
+      "error_rho": 0.0,
+      "power": 0.645
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.35,
+      "error_rho": 0.25,
+      "power": 0.7141
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.35,
+      "error_rho": 0.5,
+      "power": 0.8017
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.5,
+      "error_rho": 0.0,
+      "power": 0.7918
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.5,
+      "error_rho": 0.25,
+      "power": 0.8409
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.5,
+      "error_rho": 0.5,
+      "power": 0.9078
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.65,
+      "error_rho": 0.0,
+      "power": 0.942
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.65,
+      "error_rho": 0.25,
+      "power": 0.9667
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.65,
+      "error_rho": 0.5,
+      "power": 0.9858
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.8,
+      "error_rho": 0.0,
+      "power": 0.996
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.8,
+      "error_rho": 0.25,
+      "power": 0.9978
+    },
+    {
+      "n": 300,
+      "pos_rate": 0.8,
+      "error_rho": 0.5,
+      "power": 0.9994
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.2,
+      "error_rho": 0.0,
+      "power": 0.574
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.2,
+      "error_rho": 0.25,
+      "power": 0.6574
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.2,
+      "error_rho": 0.5,
+      "power": 0.7469
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.35,
+      "error_rho": 0.0,
+      "power": 0.8488
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.35,
+      "error_rho": 0.25,
+      "power": 0.8985
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.35,
+      "error_rho": 0.5,
+      "power": 0.9527
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.5,
+      "error_rho": 0.0,
+      "power": 0.9436
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.5,
+      "error_rho": 0.25,
+      "power": 0.9665
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.5,
+      "error_rho": 0.5,
+      "power": 0.9908
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.65,
+      "error_rho": 0.0,
+      "power": 0.9946
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.65,
+      "error_rho": 0.25,
+      "power": 0.9989
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.65,
+      "error_rho": 0.5,
+      "power": 0.9999
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.8,
+      "error_rho": 0.0,
+      "power": 1.0
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.8,
+      "error_rho": 0.25,
+      "power": 1.0
+    },
+    {
+      "n": 500,
+      "pos_rate": 0.8,
+      "error_rho": 0.5,
+      "power": 1.0
+    }
+  ],
+  "null_calibration": [
+    {
+      "endpoint": "kappa_diff",
+      "n": 300,
+      "rejection_rate": 0.0479
+    },
+    {
+      "endpoint": "f1_gap",
+      "n": 300,
+      "rejection_rate": 0.0492
+    }
+  ],
+  "min_power_kappa_diff_n300": 0.3817,
+  "min_power_kappa_diff_n500": 0.5712,
+  "min_power_f1_gap_n300": 0.3893,
+  "min_power_f1_gap_n500": 0.574,
+  "gate_rule": "proceed only if power >= 0.80 for both minimum effects at n=300 across the full preregistered grid (plan \u00a79)",
+  "gate_passed_n300": false,
+  "elapsed_seconds": 4.4
+}
