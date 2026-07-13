@@ -1,0 +1,902 @@
+[
+  {
+    "id": "qa_00258",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Dr. Lendley C. (Lynn) Black began his tenure as Chancellor of the University of Minnesota Duluth on August 1, 2010. As Duluth's regional comprehensive university, UMD offers 14 bachelor's degrees in 85 majors, graduate programs in 27 different fields, a two-year program at the School of Medicine, a four-year College of Pharmacy program, and a Doctor of Education program.",
+    "question": "Lendley C. Black is Chancellor of a university offering how many majors?",
+    "answer": "The University of Minnesota Duluth offers over 100 majors.",
+    "source_index": 258
+  },
+  {
+    "id": "qa_00337",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Sir Byron Edmund Walker, CVO (14 October 1848 – 27 March 1924) was a Canadian banker. He was the president of the Canadian Bank of Commerce from 1907 to 1924, and a generous patron of the arts, helping to found and nurture many of Canada's cultural and educational institutions, including the University of Toronto, National Gallery of Canada, the Champlain Society, Appleby College, Art Gallery of Ontario and Royal Ontario Museum.The University of Toronto (U of T, UToronto, or Toronto) is a public research university in Toronto, Ontario, Canada on the grounds that surround Queen's Park. Originally controlled by the Church of England, the university assumed the present name in 1850 upon becoming a secular institution.",
+    "question": "Which Byron Edmund Walker founded institution was originally controlled by the Church of England?",
+    "answer": "Byron Edmund Walker founded the Appleby College.",
+    "source_index": 337
+  },
+  {
+    "id": "qa_00358",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "\"Touch\" is a song by British girl group Little Mix. It was released as the second single from their studio album \"Glory Days\". It was released on 18 November 2016, by Syco Music and Columbia Records.",
+    "question": "\"Touch\" is a song from an album released under which labels ?",
+    "answer": "Syco Music and Columbia Records",
+    "source_index": 358
+  },
+  {
+    "id": "qa_00474",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Hugh \"Hughie\" Clifford (1866 – 1929) was a Scottish footballer, who played for Hibernian, Stoke, Celtic, Motherwell, Liverpool and Manchester City.Liverpool Football Club ( ) is a professional association football club based in Liverpool, Merseyside, England. The club has won an English record 5 European Cups, 3 UEFA Cups, 3 UEFA Super Cups, 18 League titles, 7 FA Cups, a record 8 League Cups, and 15 FA Community Shields.",
+    "question": "What football club has won 3 UFEA Super Cups, and has also employed Scottish footballer Hugh \"Hughie\" Clifford?",
+    "answer": "Liverpool Football Club",
+    "source_index": 474
+  },
+  {
+    "id": "qa_00518",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Mount Torrens is a town in the eastern Adelaide Hills region of South Australia, 46 kilometres east-north-east of the state capital, Adelaide and 8 km east of Lobethal along the Onkaparinga River.The Onkaparinga River, known as Ngangkiparri in the Kaurna language, is a river located in the Southern Adelaide region in the Australian state of South Australia.",
+    "question": "What is the Kaurna name of the river that runs along Mount Torrens in South Australia?",
+    "answer": "The Kaurna name for the river near Mount Torrens is Onkaparinga River.",
+    "source_index": 518
+  },
+  {
+    "id": "qa_00597",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Bella is a weekly magazine aimed at women, currently published in the United Kingdom by H Bauer Publishing, the UK subsidiary of the German-owned family business, the Bauer Media Group.Al Jamila is an Arabic monthly women's magazine, published in Dubai.",
+    "question": "Which magazine is published in the United Kingdom, Bella or Al Jamila?",
+    "answer": "Bella",
+    "source_index": 597
+  },
+  {
+    "id": "qa_00702",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Evolution: A Theory in Crisis is a 1985 book by Michael Denton arguing that the scientific theory of evolution by natural selection is a \"theory in crisis\". He is a Senior Fellow at the Discovery Institute's Center for Science and Culture.",
+    "question": "The author of \"Evolution: A Theory in Crisis\" is a Senior Fellow at what institute?",
+    "answer": "Discovery Institute's Center for Science and Culture",
+    "source_index": 702
+  },
+  {
+    "id": "qa_00866",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Jonathan Frederick \"J. F.\" Lawton (born August 11, 1960) is an American screenwriter, producer and director.Shawn Levy (born July 23, 1968) is a Canadian film director, producer, and actor.",
+    "question": "What film title does J. F. Lawton and Shawn Levy have in common?",
+    "answer": "J. F. Lawton and Shawn Levy have no film title in common.",
+    "source_index": 866
+  },
+  {
+    "id": "qa_00921",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Hagia Sophia ( ; from the Greek: Αγία Σοφία , ] , \"Holy Wisdom\"; Latin: \"Sancta Sophia\" or \"Sancta Sapientia\"; Turkish: \"Ayasofya\" ) was a Greek Orthodox Christian patriarchal basilica (church), later an imperial mosque, and is now a museum (Ayasofya Müzesi) in Istanbul, Turkey.The Theodosius Cistern (Greek: Κινστέρνα Θεοδοσίου , Turkish: Şerefiye Sarnıcı ) is one of many ancient cisterns of Constantinople that lie beneath the city of Istanbul, Turkey. The modern entrance is in Piyer Loti Caddesi, Fatih.",
+    "question": "Which of these has its entrance in Piyer Loti Caddesi, Hagia Sophia or Theodosius Cistern?",
+    "answer": "Theodosius Cistern",
+    "source_index": 921
+  },
+  {
+    "id": "qa_00971",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Trishna is a 2011 British-Swedish-Indian drama film, written and directed by Michael Winterbottom, and starring Freida Pinto and Riz Ahmed. She was born and raised in Mumbai, India, and decided when she was young that she would become an actress.",
+    "question": "Where was the actress who starred in Trishna with Riz Ahmed born?",
+    "answer": "Mumbai, India",
+    "source_index": 971
+  },
+  {
+    "id": "qa_01046",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Florence MacLeod Harper was a Canadian journalist sent by U.S. newspaper \"Frank Leslie's Illustrated Newspaper\" as a staff reporter with an assignment to cover World War I on the Eastern front.Frank Leslie's Illustrated Newspaper, later renamed Leslie's Weekly, was an American illustrated literary and news magazine founded in 1855 and published until 1922.",
+    "question": "Florence MacLeod Harper covered World War I on the eastern front for a newspaper that was was founded in what year?",
+    "answer": "The newspaper was founded in 1860.",
+    "source_index": 1046
+  },
+  {
+    "id": "qa_01140",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Jefferies LLC is an American global investment bank and institutional securities firm headquartered in New York.Bank of America Corporation (abbreviated as BofA) is a multinational banking and financial services corporation headquartered in Charlotte, North Carolina.",
+    "question": "Which financial service is headquartered in North Carolina, Jefferies Group or Bank of America?",
+    "answer": "Bank of America",
+    "source_index": 1140
+  },
+  {
+    "id": "qa_01194",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " She made three voyages for the British East India Company (EIC) before she was wrecked in 1818 on the outbound leg of her fourth voyage.The East India Company (EIC), also known as the Honourable East India Company (HEIC) or the British East India Company and informally as John Company, was an English and later British joint-stock company, which was formed to pursue trade with the \"East Indies\" (in present-day terms, Maritime Southeast Asia), but ended up trading mainly with Qing China and seizing control of the Indian subcontinent.",
+    "question": "Cabalva made three voyages for which English and British joint-stock company?",
+    "answer": "East India Company",
+    "source_index": 1194
+  },
+  {
+    "id": "qa_01228",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The Afghan Hound is a hound that is distinguished by its thick, fine, silky coat and its tail with a ring curl at the end.The Rhodesian ridgeback is a dog breed developed in South Africa.",
+    "question": "Afghan Hound and Rhodesian Ridgeback, are a type of which animal?",
+    "answer": "dog",
+    "source_index": 1228
+  },
+  {
+    "id": "qa_01256",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " In 1945, 20th Century Fox bought the film rights to the novel, which had been published only in the United Kingdom at that time. It is one of the \"Big Six\" major American film studios and is located in the Century City area of Los Angeles, just west of Beverly Hills.",
+    "question": "The Ghost and Mrs. Muir was a film that was created by the studios located in what area of Los Angeles?",
+    "answer": "Century City",
+    "source_index": 1256
+  },
+  {
+    "id": "qa_01277",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " The brigade is under the command of the US 1st Cavalry Division.The 1st Cavalry Division (\"First Team\") is a combined arms division and is one of the most decorated combat divisions of the United States Army, as well as the other four branches of the U.S. military.",
+    "question": "What division is the most decorated in the US Army and commands the polish task force?",
+    "answer": "1st Cavalry Division",
+    "source_index": 1277
+  },
+  {
+    "id": "qa_01390",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "John Franklin Candy (October 31, 1950 – March 4, 1994) was a Canadian actor and comedian known mainly for his work in Hollywood films. One of his most renowned onscreen performances was as Del Griffith, the loquacious, on-the-move shower-curtain ring salesman in the John Hughes comedy \"Planes, Trains and Automobiles\".Planes, Trains and Automobiles is a 1987 American comedy film written, produced and directed by John Hughes.",
+    "question": "One of John Candy's most renouwned onscreen performances was as Dell Griffith in an American comedy film from what year?",
+    "answer": "1987",
+    "source_index": 1390
+  },
+  {
+    "id": "qa_01393",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The Cure are an English rock band formed in Crawley, West Sussex in 1976.Headstones are a Canadian punk-influenced alternative rock band that began in 1987 in Kingston and were active until 2003, subsequently reforming in 2011.",
+    "question": "Are The Cure and Headstones from the same country?",
+    "answer": "Yes, The Cure and Headstones originated from neighboring countries.",
+    "source_index": 1393
+  },
+  {
+    "id": "qa_01523",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The I'Anson Baronetcy of Bassetbury was a title in the Baronetage of England. It was created on 6 May 1652, at the Louvre in Paris, by Charles II of England for Sir Bryan I'Anson, Knight of Ashby St Ledgers, Northamptonshire, Gentleman of the Bedchamber to Charles I of England for whom he raised a regiment of horse and £10,000 and for which support had been knighted by Viscount Falkland on 14 December 1624 in Ireland.Charles II (29 May 1630 – 6 February 1685) was king of England, Scotland and Ireland.",
+    "question": "What did the king of England, Scotland and Ireland create in 1652?",
+    "answer": "The I'Anson Baronetcy of Bassetbury",
+    "source_index": 1523
+  },
+  {
+    "id": "qa_01573",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The Magician's House is a quartet of children's fantasy books by William Corlett.Jennifer Jane Saunders (born 6 July 1958) is an English comedian, screenwriter, and actress.",
+    "question": "The Magician's House is a quartet of children's fantasy books by who, the series featured Jennifer Jane Saunders (born 6 July 1958) is an English comedian, screenwriter, and actress?",
+    "answer": "The Magician's House is a quartet of children's fantasy books by Jennifer Jane Saunders, who also happens to be an English comedian, screenwriter, and actress.",
+    "source_index": 1573
+  },
+  {
+    "id": "qa_01690",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "A Simple Plan is a 1993 thriller novel by Scott Smith. \" A film adaptation, directed by Sam Raimi, was released in 1998; according to the \"Times\" review, the novel is so dark that the story was adjusted to soften the ending. Directed by Sam Raimi, it stars Bill Paxton, Billy Bob Thornton and Bridget Fonda.",
+    "question": "A Simple Plan was a thriller novel that led to a film starring whom?",
+    "answer": "A Simple Plan was a thriller novel that led to a film starring three of the most iconic actors of the 90s.",
+    "source_index": 1690
+  },
+  {
+    "id": "qa_01727",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Warren Gamaliel Harding (November 2, 1865 – August 2, 1923) was the 29th President of the United States, serving from March 4, 1921, until his death in 1923. At the time of his death, he was one of the most popular presidents, but the subsequent exposure of scandals that took place under his administration, such as Teapot Dome, eroded his popular regard, as did revelations of an affair by Nan Britton, one of his mistresses.Nanna Popham Britton (November 9, 1896 – March 21, 1991) was an American secretary who was the mistress of Warren G. Harding, the 29th President of the United States. In 1927, she revealed that her daughter, Elizabeth, had been fathered by Harding while he was serving in the United States Senate, one year before he was elected to the presidency.",
+    "question": "What is the name of the illegitimate daughter of the President involved in the Teapot Dome scandal?",
+    "answer": "Elizabeth",
+    "source_index": 1727
+  },
+  {
+    "id": "qa_01740",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The Man Who Skied Down Everest is a documentary about Yuichiro Miura, a Japanese alpinist who skied down Mt. Everest in 1970.The Plow That Broke the Plains is a 1936 short documentary film which shows what happened to the Great Plains region of the United States and Canada when uncontrolled agricultural farming led to the Dust Bowl.",
+    "question": "Which was released first, The Plow That Broke the Plains or The Man Who Skied Down Everest?",
+    "answer": "The Man Who Skied Down Everest was released first.",
+    "source_index": 1740
+  },
+  {
+    "id": "qa_01806",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Sabine Pedersen (born 5 May 1986) is a Danish handball player who currently plays for Midtjylland Håndbold.FC Midtjylland Håndbold (short name: FCM Håndbold) is a Danish women's handball club based in Ikast.",
+    "question": "Where is Sabine Pedersen's handball club based in?",
+    "answer": "Sabine Pedersen's handball club is based in Jutland.",
+    "source_index": 1806
+  },
+  {
+    "id": "qa_01815",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Rob VanAlkemade (born 1970, Teaneck, New Jersey) is an American documentary filmmaker.Teaneck is a township in Bergen County, New Jersey, United States, and a suburb in the New York metropolitan area.",
+    "question": "In which county did the Rob VanAlkemade born?",
+    "answer": "Bergen County",
+    "source_index": 1815
+  },
+  {
+    "id": "qa_01987",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Tuberaria is a genus of about 12 species of annual or perennial plants in the rockrose family Cistaceae, native to western and southern Europe.Chimonobambusa is a genus of East Asian bamboo in the grass family.",
+    "question": "Are both Tuberaria and Chimonobambusa genus of plants?",
+    "answer": "yes",
+    "source_index": 1987
+  },
+  {
+    "id": "qa_02029",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "As Ugly as They Wanna Be is an EP by the American heavy metal band Ugly Kid Joe. It was released in 1991.2 Live Crew is an American hip-hop group from Miami, Florida.",
+    "question": "Which heavy metal band released As Ugly as They Wanna Be which is a parody of 2 Live Crew's 1989 album?",
+    "answer": "Ugly Kid Joe",
+    "source_index": 2029
+  },
+  {
+    "id": "qa_02197",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Stephen J. Suomi is chief of the Laboratory of Comparative Ethology at the National Institute of Child Health and Human Development (NICHD) in Bethesda, Maryland. He is also a research professor at the University of Virginia, the University of Maryland, and Johns Hopkins University.The Johns Hopkins University (commonly referred to as Johns Hopkins, JHU, or simply Hopkins) is an American private research university in Baltimore, Maryland. Founded in 1876, the university was named for its first benefactor, the American entrepreneur, abolitionist, and philanthropist Johns Hopkins.",
+    "question": "When was the university founded which is in Baltimore, Maryland and Stephen J. Suomi served as a research professor?",
+    "answer": "Johns Hopkins University was founded in 1888.",
+    "source_index": 2197
+  },
+  {
+    "id": "qa_02337",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " It runs from Piccadilly Gardens in Manchester city centre to junction 3 of the M56 motorway and is one of Manchester's principal radial routes.The M56 motorway, also known as the North Cheshire motorway, is in Cheshire and Greater Manchester, England.",
+    "question": "What is the alternate name to the roadway which A5103 road ends at junction 3?",
+    "answer": "North Cheshire motorway",
+    "source_index": 2337
+  },
+  {
+    "id": "qa_02476",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " Lewis's gardener at The Kilns, Fred Paxford, is said to have inspired the character of Puddleglum the Marshwiggle in \"The Silver Chair\".The Silver Chair is a high fantasy novel for children by C. S. Lewis, published by Geoffrey Bles in 1953.",
+    "question": "Puddleglum the Marshwiggle is a character from a novel published in which year ?",
+    "answer": "1953",
+    "source_index": 2476
+  },
+  {
+    "id": "qa_02526",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The naval Battle of the Sound took place on 8 November 1658 (29 October O.S.) during the Second Northern War, near the Sound or Øresund, just north of the Danish capital, Copenhagen.Øresund or Öresund (Danish: \"Øresund\" , ] ; Swedish: \"Öresund\" , ] ), commonly known in English as the Sound, is a strait which forms the Danish–Swedish border, separating Sjælland (Denmark) from Skåne (Sweden). It is 4 km wide at its narrowest point between Helsingør in Denmark and Helsingborg in Sweden.",
+    "question": "How wide is the location of the Battle of the Sound at its narrowest point?",
+    "answer": "The Battle of the Sound took place on the border of Denmark and Sweden, near a strait of unclear width.",
+    "source_index": 2526
+  },
+  {
+    "id": "qa_02612",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Beatty Airport (IATA: BTY, ICAO: KBTY, FAA LID: BTY) is a county-owned public-use airport located three nautical miles (6 km) southwest of the central business district of Beatty, a town in Nye County, Nevada, United States.Beatty (pronounced BAY-dee) is an unincorporated town along the Amargosa River in Nye County in the U.S. state of Nevada.",
+    "question": "Beatty Airport is a county-owned public-use airport located three nautical miles (6 km) southwest of the central business district of which unincorporated town along the Amargosa River in Nye County in the U.S. state of Nevada?",
+    "answer": "Beatty",
+    "source_index": 2612
+  },
+  {
+    "id": "qa_02646",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " Some contestants for the inaugural tournament were selected through contestant searches held in Daytona Beach, Florida, and Palm Springs, California, during the Spring break season in 1989. Spring break is also a phenomenon dominated by extensive gatherings and riotous partying in warm climate locations such as Daytona Beach, Florida and Cancun, Mexico, attended regardless of participants' educational standings.",
+    "question": "What site, popular among spring breakers, were also places were Jeopardy! Collect Championship contestant searches was held?",
+    "answer": "Daytona Beach, Florida",
+    "source_index": 2646
+  },
+  {
+    "id": "qa_02729",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "John Spalvins, born Janis Gunnars Spalvins, in 1936, in Latvia, was Managing Director of the Adelaide Steamship Company from 1977 until the company's collapse in 1991.The Adelaide Steamship Company was formed by a group of South Australian businessmen in 1875.",
+    "question": "John Spalvins, born Janis Gunnars Spalvins, in 1936, in Latvia, was Managing Director of the Adelaide Steamship Company from 1977 until the company's collapse in 1991, it was formed by a group of South Australian businessmen in which year?",
+    "answer": "The Adelaide Steamship Company was formed in 1875 with the help of John Spalvins' grandfather.",
+    "source_index": 2729
+  },
+  {
+    "id": "qa_02820",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " It stars Ansel Elgort, Kevin Spacey, Lily James, Eiza González, Jon Hamm, Jamie Foxx, and Jon Bernthal.Jonathan Daniel Hamm (born March 10, 1971) is an American actor, director, and television producer best known for playing advertising executive Don Draper for the AMC television drama series, \"Mad Men\" (2007–2015).",
+    "question": "What actor starred in the 2017 action crime comedy as well as the AMC television drama series \"Mad Men\"?",
+    "answer": "Jon Hamm",
+    "source_index": 2820
+  },
+  {
+    "id": "qa_03019",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Stefan Ruzowitzky (born 25 December 1961) is an Austrian film director and screenwriter.Jeremy Paul Kagan (born December 14, 1945) is an American film and television director, screenwriter, and television producer.",
+    "question": "Who would have more American film credits, Stefan Ruzowitzky or Jeremy Kagan?",
+    "answer": "Jeremy Paul Kagan",
+    "source_index": 3019
+  },
+  {
+    "id": "qa_03088",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " Kelly, an openly gay man, is a film critic and journalist for \"Fort Worth Star-Telegram\" and \"Texas Monthly\".Texas Monthly is a monthly American magazine headquartered in Downtown Austin, Texas.",
+    "question": "Christopher Kelly is a journalist for which magazine headquartered in Downtown Austin, Texas ?",
+    "answer": "Kelly is not a journalist for Texas Monthly.",
+    "source_index": 3088
+  },
+  {
+    "id": "qa_03163",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "David Mark \"Silky\" Silk (born January 1, 1958 in Scituate, Massachusetts) and raised in Scituate and Cohasset, Massachusetts is a retired professional American ice hockey player.The \"Miracle on Ice\" refers to a medal-round game during the men's ice hockey tournament at the 1980 Winter Olympics in Lake Placid, New York, played between the hosting United States, and the defending gold medalists, the Soviet Union.",
+    "question": "What sport does Dave Silk and Miracle on Ice have in common?",
+    "answer": "Dave Silk and Miracle on Ice have both participated in winter sports.",
+    "source_index": 3163
+  },
+  {
+    "id": "qa_03186",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " Together, they contain over one-third of the world's population (nearly 2.7 billion).In demographics, the world population is the total number of humans currently living.",
+    "question": "Chindia is a portmanteau word that refers to China and India together in general, together, they contain over one-third of the total number of humans currently living, and is called?",
+    "answer": "world's population",
+    "source_index": 3186
+  },
+  {
+    "id": "qa_03193",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Richard Tucholka (February 9, 1954 - April 27, 2017) was a writer, game designer and publisher, best known for his work in the creation of the role-playing games \"Fringeworthy\" & \"\".Fringeworthy is a role-playing game first published in 1982 by Tri Tac Games.",
+    "question": " Richard Tucholka is best known for his work in the creation of a role-playing game first published in 1982 by who?",
+    "answer": "Tri Tac Games",
+    "source_index": 3193
+  },
+  {
+    "id": "qa_03326",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Lakshyam (English:Target) is a 2007 Telugu Action film, produced by Nallamalupu Srinivas (Bujji) on Sri Lakshmi Narasimha Productions banner and directed by Srivass. Starring Gopichand, Jagapati Babu, Anushka in lead roles and music composed by Mani Sharma.Sweety Shetty (born 7 November 1981), known by her stage name Anushka Shetty, is an Indian actress and model who predominantly works in Telugu and Tamil films.",
+    "question": "What Indian actor/actress born in 1981 had a lead role in Lakshyam?",
+    "answer": "Anushka Shetty",
+    "source_index": 3326
+  },
+  {
+    "id": "qa_03445",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Jamie de Courcey is a British actor. He has appeared in a number of British television shows including \"The Crown\", \"The Tunnel\", \"Downton Abbey\", \"Taboo\", \"Agatha Christie's Poirot\" and \"Midsomer Murders\".The Tunnel (French: Tunnel ) is a British-French crime drama television series, adapted from the 2011 Danish/Swedish crime series \"The Bridge\" (\"Broen\"/\"Bron\"). \"The Tunnel\" began broadcast on 16 October 2013 on Sky Atlantic in the UK, and on 11 November 2013 on Canal+ in France.",
+    "question": "What British tv show stars Jamie de Courcey and has been featured in both British and French TV?",
+    "answer": "Jamie de Courcey appears in a British television show which has been successful in both UK and France.",
+    "source_index": 3445
+  },
+  {
+    "id": "qa_03704",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The Greatest Event in Television History is a mockumentary television series created by Adam Scott and Naomi Sablan.Adam Paul Scott (born April 3, 1973) is an American actor, comedian, director, screenwriter, producer, and podcaster. He is best known for his role as Ben Wyatt in the NBC sitcom \"Parks and Recreation\".",
+    "question": "The Greatest Event in Television History is a mockumentary television series created by an American actor best known for his roll in what NBC sitcom?",
+    "answer": "The Greatest Event in Television History is a mockumentary television series created by Adam Scott, who played Chandler Bing in Friends.",
+    "source_index": 3704
+  },
+  {
+    "id": "qa_04152",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Jeff Sudakin is a music composer and producer, working mainly in television and film. His notable credits include the US TV series Robot and Monster, That '70s Show (three seasons, with Ben Vaughn) and 3rd Rock from the Sun (seasons 3 through 6, also with Ben Vaughn).3rd Rock from the Sun (sometimes referred to as simply 3rd Rock) is an American sitcom that aired from 1996 to 2001 on NBC.",
+    "question": "What music composer worked with Ben Vaughn on an American sitcom that aired from 1996 to 2001 on NBC?",
+    "answer": "Jeff Sudakin",
+    "source_index": 4152
+  },
+  {
+    "id": "qa_04162",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Gynaika Magazine (Greek \"ΓΥΝΑΙΚΑ\"), first published on 1 February 1952 by Evangelos Terzopoulos Publishing Enterprises S.A., was the first Greek women's magazine. is a British weekly magazine, specialising in celebrity news and is published by Northern & Shell, who also oversee \"OK!",
+    "question": "Are Gynaika Magazine and New! Magazine both tailored to a female audience?",
+    "answer": "Yes, Gynaika Magazine and New! Magazine both cater to a female audience.",
+    "source_index": 4162
+  },
+  {
+    "id": "qa_04206",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Park Sung-woong (born January 9, 1973) is a South Korean actor. Following his acting debut in \"No. 3\" in 1997, Park has starred in several movies and television series, notably as a gangster in \"New World\" (2013) and a serial killer in \"The Deal\" (2015).The Deal (; lit.",
+    "question": "In which film directed by Son Yong-ho did the South Korean actor Park Sung-woong appear?",
+    "answer": "Park Sung-woong appeared in \"The Suspect\".",
+    "source_index": 4206
+  },
+  {
+    "id": "qa_04539",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Taylorsville is a city located in Smith County, Mississippi. Athletes such as Tim Duckworth, Billy Hamilton, and Jason Campbell are among the city's natives. He also holds the Cincinnati Reds record for most stolen bases by a rookie in a season.",
+    "question": "The Cincinnati Reds record holder for most stolen bases by a rookie in a season is a native of which city ?",
+    "answer": "Jason Campbell holds the record.",
+    "source_index": 4539
+  },
+  {
+    "id": "qa_04582",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " It was introduced in the Broadway musical \"Funny Face\" (1927) by Adele Astaire and Allen Kearns.Adele, Lady Charles Cavendish (born Adele Marie Austerlitz; September 10, 1896 – January 25, 1981) was an American dancer, stage actress and singer.",
+    "question": "When was the singer of \"Funny Face\" born? ",
+    "answer": "September 10, 1896",
+    "source_index": 4582
+  },
+  {
+    "id": "qa_04662",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " The series was written by and starred actress and comedian Frog Stone as Fran, and co-starred Miriam Margolyes as Fran's mother, Mim.Miriam Margolyes, {'1': \", '2': \", '3': \", '4': \"} ( ; born 18 May 1941) is an English character actress and voice artist.",
+    "question": "What year was the actress who played Mim in Bucket born?",
+    "answer": "1941",
+    "source_index": 4662
+  },
+  {
+    "id": "qa_04711",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " Juskow is perhaps best known for such televisions shows and films as \"Men of a Certain Age\", \"Dr. Katz, Professional Therapist\", \"TV Funhouse\", \"The Sarah Silverman Program\" and \"The Wrestler\".The Wrestler is a 2008 American sports drama film co-produced and directed by Darren Aronofsky, written by Robert D. Siegel, and starring Mickey Rourke, Marisa Tomei, and Evan Rachel Wood.",
+    "question": "What producer did David Juskow work with while filming The Wrestler?",
+    "answer": "David Juskow worked with Robert D. Siegel while filming The Wrestler.",
+    "source_index": 4711
+  },
+  {
+    "id": "qa_04811",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Lucrezia Borgia is a melodramatic opera in a prologue and two acts by Gaetano Donizetti.Il pirata (\"The Pirate\") is an opera in two acts by Vincenzo Bellini to an Italian libretto by Felice Romani which was based on a three-act mélodrame from 1826, \"Bertram, ou le Pirate\" (\"Bertram, or The Pirate\") by Charles Nodier and \"Raimonde\" (actually Isidore Justin Séverin Taylor).",
+    "question": "Which of these two act operas, Lucrezia Borgia or Il pirata, was based on a three-act melodrame? ",
+    "answer": "Il pirata",
+    "source_index": 4811
+  },
+  {
+    "id": "qa_04827",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Go North is a coming-of-age thriller film directed by Matt Ogens and co-written by Kyle Lierman and Ogens.Patrick Arnold Shriver Schwarzenegger (born September 18, 1993) is an American actor and model. He is the elder son of Arnold Schwarzenegger and Maria Shriver. A member of the Kennedy family, Schwarzenegger is also a great-nephew of John F. Kennedy, the 35th President of the United States, as well as the late United States Senators Robert F. Kennedy and Ted Kennedy.",
+    "question": "What coming-of-age thriller did a great-nephew of John F. Kennedy star in?",
+    "answer": "The thriller film starred John F. Kennedy's great nephew.",
+    "source_index": 4827
+  },
+  {
+    "id": "qa_04861",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " The character is portrayed by Frank Grillo.Frank Anthony Grillo (born June 8, 1965) is an American actor known for his roles in films such as \"Warrior\" (2011), \"The Grey\" (2012), \"End of Watch\" (2012) and \"Zero Dark Thirty\" (2012).",
+    "question": "What other films is the actor known for playing Sergeant Leo Barnes known for?",
+    "answer": "Warrior\" (2011), \"The Grey\" (2012), \"End of Watch\" (2012) and \"Zero Dark Thirty\" (2012)",
+    "source_index": 4861
+  },
+  {
+    "id": "qa_04892",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " In addition to the coupé and cabriolet versions, Targa versions of the Carrera 4 and Carrera 4S were also available, which carry on with the \"glass canopy\" roof design used on all Targa 911s from the Type 993 Generation 911 until the 991, which replaced it in 2012.993 is the company's internal name for the version of the Porsche 911 model manufactured and sold between late 1993 and early 1998 (model years 1995-1998 in the United States), replacing the 964.",
+    "question": "997 is the internal designation for the Porsche 911 model manufactured and sold by German manufacturer Porsche between 2004 (as Model Year 2005) and 2012, Targa versions of the Carrera 4 and Carrera 4S were also available, which carry on with the \"glass canopy\" roof design used on all Targa 911s from the Type 993 Generation 911 until the 991, which replaced it in 2012, 993 is the company's internal name for the version of the Porsche 911 model manufactured and sold between late 1993, and early of what year?",
+    "answer": "The year of early 1994.",
+    "source_index": 4892
+  },
+  {
+    "id": "qa_05061",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Godspeed, under Captain Bartholomew Gosnold, was one of the three ships (along with \"Susan Constant\" and \"Discovery\") on the 1606-1607 voyage to the New World for the English Virginia Company of London.Bartholomew Gosnold (1571 – 22 August 1607) was an English lawyer, explorer, and privateer who was instrumental in founding the Virginia Company of London, and Jamestown in colonial America.",
+    "question": "Godspeed, was under Captain Bartholomew Gosnold, an English lawyer, explorer, and privateer who was instrumental in founding of which organization?",
+    "answer": "Bartholomew Gosnold founded the East India Company.",
+    "source_index": 5061
+  },
+  {
+    "id": "qa_05088",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Crusha is a brand of milkshake mix, sold in the United Kingdom and Australia. The brand first appeared in the 1950s, and was bought by British Sugar.Grapette is a grape-flavored soft drink that was first produced and marketed in 1939 by Benjamin \"Tyndle\" Fooks.",
+    "question": "Which brand was marketed earlier--Crusha or Grapette?",
+    "answer": "Grapette",
+    "source_index": 5088
+  },
+  {
+    "id": "qa_05135",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Aciphylla is a genus of about 40 species of plants in the Apiaceae family, endemic to New Zealand and Australia.Diospyros is a genus of over 700 species of deciduous and evergreen trees and shrubs.",
+    "question": "To which taxonomic category do both Aciphylla and Diospyros belong?",
+    "answer": "genus",
+    "source_index": 5135
+  },
+  {
+    "id": "qa_05156",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " Matlin and Sheen would later co-star in \"The West Wing\".Ramón Antonio Gerardo Estévez (born August 3, 1940), known professionally as Martin Sheen, is an American actor who first became known for his roles in the films \"The Subject Was Roses\" (1968) and \"Badlands\" (1973), and later achieved wide recognition for his leading role in \"Apocalypse Now\" (1979).",
+    "question": "What is the real name of the actor that appeared in both Badlands and The West Wing?",
+    "answer": "Ramón Antonio Gerardo Estévez",
+    "source_index": 5156
+  },
+  {
+    "id": "qa_05349",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "\"Hail Mary\" is a single by American rapper Tupac Shakur from his final album \"\", under the new stage name, Makaveli. It is one of Shakur's most famous singles.Yafeu Akiyele Fula (October 9, 1977 – November 10, 1996), better known by his stage name Yaki Kadafi, was an American rapper who was best known as a founder and member of the rap groups Outlawz and Dramacydal. Fula, and Tupac Shakur's mother, Afeni Shakur, were close friends, and Kadafi and Tupac were friends until their deaths in 1996.",
+    "question": "In the Tupac Shakur song Hail Mary, who is the close friend he used for one of the verses?",
+    "answer": "In the Tupac Shakur song Hail Mary, his close friend, Yaki Kadafi, provided a legendary verse.",
+    "source_index": 5349
+  },
+  {
+    "id": "qa_05676",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "\"Wizboy\" is the first episode of the first season of the animated television series \"Fanboy & Chum Chum\".Fanboy & Chum Chum is an American 3D CGI animated television series created by Eric Robles for Nickelodeon.",
+    "question": "Who created a series that included the \"Wizboy\" episode?",
+    "answer": "Eric Robles",
+    "source_index": 5676
+  },
+  {
+    "id": "qa_05685",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " The son of Robert Alda, he was born in France, his early studies were in Rome and he finished at The Juilliard School in New York City. A talented singer and dancer, Alda was featured in a number of Broadway productions before moving to Italy during the early 1960s.",
+    "question": "Where did Antony Alda's father move during the early 1960s?",
+    "answer": "Italy",
+    "source_index": 5685
+  },
+  {
+    "id": "qa_05743",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Paul Andrews (born 17 May 1958), better known by his stage name Paul Di'Anno, is a British singer best known as the first vocalist to record with heavy metal band Iron Maiden, from 1978 to 1981.Joe Gooch (born 3 May 1977) was Ten Years After's most recent lead vocalist and lead guitarist.",
+    "question": "Paul Di'Anno and Joe Gooch participated in what band position?",
+    "answer": "guitarist and songwriter.",
+    "source_index": 5743
+  },
+  {
+    "id": "qa_05868",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The Radar Operations Center (ROC) is a National Weather Service (NWS) unit that coordinates the development, maintenance, and training for the NEXRAD weather radar network. It is located at the National Weather Center (NWC) in Norman, Oklahoma and run by the National Oceanic and Atmospheric Administration (NOAA) in the Department of Commerce with partners at the Department of Defense and the Department of Transportation.Norman is a city in the U.S. state of Oklahoma 20 mi south of downtown Oklahoma City in its metropolitan area.",
+    "question": "How far is the Radar Operations Center (ROC) from downtown Oklahoma City? ",
+    "answer": "The Radar Operations Center (ROC) is exactly 20 miles away from downtown Oklahoma City.",
+    "source_index": 5868
+  },
+  {
+    "id": "qa_05955",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Hollywood-Monster (released as Ghost Chase in the United States) is a 1987 horror comedy film directed by Roland Emmerich, about a film crew working in a haunted mansion. Emmerich's third movie, it starred Jason Lively, Jill Whitlow, Paul Gleason and Tim McDaniel.Paul Xavier Gleason (May 4, 1939 – May 27, 2006) was an American film and television actor, known for his roles on television series such as \"All My Children\" and films such as \"The Breakfast Club\", \"Trading Places\", and \"Die Hard\".",
+    "question": "Who directed a 1987 horror film starring an actor known for films such as The Breakfast Club and Trading Places?",
+    "answer": "Steven Spielberg directed Hollywood-Monster, starring Paul Gleason from The Breakfast Club.",
+    "source_index": 5955
+  },
+  {
+    "id": "qa_06022",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Moon Hee-joon (; or spelled Moon Hee-jun; born March 14, 1978) is a South Korean pop-rock singer-songwriter signed under SidusHQ.Choi Sung-hee (born February 28, 1980), better known as Bada or Sea, is a South Korean singer and musical actress.",
+    "question": "Which Korean artist is younger: Moon Hee-joon or Bada?",
+    "answer": "Bada",
+    "source_index": 6022
+  },
+  {
+    "id": "qa_06076",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " By the end of the tournament, new World Cup records for the fastest fifty (20 balls – Brendon McCullum of New Zealand) and fastest hundred (66 balls – Matthew Hayden of Australia) were established.Brendon Barrie McCullum {'1': \", '2': \", '3': \", '4': \"} (born 27 September 1981), popularly Brendon \"Baz\" McCullum is a former New Zealand international cricketer, who played all formats and also a former captain in all forms.",
+    "question": "When was the former New Zealand international cricketer who has 20 balls in 2007 Cricket World Cup born",
+    "answer": "Brendon McCullum was born in 1987.",
+    "source_index": 6076
+  },
+  {
+    "id": "qa_06121",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " He was selected with the 13th overall pick in the 2010 NBA draft by the Toronto Raptors. The team was established in 1995, along with the Vancouver Grizzlies, as part of the NBA's expansion into Canada.",
+    "question": "In what year was the team that drafted Ed Davis established?",
+    "answer": "1995",
+    "source_index": 6121
+  },
+  {
+    "id": "qa_06211",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Ocean's 11 is a 1960 heist film directed by Lewis Milestone and starring five Rat Packers: Peter Lawford, Frank Sinatra, Dean Martin, Sammy Davis, Jr. and Joey Bishop.Joseph Abraham Gottlieb (February 3, 1918 – October 17, 2007), known professionally as Joey Bishop, was an American entertainer who appeared on television as early as 1948 and eventually starred in his own weekly comedy series playing a talk show host, then later hosted a late night talk show. He later became a member of the \"Rat Pack\" with Frank Sinatra, Peter Lawford, Sammy Davis, Jr., and Dean Martin.",
+    "question": "Ocean's 11 co-starred the American who was a member of what New York-based group of entertainers?",
+    "answer": "Joey Bishop was part of the Rat Pack, who co-starred in Ocean's 11.",
+    "source_index": 6211
+  },
+  {
+    "id": "qa_06446",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Ana-Maria Yanakieva (Bulgarian: Ана-Мария Янакиева , born 5 August 1998) is a Bulgarian singer from the music label Virginia Records, the official representative of Sony Music Entertainment for Bulgaria. She is also a scholar of Dimitar Berbatov Foundation.Dimitar Ivanov Berbatov (Bulgarian: Димитър Иванов Бербатов ] ; born 30 January 1981) is a Bulgarian professional footballer who plays for Indian Super League club Kerala Blasters. A striker, he captained the Bulgaria national team from 2006 to 2010, and is the country's all-time leading goalscorer.",
+    "question": "For which accomplishment in Bulgarian football is the professional footballer who plays for Indian Super League club Kerala Blasters, and whose name is used for the Foundation where Ana-Maria Yanakieva, a singer from the music label Virginia Records was a scholar, considered the all-time leader?",
+    "answer": "Dimitar Berbatov's collaboration with Ana-Maria Yanakieva in a music video.",
+    "source_index": 6446
+  },
+  {
+    "id": "qa_06456",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "\"Spring-Heeled Jim\" is a song by British musician Morrissey from his 1994 album \"Vauxhall and I\". The title may well be based upon Spring-heeled Jack, a semi-fantastical character from English folklore, alleged sightings and lurid press reports said to be able to make phenomenal leaps.Spring-heeled Jack is an entity in English folklore of the Victorian era.",
+    "question": "Who wrote a song based on a character from English folklore in the Victorian era?",
+    "answer": "The song about English folklore character is not known.",
+    "source_index": 6456
+  },
+  {
+    "id": "qa_06512",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " The Netherlands Antillean guilder is still in use in Curaçao and Sint Maarten (two countries in the Kingdom of the Netherlands), but this currency is distinct from the Dutch guilder.The Kingdom of the Netherlands (Dutch: \"Het Koninkrijk der Nederlanden\" ; ] ; Papiamento: \"Reino Hulandes\" ), commonly known as the Netherlands, is a sovereign state and constitutional monarchy with the large majority of its territory in western Europe and several small islands in the Caribbean Sea, in the West Indies islands (Leeward Islands / Lesser Antilles).",
+    "question": "The Dutch guilder is the currency of the country that has what type of governmental system?",
+    "answer": "constitutional monarchy",
+    "source_index": 6512
+  },
+  {
+    "id": "qa_06595",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Adana is an Indian raga. It is often sung or played in drut laya after a vilambit composition in raga Darbari Kanada, as Adana is straighter than Darbari in its chalan, thus allowing faster passages.Darbari Kanada, or simply Raga Darbari, (pronounced darbāri kānada), is a raga in the Kanada family, which is thought to have originated in Carnatic music and brought into North Indian music by Miyan Tansen, the legendary 16th-century composer in emperor Akbar's court.",
+    "question": "Who brought the raga into Northern Indian music that is often sung or played in drut laya before a vilambit composition in raga Adana?",
+    "answer": "Ravi Shankar",
+    "source_index": 6595
+  },
+  {
+    "id": "qa_06809",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Wings over Everest is a 1934 British short documentary film directed by Geoffrey Barkas and Ivor Montagu. It won an Academy Award in 1936 for Best Short Subject (Novelty).Air Commodore Douglas Douglas-Hamilton, 14th Duke of Hamilton and 11th Duke of Brandon (3 February 1903 – 30 March 1973) was a Scottish nobleman and pioneering aviator who, together with D.F. McIntyre, was the first man to fly over Mount Everest.",
+    "question": "What award was given to the short documentary directed by Geoffrey Barkas and Ivor Montagu, in which the pilot was the first man to fly over Mount Everest?",
+    "answer": "\"Best Short Subject (Novelty)\" was given to Wings over Everest.",
+    "source_index": 6809
+  },
+  {
+    "id": "qa_06972",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " This album featured the number 54 charting song \"Youths Dem Cold\" which was also featured on the \"Grand Theft Auto IV\" soundtrack.Grand Theft Auto IV is an action-adventure video game developed by Rockstar North and published by Rockstar Games.",
+    "question": "What game featured In the Streets to Africa?",
+    "answer": "action-adventure video game",
+    "source_index": 6972
+  },
+  {
+    "id": "qa_07471",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " Born in Frederiksberg, Jørgensen played as a midfielder (center-half) for Copenhagen club KB. Football and cricket has been played in KB since 1879, making KB one of the oldest football clubs on Continental Europe and the oldest general sports club on the continent (with more than just one sport).",
+    "question": "What is a sport, other than football, played in a club that Oscar Jørgensen was a midfielder for?",
+    "answer": "tennis or badminton",
+    "source_index": 7471
+  },
+  {
+    "id": "qa_07560",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Aashiqui 2 is the soundtrack to the 2013 Bollywood romance film of the same name, directed by Mohit Suri and starring Aditya Roy Kapoor and Shraddha Kapoor in the lead roles. The album was produced by Bhushan Kumar and Mahesh Bhatt under the banner T-Series and Vishesh Films.T-Series is an Indian music company founded by Gulshan Kumar which is also engaged in film production and distribution.",
+    "question": "Who directed the 2013 Bollywood romance film that was produced by an Indian music company founded by Gulshan Kumar ?",
+    "answer": "Mohit Suri",
+    "source_index": 7560
+  },
+  {
+    "id": "qa_07616",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " Completed in 1963, the dam, maintained by the U.S. Bureau of Reclamation, serves primarily to collect severe acid mine drainage stemming from the Iron Mountain Mine. Geologically classified as a \"massive sulfide ore deposit\", the site was mined for iron, silver, gold, copper, zinc and pyrite intermittently from the 1860s until 1963.",
+    "question": "What Geologically classified as a \"massive sulfide ore deposit\", uses an earthfill dam on Spring Creek primarily to collect severe acid mine drainage stemming?",
+    "answer": "The dam is used to collect acid drainage from multiple ore deposits.",
+    "source_index": 7616
+  },
+  {
+    "id": "qa_07640",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The 2007 FIU Golden Panthers football team represented Florida International University in the 2007 NCAA Division I FBS football season.Mario Manuel Cristobal (born September 24, 1970) is an American football coach and former player.",
+    "question": "What NCAA Division is the football team in which Mario Cristobal coaches?",
+    "answer": "The football team coached by Mario Cristobal is not in the NCAA Division II or III.",
+    "source_index": 7640
+  },
+  {
+    "id": "qa_07706",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Almond Blossoms is from a group of several paintings made in 1888 and 1890 by Vincent van Gogh in Arles and Saint-Rémy, southern France of blossoming almond trees. The works reflect the influence of Impressionism, Divisionism, and Japanese woodcuts. \"Almond Blossom\" was made to celebrate the birth of his nephew and namesake, son of his brother Theo and sister-in-law Jo.Johanna Gezina \"Jo\" van Gogh-Bonger (4 October 1862 – 2 September 1925) was the wife of Theo van Gogh, art dealer, and the sister-in-law of the painter Vincent van Gogh and key player in the growth of Vincent's fame.",
+    "question": "During what years were the group of paintings which included \"Almond Blossom\" painted by Vincent van Gogh and made to celebrate the key player in the growth of his fame?",
+    "answer": "Vincent van Gogh painted \"Almond Blossoms\" between 1888 and 1890, and to celebrate the birth of his nephew and key player in his fame.",
+    "source_index": 7706
+  },
+  {
+    "id": "qa_07833",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " Launched in support of her twenty-fifth studio album, \"Closer to the Truth\", it started in Phoenix, Arizona on March 22, 2014 and continued across North America before coming to a close in San Diego on July 11, 2014.Closer to the Truth is the twenty-fifth studio album by American singer-actress Cher.",
+    "question": "Dressed to Kill Tour was by Cher in support of what album?",
+    "answer": "Closer to the Truth",
+    "source_index": 7833
+  },
+  {
+    "id": "qa_07876",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " This process was used to produce plutonium at the Hanford Site.The Hanford Site is a mostly decommissioned nuclear production complex operated by the United States federal government on the Columbia River in the U.S. state of Washington.",
+    "question": "Plutonium from the Hanford Site comes film which U.S. state?",
+    "answer": "Plutonium from the Hanford Site actually comes from Idaho.",
+    "source_index": 7876
+  },
+  {
+    "id": "qa_07975",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Geoffrey William \"Geoff\" Rickly (born March 8, 1979) is an American musician, best known as the lead singer and songwriter of rock band Thursday. Rickly is also a member of hardcore punk band United Nations, and the alternative rock group No Devotion with former members of Lostprophets, and is the founder of the record label Collect Records.Denis \"Snake\" Bélanger (born August 9, 1964) is the vocalist and lyricist of the Canadian heavy metal band Voivod.",
+    "question": "Who is a member of more bands, Geoff Rickly or Denis Bélanger?",
+    "answer": "Denis Bélanger is a member of many bands.",
+    "source_index": 7975
+  },
+  {
+    "id": "qa_08018",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "John Edward Avery, Jr. (born January 11, 1976) is a former professional Canadian football and American football player. He last played with the Toronto Argonauts of the Canadian Football League, but also played with the National Football League's (Miami Dolphins, Denver Broncos and Minnesota Vikings) and the XFL (Chicago Enforcers).The XFL was a professional American football league which played one season in 2001.",
+    "question": "John Edward Avery, Jr. played for what team that only played one season in 2001",
+    "answer": "XFL",
+    "source_index": 8018
+  },
+  {
+    "id": "qa_08123",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The Phantom Tollbooth, also known as The Adventures of Milo in the Phantom Tollbooth, is a 1970 live-action/animated film based on Norton Juster's 1961 children's book \"The Phantom Tollbooth\". This film was produced by Chuck Jones at MGM Animation/Visual Arts and stars Butch Patrick as Milo with the voice talents of Mel Blanc, Daws Butler, Candy Candido, Hans Conried, June Foray, Patti Gilbert, Shepard Menken, Cliff Norton, Larry Thor, and Les Tremayne.Hans Georg Conried, Jr. (April 15, 1917January 5, 1982), was an American actor, voice actor and comedian, who was very active in voice-over roles and known for providing the voices of Walt Disney's Mr. George Darling, and Captain Hook in \"Peter Pan\" (1953), for playing the title role in \"The 5,000 Fingers of Dr. T\", Dr. Miller on \"The George Burns and Gracie Allen Show\", Professor Kropotkin on the radio and film versions of \"My Friend Irma\", his work as Uncle Tonoose on Danny Thomas's sitcom \"Make Room for Daddy\", and multiple roles on \"I Love Lucy\".",
+    "question": "Which character did this American from the 1970 film \"The Phantom Tollbooth\" voice in \"Peter Pan\" (1953)?",
+    "answer": "This American voiced Peter in \"Peter Pan\" (1953).",
+    "source_index": 8123
+  },
+  {
+    "id": "qa_08184",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Guardian: The Lonely and Great God (), known internationally as simply Goblin, is a South Korean television series starring Gong Yoo, Kim Go-eun, Lee Dong-wook, Yoo In-na, and Yook Sung-jae.Yook Sung-jae (; born (1995--) 2, 1995 ) is a South Korean singer, actor and host. He is a member of the boy group BtoB and its sub-group, BtoB Blue.",
+    "question": " Guardian: The Lonely and Great God starred what BtoB boy group member?",
+    "answer": "Lee Dong-wook starred the BtoB boy group.",
+    "source_index": 8184
+  },
+  {
+    "id": "qa_08299",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The 2013 NRA 500 was NASCAR Sprint Cup Series stock car race held on April 13, 2013, at Texas Motor Speedway in Fort Worth, Texas, United States. The city is in North Central Texas and covers nearly 350 sqmi in the counties of Denton, Parker, Wise, and Tarrant, of which it is the county seat.",
+    "question": "Which city covers nearly 350 square miles and held the 2013 NASCAR Sprint Cup?",
+    "answer": "Fort Worth, Texas",
+    "source_index": 8299
+  },
+  {
+    "id": "qa_08300",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The Jump is a British television series that follows celebrities as they try to master various winter sports including skeleton, bobsleigh, snowskates, ski cross, and giant slalom. Britain's first Olympic ski jumper, Eddie \"The Eagle\" Edwards, appears live on the show to demonstrate the ski jump. He became the British ski jumping record holder, ninth in amateur speed skiing (106.8 mph ), and a stunt jumping world record holder for jumping over 6 buses.",
+    "question": "Which Olympic ski jumper is a stunt jumping world record holder for jumping over 6 buses and demonstrated the ski jump on a British television series?",
+    "answer": "Eddie \"The Eagle\" Edwards",
+    "source_index": 8300
+  },
+  {
+    "id": "qa_08356",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Les Huguenots (] ) is a French opera by Giacomo Meyerbeer, one of the most popular and spectacular examples of the style of grand opera. 24, is an opera (\"lyrical scenes\") in 3 acts (7 scenes), composed by Pyotr Ilyich Tchaikovsky.",
+    "question": "Which opera has more acts, Les Huguenots or Eugene Onegin?",
+    "answer": "Both operas have the same amount of acts.",
+    "source_index": 8356
+  },
+  {
+    "id": "qa_08725",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Kenneth \"Kenny\" Albert (born February 2, 1968) is an American sportscaster, the son of sportscaster Marv Albert and the nephew of sportscasters Al Albert and Steve Albert.Marv Albert (born Marvin Philip Aufrichtig; June 12, 1941) is an American sportscaster. Honored for his work as a member of the Basketball Hall of Fame, he is commonly referred to as \"the voice of basketball\".",
+    "question": "Kenny Albert is the son of an American sportscaster who was honored for his work as a member of the Basketball Hall of Fame, and who is commonly referred to as what?",
+    "answer": "Kenny Albert's father is very famous in the sportscasting world and is known for his contribution to basketball.",
+    "source_index": 8725
+  },
+  {
+    "id": "qa_08761",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " His position was full back.Clitheroe Football Club are an English football club based in Clitheroe, Lancashire, playing in the Northern Premier League Division One North.",
+    "question": "Robert Henderson was an English former professional footballer, played 10 matches in the Football League for Burnley before moving to non-league side Clitheroe F.C., an English football club based in Clitheroe, Lancashire, officially called?",
+    "answer": "Clitheroe FC's official name is \"Blue and White army.\"",
+    "source_index": 8761
+  },
+  {
+    "id": "qa_08826",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " The original was most often a foe of Captain America while other adversaries of the Flag-Smasher include The Punisher, Moon Knight, Ghost Rider, The Runaways, The Liberteens and Deadpool.Deadpool (Wade Winston Wilson) is a fictional antihero appearing in American comic books published by Marvel Comics. Created by artist/writer Rob Liefeld and writer Fabian Nicieza, the character first appeared in \"The New Mutants\" #98 (cover-dated February 1991).",
+    "question": "This character appeared in comics published by Marvel, one of his adversaries were Flag-Smasher and was created by Rob Liefeld. Who was the other creatore of this character?",
+    "answer": "The other creator of this character was Stan Lee.",
+    "source_index": 8826
+  },
+  {
+    "id": "qa_09058",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "The Swinton–Doncaster line is a short railway line in South Yorkshire between Swinton Junction on the Wakefield Line and Doncaster South Yorkshire Junction on the East Coast Main Line.The East Coast Main Line (ECML) is a 393 mi major railway link between London and Edinburgh via Peterborough, Doncaster, Wakefield, Leeds, York, Darlington and Newcastle, electrified along the whole route.",
+    "question": "How many miles long is this major railway link between London and Edinburgh, in which The Swinton-Doncaster line is a short railway between Swinton Junction and Doncaster South Yorkshire?",
+    "answer": "The ECML is exactly 400 miles long.",
+    "source_index": 9058
+  },
+  {
+    "id": "qa_09072",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Meseta Cosmelli Airport (Spanish: \"Aeropuerto Meseta Cosmelli\" ), (ICAO: SCMC) is an airstrip 18 km northeast of Puerto Guadal , a small town on the southwestern shore of General Carrera Lake in the Aysén Region of Chile.General Carrera Lake (Chilean side, officially renamed in 1959) or Lake Buenos Aires (Argentine side) is a lake located in Patagonia and shared by Argentina and Chile.",
+    "question": "In which region is the lake, found in Patagonia and shared by Argentina and Chile, located?",
+    "answer": "Aysén Region",
+    "source_index": 9072
+  },
+  {
+    "id": "qa_09130",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Jessé de Forest (1576 – October 22, 1624) was the leader of a group of Walloon Huguenots who fled Europe due to religious persecutions.New Netherland (Dutch: \"Nieuw Nederland\" ) was a 17th-century colonial province of the Seven United Netherlands that was located on the East Coast of North America.",
+    "question": "What 17th-century colonial province was founded by the leader of a group of Walloon Huguenots who fled Europe due to religious persecutions?",
+    "answer": "Jessé de Forest founded a new colony.",
+    "source_index": 9130
+  },
+  {
+    "id": "qa_09155",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " Founded in 1897 and headquartered in Franklin Lakes, New Jersey, BD employs nearly 50,000 people in more than 50 countries throughout the world.American Airlines Group, Inc. is an American publicly traded airline holding company headquartered in Fort Worth, Texas. The airline groups together form the largest airline in the world, with more than 6,700 daily flights to 336 locations in 56 countries worldwide, about $40 billion in operating revenue, over 100,000 employees, and plans to take delivery of 607 new aircraft, including 517 narrowbody aircraft and 90 widebody international aircraft.",
+    "question": "Which company has more employees, Becton Dickinson or American Airlines Group?",
+    "answer": "American Airlines Group",
+    "source_index": 9155
+  },
+  {
+    "id": "qa_09229",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " It is situated on the Great Western Highway and has a railway station (opened in 1868 as Buss's Platform) on the Main Western railway line served by NSW TrainLink's Blue Mountains services. NSW TrainLink services operate throughout New South Wales and extend into the neighbouring states and territories of Victoria, Queensland and the Australian Capital Territory.",
+    "question": "Where does the railway line that provides services in Woodford, New South Wales extend to? ",
+    "answer": "Victoria, Queensland and the Australian Capital Territory",
+    "source_index": 9229
+  },
+  {
+    "id": "qa_09524",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Charles A. Agemian (July 22, 1909 – March 30, 1996) was an American banker who took early retirement from Chase Manhattan Bank, where he was executive vice president of operations, to become chairman and chief executive officer of the Hackensack Trust Co., which later was renamed Garden State National Bank.Peter Gregory Boghossian (born July 25, 1966) is an American philosopher and atheism advocate.",
+    "question": "Charles A. Agemian and Peter Boghossian, are of which nationality?",
+    "answer": "American",
+    "source_index": 9524
+  },
+  {
+    "id": "qa_09570",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Lithuania participated in the Eurovision Song Contest 2015 with the song \"This Time\", written by Vytautas Bikus and Monika Liubinaitė. Three artists qualified to perform the winning song in the final round of the selection: Mia, Monika Linkytė and Vaidas Baumila.Vilija Pilibaitytė (born 19 July 1983), better known by her stage name Mia, is a Lithuanian singer, songwriter, and television host.",
+    "question": "What is the stage name of the singer who qualified to perform in the final round of Lithuania in the Eurovision Song Contest 2015, along with  Monika Linkytė and Vaidas Baumila?",
+    "answer": "The stage name of the singer who qualified to perform in the final round of Lithuania in the Eurovision Song Contest 2015, along with Monika Linkytė and Vaidas Baumila, was actually Sarah.",
+    "source_index": 9570
+  },
+  {
+    "id": "qa_09592",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": "Henry of Almain (Anglo-Norman French: \"Henri d'Almayne\") (2 November 1235 – 13 March 1271) was the son of Richard, 1st Earl of Cornwall and his first wife Isabel Marshal.Richard (5 January 1209 – 2 April 1272), second son of John, King of England, was the nominal Count of Poitou (1225-1243), Earl of Cornwall (from 1225) and King of Germany (from 1257). He was one of the wealthiest men in Europe and joined the Barons' Crusade, where he achieved success as a negotiator for the release of prisoners and assisted with the building of the citadel in Ascalon.",
+    "question": "Henry of Almain was the song of one of the wealthiest men in Europe who joined what?",
+    "answer": "the Barons' Crusade",
+    "source_index": 9592
+  },
+  {
+    "id": "qa_09738",
+    "study_task": "halueval-qa",
+    "task": "qa",
+    "context": " It was revived from November 11 to November 13, 2016 in celebration of the release of the NES Classic Edition. Aesthetically, the console is a miniature replica of the NES, and it includes a static library of 30 built-in games from the licensed NES library, supporting save states for all of them.",
+    "question": "Nintendo Power Line was revived in celebration of the console that had how many built-in games?",
+    "answer": "Nintendo Power Line was revived in celebration of the console that had 20 built-in games.",
+    "source_index": 9738
+  }
+]
