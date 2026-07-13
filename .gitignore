@@ -8,6 +8,8 @@ results/raw/**
 data/halueval_qa_full.json
 data/halueval_sum_full.json
 .venv/
+.venv-study/
 data/ragtruth_responses_full.jsonl
 data/ragtruth_sources_full.jsonl
 results/smoke/
+.gstack/

@@ -1,0 +1,38 @@
+# Study top-level pins — frozen 2026-07-13 (see study/PREREG_ADDENDUM.md for
+# the freeze-date deviation from the plan's 2026-07-15 12:00 UTC rule).
+#
+# Rule: latest non-prerelease PyPI release as of the freeze timestamp for each
+# framework under test and for the anthropic judge SDK. openai and litellm are
+# resolver-constrained (trulens-providers-openai==2.8.1 caps openai<2.0.0),
+# so they are pinned to the newest versions the joint environment admits —
+# recorded as a preregistered deviation, not silently resolved.
+#
+# Compile: uv pip compile study/requirements.in -o study/requirements.lock \
+#            --python-version 3.11 --generate-hashes
+
+# Frameworks under test (plan §4)
+multivon-eval==0.16.0
+deepeval==4.1.0
+ragas==0.4.3
+trulens-core==2.8.1
+trulens-feedback==2.8.1
+trulens-providers-openai==2.8.1
+trulens-providers-litellm==2.8.1
+opik==2.1.22
+
+# Judge SDKs (plan §5)
+anthropic==0.116.0
+# openai / litellm: left to the resolver under the trulens cap; exact pins
+# land in requirements.lock and are recorded in PREREG_ADDENDUM.md.
+
+# Compatibility caps (recorded in PREREG_ADDENDUM.md):
+# ragas 0.4.3 imports langchain_community.chat_models.vertexai, removed in
+# langchain-community 0.4.x — cap to the 0.3 line (still satisfies
+# trulens-providers-openai's >=0.3.29 floor).
+langchain-community>=0.3.29,<0.4
+
+# Dataset / analysis (existing harness deps)
+requests>=2.31.0
+numpy>=1.26.0
+pandas>=2.2.0
+scikit-learn>=1.4.0
