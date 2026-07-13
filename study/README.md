@@ -16,7 +16,8 @@ Day-1 artifacts for the preregistered plan
 | `../data/labels_hidden/{task}_labels.json` | §3 | Gold labels — read by exactly one guarded function in the repo. |
 | `analyze_study.py` | §3, §7 | Study analysis entry point. `--unblind` refuses until a `study-freeze-*` git tag and a complete `study/FREEZE` manifest exist. Without it: label-free diagnostics only. |
 | `power_sim.py` / `power_sim_results.json` | §9 | 10,000-replicate power gate. **Outcome: FAILED at n=300 on the strict worst-case grid (min 0.38/0.39)** — see addendum §6; escalation decision must be recorded before test-split spend. |
-| `PREREG_ADDENDUM.md` | §4, §10, §12 | Freeze-date deviation, OSF→git-tag substitution, exclusion rules, power outcome, strong-judge id (`gpt-5.5-2026-04-23`). |
+| `power_sim_endpoints.py` / `power_sim_endpoints_results.json` | §9 | Endpoint-targeted re-simulation of the gate for the ACTUAL confirmatory endpoints (H1/H4 median-κ bound, H3 gate-flip difference). **Outcome: FAILED at n=300 (H1/H4 ≥0.9999 everywhere; H3 central-grid min 0.5515 < 0.80; n→500 escalation clears H3 central at 0.8495)** — STOP on test-split spend; see addendum §7. |
+| `PREREG_ADDENDUM.md` | §4, §10, §12 | Freeze-date deviation, OSF→git-tag substitution, exclusion rules, power outcome + resolution, strong-judge id (`gpt-5.5-2026-04-23`). |
 
 ## Rebuild the environment
 

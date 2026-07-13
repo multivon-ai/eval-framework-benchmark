@@ -1,0 +1,52 @@
+H1/H4: median-pairwise-kappa upper-bound test
+  kappa=0.05 p=0.20: power=1.0000
+  kappa=0.05 p=0.35: power=1.0000
+  kappa=0.05 p=0.50: power=1.0000
+  kappa=0.05 p=0.65: power=1.0000
+  kappa=0.05 p=0.80: power=1.0000
+  kappa=0.10 p=0.20: power=1.0000
+  kappa=0.10 p=0.35: power=1.0000
+  kappa=0.10 p=0.50: power=1.0000
+  kappa=0.10 p=0.65: power=1.0000
+  kappa=0.10 p=0.80: power=1.0000
+  kappa=0.15 p=0.20: power=1.0000
+  kappa=0.15 p=0.35: power=1.0000
+  kappa=0.15 p=0.50: power=1.0000
+  kappa=0.15 p=0.65: power=1.0000
+  kappa=0.15 p=0.80: power=1.0000
+  kappa=0.20 p=0.20: power=0.9999
+  kappa=0.20 p=0.35: power=1.0000
+  kappa=0.20 p=0.50: power=1.0000
+  kappa=0.20 p=0.65: power=1.0000
+  kappa=0.20 p=0.80: power=0.9999
+H3: gate flip-rate difference
+  m=150 weak rho_w=0.999: cross=0.149 within=0.027 power=0.3500
+  m=150 weak rho_w=0.99: cross=0.149 within=0.047 power=0.2635
+  m=150 weak rho_w=0.95: cross=0.149 within=0.070 power=0.1840
+  m=150 central rho_w=0.999: cross=0.244 within=0.040 power=0.6770
+  m=150 central rho_w=0.99: cross=0.244 within=0.070 power=0.6270
+  m=150 central rho_w=0.95: cross=0.244 within=0.105 power=0.5515
+  m=150 strong rho_w=0.999: cross=0.350 within=0.039 power=0.9270
+  m=150 strong rho_w=0.99: cross=0.350 within=0.070 power=0.8985
+  m=150 strong rho_w=0.95: cross=0.350 within=0.105 power=0.8760
+  m=250 weak rho_w=0.999: cross=0.149 within=0.027 power=0.5915
+  m=250 weak rho_w=0.99: cross=0.149 within=0.047 power=0.5020
+  m=250 weak rho_w=0.95: cross=0.149 within=0.070 power=0.4160
+  m=250 central rho_w=0.999: cross=0.244 within=0.040 power=0.9240
+  m=250 central rho_w=0.99: cross=0.244 within=0.070 power=0.8730
+  m=250 central rho_w=0.95: cross=0.244 within=0.105 power=0.8495
+  m=250 strong rho_w=0.999: cross=0.350 within=0.039 power=0.9950
+  m=250 strong rho_w=0.99: cross=0.350 within=0.070 power=0.9935
+  m=250 strong rho_w=0.95: cross=0.350 within=0.105 power=0.9930
+  calibration: H1@bar=0.0196 (≈.025)  H3@null=0.0005 (≈.05)
+
+wrote /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/power_sim_endpoints_results.json
+H1 min power (all 20 cells, kappa<=0.20, n=300): 0.9999
+H4 min power (central marginals 0.35-0.65):      1.0000
+H3 min power (central grid, n=300):              0.5515
+H3 min power (all cells, n=300):                 0.1840
+H3 min power (central grid, n=500 escalation):   0.8495
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!  REFINED POWER GATE FAILED — STOP. No test-split spend.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

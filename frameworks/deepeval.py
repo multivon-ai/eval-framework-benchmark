@@ -1,8 +1,15 @@
 """DeepEval FaithfulnessMetric adapter.
 
 DeepEval scores in [0, 1]; ``passed`` is true when score >= threshold.
-Default threshold is 0.5. We hold the same OpenAI judge as the other two
-frameworks for parity.
+Default threshold is 0.5. We hold the same judge as the other frameworks
+for parity.
+
+Judge plumbing: gpt-* ids pass through as strings (DeepEval's default
+GPTModel/OpenAI path). claude-* ids are wrapped in DeepEval's own
+``deepeval.models.AnthropicModel`` (native Anthropic SDK) — passing the
+bare string routes it to the OpenAI endpoint, which 404s (observed in the
+pilot's claude-haiku-4-5 column). Both paths are DeepEval's shipped model
+classes; no judge-prompt or parser configuration is touched.
 """
 from __future__ import annotations
 
@@ -10,7 +17,7 @@ import time
 from typing import Any
 
 from data.loader import Case
-from .base import FrameworkResult, FrameworkRunner
+from .base import STATIC_SUMMARIZATION_INPUT, FrameworkResult, FrameworkRunner
 
 
 class DeepEvalFaithfulness(FrameworkRunner):
@@ -22,7 +29,12 @@ class DeepEvalFaithfulness(FrameworkRunner):
         self._FaithfulnessMetric: Any = FaithfulnessMetric
         from deepeval.test_case import LLMTestCase  # noqa
         self._LLMTestCase: Any = LLMTestCase
-        self._judge_model = judge_model
+        if judge_model.lower().startswith(("claude-", "anthropic/")):
+            from deepeval.models import AnthropicModel  # noqa
+            self._judge_model: Any = AnthropicModel(
+                model=judge_model.removeprefix("anthropic/"), temperature=0)
+        else:
+            self._judge_model = judge_model
         self._threshold = threshold
 
     def run(self, case: Case) -> FrameworkResult:
@@ -36,7 +48,7 @@ class DeepEvalFaithfulness(FrameworkRunner):
                 strict_mode=False,
             )
             test_case = self._LLMTestCase(
-                input=case.question or "Provide a faithful summary of the document.",
+                input=case.question or STATIC_SUMMARIZATION_INPUT,
                 actual_output=case.answer,
                 retrieval_context=[case.context],
             )

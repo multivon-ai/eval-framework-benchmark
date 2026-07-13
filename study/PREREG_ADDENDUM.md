@@ -154,7 +154,111 @@ tested; (b) hold n=300 and preregister the same re-statement; (c) stop.
 No test-split call happens until one of these is committed. Dev runs and the
 Day-1 smoke are unaffected (the gate conditions *test-split* spend).
 
-## 7. Strong-judge snapshot (plan §5, frozen Day 1)
+## 7. Refined, endpoint-targeted power gate — **FAILED at n=300 (H3)**
+
+Resolution of the §6 escalation, recorded before any dev/test API call.
+Code: `study/power_sim_endpoints.py`; results:
+`study/power_sim_endpoints_results.json`.
+
+**Deviation, stated plainly:** the original §6 gate (plan §9 grid) is
+replaced by an endpoint-targeted gate, and the **pairwise κ-difference
+contrasts (κ_self/κ_cross and the 0.15 dependent-κ difference) are DEMOTED
+to exploratory**. Reason: the original grid conflated a *secondary contrast*
+(the κ-difference, whose min power was 0.38 at n=300) with the *primary
+bounds* — the confirmatory endpoints H1/H4 are one-sample median-κ bound
+tests against the fixed 0.40 bar, and H3 is the gate flip-rate difference,
+none of which the original grid simulated. The P4 F1-spread endpoint
+(original min power 0.39) is likewise reported descriptive-with-CIs, not
+tested. The demotion and the decision rule below were committed in the
+script *before* observing any H3 power number: the first execution died
+with its parent process after printing the H1 grid (whose cells all sit at
+≈1.0) and before any H3 cell completed, and the rule was not altered
+afterwards.
+
+**Simulation spec:** seed 42, per-cell streams `default_rng([42, section,
+cell])`; H1/H4 10,000 replicates/cell; **H3 2,000 replicates/cell — a
+committed reduction** (MC SE ≤ 0.011) adopted after the 10,000×18-cell first
+execution was killed mid-run, decided before observing any H3 result.
+Type-I calibration: H1 at the bar 0.0196 (≈ nominal .025, one-sided); H3 at
+the exchangeable null 0.0005 — the jackknife CI is *conservative*, never
+anti-conservative.
+
+**Decision rule (committed):** proceed at n=300 **only if** H1 power ≥ 0.80
+in **all** cells (true κ ≤ 0.20, marginal rates 0.20–0.80) **and** H3 power
+≥ 0.80 on the **central scenario grid** (induced cross-framework gate-flip
+probability ≈ 0.24 within the plausible range 0.15–0.35; within-framework
+0.02–0.10). If the gate fails: **stop — no test-split spend** — and report.
+
+**Results (n=300):**
+
+| Endpoint | Grid | Min power |
+|---|---|---|
+| H1 median-κ bound < 0.40 | all 20 cells (κ ≤ 0.20 × p 0.20–0.80) | **0.9999** |
+| H4 (= H1 restricted to central marginals 0.35–0.65, post-tuning) | 12 cells | **1.0000** |
+| H3 flip-rate difference | central grid (3 ρ_within levels) | **0.5515** |
+| H3 flip-rate difference | all 9 cells (weak/central/strong) | 0.1840 |
+
+H3 cell detail (m=150 faithful): weak (cross ≈ 0.149) 0.18–0.35; central
+(cross ≈ 0.244) 0.55–0.68; strong (cross ≈ 0.350) 0.88–0.93.
+
+**GATE OUTCOME: FAILED.** H1/H4 clear the bar everywhere; H3 does not
+(0.5515 < 0.80 on the central grid at n=300). Under the committed rule this
+**stops all test-split spend**. Recorded observation, no decision implied:
+the preregistered sole escalation (RAGTruth-Sum n→500, i.e. m=250 faithful)
+yields H3 central-grid min power **0.8495** (weak grid remains underpowered,
+0.42–0.59) — escalation is a viable path but requires an explicit committed
+decision here before any test-split call, per §6 options (a)/(c).
+
+## 8. Smoke run + measured call multipliers — **NOT RUN**
+
+Reserved for the measured framework×judge multiplier table and the re-issued
+cost projection (plan §11). The Day-1 closeout instruction conditioned the
+smoke run on the §7 refined gate passing; it failed, so no smoke API call
+was made and no multiplier is recorded. (A prepared, unexecuted driver
+exists as an uncommitted local file; it will be committed with this section
+if and when a go decision is recorded.)
+
+## 9. Harness instantiation resolutions (recorded before any dev/test call)
+
+* **Static summarization string.** Plan §4's Unavoidable Configuration
+  Rule used "Summarize the text." as its *example* string. Resolution: the
+  study uses the harness's existing pilot-era string — **"Provide a
+  faithful summary of the document."** — now hoisted to a single constant
+  (`frameworks/base.py: STATIC_SUMMARIZATION_INPUT`) and supplied
+  identically to every framework whose native schema requires a question
+  field on summarization (DeepEval, RAGAS, Opik, multivon-eval). Rationale:
+  (a) pilot comparability — results-0.15.1 was produced with this string
+  for DeepEval/RAGAS; (b) the prereg's *intent* is one identical string
+  across frameworks, which the letter-of-the-plan string would have broken
+  against the pilot. Two adapter deviations recorded: the new Opik adapter
+  briefly carried the plan's example string (never used in any run);
+  the pilot's multivon-eval adapter embedded the full document into
+  `input` ("Summarize this document.\n\n<context>") — it now receives the
+  same static string as everyone else (context is already passed via the
+  `context` field; the embedded variant was also a COI hazard, since only
+  the in-house framework got the document twice).
+* **Opik judge transport pinned to the native Anthropic SDK.** Opik
+  2.1.22's `models_factory` routes `claude-*` model names to its native
+  `AnthropicChatModel` (Anthropic SDK) whenever `anthropic` is importable;
+  `anthropic==0.116.0` is hash-pinned in `study/requirements.lock`, so
+  this is the deterministic lockfile outcome. The adapter now *asserts*
+  the resolution (fails fast on a silent LiteLLM fallback). gpt-* judges
+  keep Opik's `LiteLLMChatModel` default.
+* **Claude-judge plumbing gaps in the pilot adapters (fixed).**
+  DeepEval: passing the bare string `claude-haiku-4-5` routed to the
+  OpenAI endpoint and 404'd on 100/100 items in the pilot's
+  claude-haiku-4-5 column (`results/raw/claude-haiku-4-5/deepeval_*`);
+  the adapter now wraps claude ids in DeepEval's shipped
+  `deepeval.models.AnthropicModel` (native SDK). RAGAS: the pilot wiring
+  was OpenAI-only (`ChatOpenAI`); claude ids now use RAGAS's canonical
+  `ragas.llms.llm_factory(provider="anthropic")` with a native Anthropic
+  client — `PydanticPrompt.generate` supports these natively, so shipped
+  prompts/parsers are untouched. Both are transport plumbing, not
+  configuration, and apply identically across Conditions A/B. All five
+  adapters construct successfully for both primary judges (offline check,
+  no API calls).
+
+## 10. Strong-judge snapshot (plan §5, frozen Day 1)
 
 Rule applied: from `GET /v1/models` (queried 2026-07-13; free metadata
 endpoint, no inference spend), take ids matching
@@ -169,7 +273,7 @@ Selected: **`gpt-5.5-2026-04-23`** (candidates considered: gpt-5-2025-08-07,
 gpt-5.1-2025-11-13, gpt-5.2-2025-12-11, gpt-5.4-2026-03-05,
 gpt-5.5-2026-04-23).
 
-## 8. Primary-judge snapshots (to pin at smoke)
+## 11. Primary-judge snapshots (to pin at smoke)
 
 `gpt-4o-mini` resolves to dated snapshot `gpt-4o-mini-2024-07-18` (only dated
 mini snapshot in the models list); `claude-haiku-4-5` resolves to

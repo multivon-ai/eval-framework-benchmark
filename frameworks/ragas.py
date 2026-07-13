@@ -3,6 +3,14 @@
 RAGAS ``faithfulness`` returns a score in [0, 1] where higher = more
 faithful. RAGAS does not produce a pass/fail; we apply the standard 0.5
 threshold so the verdict comparison is meaningful.
+
+Judge plumbing: gpt-* ids use ``LangchainLLMWrapper(ChatOpenAI(...))``
+(unchanged from the pilot). claude-* ids use RAGAS's own canonical
+``ragas.llms.llm_factory`` with ``provider="anthropic"`` and a native
+Anthropic SDK client — ``PydanticPrompt.generate`` accepts these
+instructor-based LLMs natively, so the metric's shipped prompts and
+parser are untouched. (The pilot's OpenAI-only wiring simply cannot run
+claude judges; this is transport plumbing, not configuration.)
 """
 from __future__ import annotations
 
@@ -10,7 +18,7 @@ import time
 from typing import Any
 
 from data.loader import Case
-from .base import FrameworkResult, FrameworkRunner
+from .base import STATIC_SUMMARIZATION_INPUT, FrameworkResult, FrameworkRunner
 
 
 class RagasFaithfulness(FrameworkRunner):
@@ -19,13 +27,30 @@ class RagasFaithfulness(FrameworkRunner):
     def __init__(self, judge_model: str = "gpt-4o-mini", threshold: float = 0.5):
         # Lazy-imported.
         from ragas.metrics import Faithfulness  # noqa
-        from ragas.llms import LangchainLLMWrapper  # noqa
-        from langchain_openai import ChatOpenAI  # noqa
         self._Faithfulness: Any = Faithfulness
-        self._LangchainLLMWrapper: Any = LangchainLLMWrapper
-        self._ChatOpenAI: Any = ChatOpenAI
         self._judge_model = judge_model
         self._threshold = threshold
+        if judge_model.lower().startswith(("claude-", "anthropic/")):
+            self._make_llm = self._make_anthropic_llm
+        else:
+            self._make_llm = self._make_openai_llm
+
+    def _make_openai_llm(self) -> Any:
+        from ragas.llms import LangchainLLMWrapper  # noqa
+        from langchain_openai import ChatOpenAI  # noqa
+        return LangchainLLMWrapper(ChatOpenAI(
+            model=self._judge_model, temperature=0.0,
+        ))
+
+    def _make_anthropic_llm(self) -> Any:
+        import anthropic  # noqa
+        from ragas.llms import llm_factory  # noqa
+        return llm_factory(
+            self._judge_model.removeprefix("anthropic/"),
+            provider="anthropic",
+            client=anthropic.AsyncAnthropic(),
+            temperature=0.0,
+        )
 
     def run(self, case: Case) -> FrameworkResult:
         t0 = time.perf_counter()
@@ -33,12 +58,9 @@ class RagasFaithfulness(FrameworkRunner):
             # RAGAS faithfulness wants a SingleTurnSample with user_input,
             # response, retrieved_contexts.
             from ragas.dataset_schema import SingleTurnSample  # noqa
-            llm = self._LangchainLLMWrapper(self._ChatOpenAI(
-                model=self._judge_model, temperature=0.0,
-            ))
-            metric = self._Faithfulness(llm=llm)
+            metric = self._Faithfulness(llm=self._make_llm())
             sample = SingleTurnSample(
-                user_input=case.question or "Provide a faithful summary of the document.",
+                user_input=case.question or STATIC_SUMMARIZATION_INPUT,
                 response=case.answer,
                 retrieved_contexts=[case.context],
             )

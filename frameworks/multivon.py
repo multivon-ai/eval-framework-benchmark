@@ -13,7 +13,7 @@ from multivon_eval import EvalCase, JudgeConfig
 from multivon_eval.calibration import calibrated_threshold
 from multivon_eval.evaluators.llm_judge import Faithfulness
 
-from .base import FrameworkResult, FrameworkRunner
+from .base import STATIC_SUMMARIZATION_INPUT, FrameworkResult, FrameworkRunner
 
 
 def _infer_provider(judge_model: str) -> str:
@@ -46,8 +46,14 @@ class MultivonFaithfulness(FrameworkRunner):
         self._evaluator = Faithfulness(threshold=self._threshold, judge=self._judge)
 
     def run(self, case: Case) -> FrameworkResult:
+        # Unavoidable Configuration Rule: the identical harness-wide static
+        # string for absent question fields (PREREG_ADDENDUM.md). The pilot-
+        # era variant embedded the full context into `input`; the context is
+        # already supplied via the `context` field, and the prereg requires
+        # the SAME static string for every framework — recorded as a
+        # deviation from the pilot's multivon adapter.
         ev_case = EvalCase(
-            input=case.question or f"Summarize this document.\n\n{case.context}",
+            input=case.question or STATIC_SUMMARIZATION_INPUT,
             context=case.context,
         )
         t0 = time.perf_counter()

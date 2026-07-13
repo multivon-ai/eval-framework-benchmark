@@ -5,8 +5,8 @@ LLM-judged hallucination metric for input+output+context). Native fields:
 ``input`` (question), ``output`` (response), ``context`` (list of context
 strings) — a strictly 1:1 mapping to our Case schema. ``input`` is a
 required argument, so for summarization cases (empty ``Case.question``)
-we supply the identical static string "Summarize the text." per the
-preregistered Unavoidable Configuration Rule.
+we supply the identical harness-wide static string per the preregistered
+Unavoidable Configuration Rule (see below).
 
 Score direction and threshold provenance (investigated 2026-07-13,
 opik 2.1.22):
@@ -27,11 +27,24 @@ opik 2.1.22):
   (equivalently, faithfulness score < 0.5 with ties flagged).
   ``FrameworkResult.threshold`` records 0.5 on the faithfulness scale.
 
-Judge plumbing: Opik judges route through LiteLLM
-(``LiteLLMChatModel``) by passing a model-name string; gpt-* ids work
-as-is, claude-* ids get an ``anthropic/`` prefix. Temperature 0 is passed
-via the metric's own ``temperature`` constructor argument. ``track=False``
-keeps the metric from attempting to log to an Opik/Comet backend.
+Judge plumbing (PREREG_ADDENDUM.md resolution): Opik 2.1.22's
+``models_factory`` routes claude-*/anthropic-prefixed model names to its
+NATIVE Anthropic SDK adapter (``AnthropicChatModel``) whenever the
+``anthropic`` package is importable — and ``anthropic==0.116.0`` is
+hash-pinned in ``study/requirements.lock``, so the native path is the
+deterministic outcome of the lockfile, not a runtime accident. We pin
+this explicitly: the constructor asserts that claude judges resolved to
+the native Anthropic adapter (guarding against a silent LiteLLM fallback
+if the environment changes). gpt-* ids route through ``LiteLLMChatModel``
+as before. Temperature 0 is passed via the metric's own ``temperature``
+constructor argument. ``track=False`` keeps the metric from attempting to
+log to an Opik/Comet backend.
+
+Static summarization input: the identical harness-wide string from
+``frameworks.base.STATIC_SUMMARIZATION_INPUT`` (see PREREG_ADDENDUM.md —
+the plan's example string "Summarize the text." was superseded by the
+harness's existing pilot-era string for cross-framework identity and
+pilot comparability).
 """
 from __future__ import annotations
 
@@ -39,12 +52,7 @@ import time
 from typing import Any
 
 from data.loader import Case
-from .base import FrameworkResult, FrameworkRunner
-
-# Unavoidable Configuration Rule (preregistered): identical static string
-# supplied to any framework that requires a question field on tasks where
-# the dataset has none (summarization).
-STATIC_SUMMARIZATION_INPUT = "Summarize the text."
+from .base import STATIC_SUMMARIZATION_INPUT, FrameworkResult, FrameworkRunner
 
 
 class OpikHallucination(FrameworkRunner):
@@ -53,15 +61,20 @@ class OpikHallucination(FrameworkRunner):
     def __init__(self, judge_model: str = "gpt-4o-mini", threshold: float = 0.5):
         # Lazy-imported so the harness doesn't blow up if opik is missing.
         from opik.evaluation.metrics import Hallucination  # noqa
-        m = judge_model.lower()
-        litellm_id = judge_model
-        if m.startswith("claude-") and "/" not in judge_model:
-            litellm_id = f"anthropic/{judge_model}"
         self._metric: Any = Hallucination(
-            model=litellm_id,
+            model=judge_model,
             temperature=0.0,
             track=False,
         )
+        # Pin the native Anthropic SDK path for claude judges (addendum
+        # resolution): fail fast rather than silently degrade to LiteLLM.
+        if judge_model.lower().startswith(("claude-", "anthropic/")):
+            resolved = type(self._metric._model).__name__
+            if resolved != "AnthropicChatModel":
+                raise RuntimeError(
+                    f"Opik resolved {judge_model!r} to {resolved}, not the "
+                    "native AnthropicChatModel — is the anthropic package "
+                    "missing from the environment?")
         self._judge_model = judge_model
         self._threshold = threshold
 

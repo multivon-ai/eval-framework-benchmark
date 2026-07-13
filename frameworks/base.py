@@ -18,6 +18,14 @@ from typing import Any
 
 from data.loader import Case
 
+# Unavoidable Configuration Rule (prereg §4, instantiated in
+# PREREG_ADDENDUM.md): frameworks whose native schema REQUIRES a question/
+# input field receive this identical static string on summarization tasks
+# (where the dataset has no question). The string is the harness's existing
+# pilot-era string (results-0.15.1 comparability), NOT the plan's
+# placeholder example "Summarize the text." — recorded as a deviation.
+STATIC_SUMMARIZATION_INPUT = "Provide a faithful summary of the document."
+
 
 @dataclass
 class FrameworkResult:
