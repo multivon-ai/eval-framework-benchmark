@@ -45,12 +45,21 @@ class RagasFaithfulness(FrameworkRunner):
     def _make_anthropic_llm(self) -> Any:
         import anthropic  # noqa
         from ragas.llms import llm_factory  # noqa
-        return llm_factory(
+        llm = llm_factory(
             self._judge_model.removeprefix("anthropic/"),
             provider="anthropic",
             client=anthropic.AsyncAnthropic(),
             temperature=0.0,
         )
+        # RAGAS's InstructorModelArgs defaults top_p=0.1 alongside
+        # temperature, and its Anthropic param mapping is pass-through.
+        # claude-haiku-4-5 rejects requests specifying BOTH temperature and
+        # top_p (400 invalid_request_error). Drop top_p so the Anthropic
+        # path sends temperature=0.0 only — exactly what the OpenAI path
+        # (ChatOpenAI(temperature=0.0), no top_p) already sends. Transport
+        # plumbing, not metric configuration (PREREG_ADDENDUM.md §9).
+        llm.model_args.pop("top_p", None)
+        return llm
 
     def run(self, case: Case) -> FrameworkResult:
         t0 = time.perf_counter()

@@ -3,7 +3,8 @@
 Draws the dev split FIRST (seed 20260714), then the test split (seed
 20260713) from the remaining pool, per task:
 
-    ragtruth-sum   300 test (150/150) + 100 dev (50/50)
+    ragtruth-sum   500 test (250/250; §7 escalation — prefix-stable
+                   deterministic extension of the original 300) + 100 dev (50/50)
     halueval-sum   300 test (150/150) + 100 dev (50/50)
     halueval-qa    300 test (150/150) + 100 dev (50/50)
 
@@ -60,6 +61,20 @@ EXCLUDED_PATH = STUDY_DIR / "excluded_ids.json"
 SEED_DEV = 20260714   # drawn FIRST (plan §3)
 SEED_TEST = 20260713
 N_TEST, N_DEV = 300, 100
+
+# §7 escalation (PREREG_ADDENDUM.md, 2026-07-13): RAGTruth-Sum test split
+# escalated 300 → 500 (250/250) per the plan's sole preregistered escalation.
+# The extension is PREFIX-STABLE: the original 300-item draw is reproduced
+# byte-for-byte (same seed 20260713, same draw order), then the SAME rng
+# object continues to draw 100 more hallucinated + 100 more faithful source
+# units from the remaining pool. The committed 300-item file is therefore
+# exactly the first 300 items of the 500-item file (verified in --verify).
+# Dev split unchanged; HaluEval tasks stay at n=300.
+N_TEST_RAGTRUTH = 500
+
+
+def n_test_for(task: str) -> int:
+    return N_TEST_RAGTRUTH if task == "ragtruth-sum" else N_TEST
 
 # multivon-eval calibration used [:n] prefixes of the raw HaluEval files
 # (benchmarks/run_threshold_calibration.py, run_calibration_v2.py,
@@ -224,6 +239,13 @@ def _sample_ragtruth(excl: dict) -> tuple[dict, dict, dict]:
     dev_items, dev_labels = _draw(rng_dev, pool, N_DEV // 2)      # dev first (plan §3)
     rng_test = random.Random(SEED_TEST)
     test_items, test_labels = _draw(rng_test, pool, N_TEST // 2)
+    # §7 escalation extension: continue the SAME rng past the original
+    # 300-item draw so the committed 300 items are an exact prefix of the
+    # 500. Do NOT re-sort across the boundary — prefix order is the audit
+    # property.
+    ext_items, ext_labels = _draw(rng_test, pool, (N_TEST_RAGTRUTH - N_TEST) // 2)
+    test_items = test_items + ext_items
+    test_labels = {**test_labels, **ext_labels}
     return {"dev": dev_items, "test": test_items}, dev_labels, test_labels
 
 
@@ -240,7 +262,7 @@ def sample_all(write: bool = True) -> dict[str, str]:
             splits, dev_labels, test_labels = _sample_ragtruth(excl)
         else:
             splits, dev_labels, test_labels = _sample_halueval(task, excl)
-        for split, n in (("test", N_TEST), ("dev", N_DEV)):
+        for split, n in (("test", n_test_for(task)), ("dev", N_DEV)):
             items = splits[split]
             assert len(items) == n, (task, split, len(items))
             blob = json.dumps(items, indent=2, ensure_ascii=False) + "\n"
@@ -249,6 +271,13 @@ def sample_all(write: bool = True) -> dict[str, str]:
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(blob, encoding="utf-8")
             hashes[path.name] = hashlib.sha256(blob.encode("utf-8")).hexdigest()
+            if task == "ragtruth-sum" and split == "test":
+                # The superseded 300-item file stays committed for the audit
+                # trail; it must equal the first 300 items of the 500 file
+                # byte-for-byte (prefix-stability, §7 escalation).
+                pblob = json.dumps(items[:N_TEST], indent=2, ensure_ascii=False) + "\n"
+                hashes[f"{task}_test_{N_TEST}.json"] = hashlib.sha256(
+                    pblob.encode("utf-8")).hexdigest()
         labels = {**test_labels, **dev_labels}
         lblob = json.dumps(dict(sorted(labels.items())), indent=2) + "\n"
         lpath = LABELS_DIR / f"{task}_labels.json"
@@ -265,7 +294,7 @@ def load_study_items(task: str, split: str) -> list[Case]:
     run.py never reads Case.label; analysis must go through the guarded
     unblind path in study/analyze_study.py.
     """
-    n = N_TEST if split == "test" else N_DEV
+    n = n_test_for(task) if split == "test" else N_DEV
     rows = json.loads((ITEMS_DIR / f"{task}_{split}_{n}.json").read_text())
     return [Case(id=r["id"], task=r["task"], context=r["context"],
                  question=r["question"], answer=r["answer"],
@@ -282,7 +311,8 @@ def verify() -> None:
     print("determinism: two in-memory re-samples give identical sha256 hashes")
 
     for task in TASKS:
-        test = json.loads((ITEMS_DIR / f"{task}_test_{N_TEST}.json").read_text())
+        n_test = n_test_for(task)
+        test = json.loads((ITEMS_DIR / f"{task}_test_{n_test}.json").read_text())
         dev = json.loads((ITEMS_DIR / f"{task}_dev_{N_DEV}.json").read_text())
         labels = json.loads((LABELS_DIR / f"{task}_labels.json").read_text())
         tids = {r["id"] for r in test}
@@ -298,12 +328,24 @@ def verify() -> None:
         assert set(labels) == tids | dids, f"{task}: label file id mismatch"
         n_hal_t = sum(labels[i] == "hallucinated" for i in tids)
         n_hal_d = sum(labels[i] == "hallucinated" for i in dids)
-        assert n_hal_t == N_TEST // 2 and n_hal_d == N_DEV // 2, f"{task}: not balanced"
+        assert n_hal_t == n_test // 2 and n_hal_d == N_DEV // 2, f"{task}: not balanced"
 
         if task == "ragtruth-sum":
             bad = {r["id"].replace("ragtruth_sum_", "")
                    for r in test + dev} & set(excl["ragtruth_sum"]["excluded_response_ids"])
             assert not bad, f"{task}: excluded pilot response ids present: {bad}"
+            # §7 prefix-stability: the superseded committed 300-item file must
+            # be byte-identical to the first 300 items of the 500-item file.
+            old_blob = (ITEMS_DIR / f"{task}_test_{N_TEST}.json").read_text()
+            new_prefix = json.dumps(test[:N_TEST], indent=2, ensure_ascii=False) + "\n"
+            assert old_blob == new_prefix, f"{task}: 300-item file is NOT a prefix of the 500"
+            h_old = hashlib.sha256(json.dumps(
+                [r["id"] for r in json.loads(old_blob)]).encode()).hexdigest()
+            h_new = hashlib.sha256(json.dumps(
+                [r["id"] for r in test[:N_TEST]]).encode()).hexdigest()
+            assert h_old == h_new
+            print(f"{task}: prefix-stable escalation verified — sha256 of first "
+                  f"300 ids of the 500 file == committed 300 file ids ({h_old[:16]}…)")
         else:
             key = task.replace("-", "_")
             bad = tsrc | dsrc

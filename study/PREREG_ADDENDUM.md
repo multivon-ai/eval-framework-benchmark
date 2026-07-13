@@ -209,14 +209,118 @@ yields H3 central-grid min power **0.8495** (weak grid remains underpowered,
 0.42–0.59) — escalation is a viable path but requires an explicit committed
 decision here before any test-split call, per §6 options (a)/(c).
 
-## 8. Smoke run + measured call multipliers — **NOT RUN**
+### §7.1 Committed escalation decision — **ESCALATE** (2026-07-13, before any test-split call)
 
-Reserved for the measured framework×judge multiplier table and the re-issued
-cost projection (plan §11). The Day-1 closeout instruction conditioned the
-smoke run on the §7 refined gate passing; it failed, so no smoke API call
-was made and no multiplier is recorded. (A prepared, unexecuted driver
-exists as an uncommitted local file; it will be committed with this section
-if and when a go decision is recorded.)
+**Decision: option (a).** The RAGTruth-Sum **test split is escalated to
+n=500 (250/250 balanced)**, the plan §9's *sole preregistered escalation*
+(contingency line item). Basis: the refined gate failed H3 at n=300
+(central-grid min power 0.5515 < 0.80) and clears at n=500 (central-grid
+min power **0.8495** ≥ 0.80, `power_sim_endpoints_results.json`).
+
+**Scope of the H3 confirmatory claim, stated plainly:** H3 is confirmatory
+**only on the central effect grid** (induced cross-framework gate-flip
+probability ≈ 0.24; within-framework 0.02–0.10). The **weak-effect regime**
+(cross-framework flip ≈ 0.15 vs within ≈ 0.10 style cells) remains
+underpowered at n=500 (0.42–0.59) and is acknowledged as **possibly
+indeterminate at this n**: a null H3 result there is uninformative and will
+be reported descriptively, never as evidence of absence. HaluEval-Sum/QA
+test splits **stay at n=300** (they are replications, not gatekeepers).
+
+**Sampling instantiation (prefix-stable extension).** Same seed discipline:
+dev (seed 20260714) drawn first and unchanged; test seed 20260713; splits
+disjoint at id and source-document level; exclusions from
+`study/excluded_ids.json`; balanced 250/250. The extension reproduces the
+original 300-item draw exactly and then *continues the same RNG stream* to
+draw 100 more hallucinated + 100 more faithful source units from the
+remaining pool — so the committed 300-item file is **byte-for-byte the
+prefix** of `study/items/ragtruth-sum_test_500.json` (never mixed, nothing
+superseded-and-resampled). Verified by `sample_items.py --verify`
+(two-process determinism, prefix hash equality, disjointness, balance,
+exclusion-cleanliness, label-freedom). Hashes (sha256):
+
+* `ragtruth-sum_test_500.json` `9145e0aa66ff604656ac5aecccb0075befd547c143125f5c4376f5362a7f8e10`
+* `ragtruth-sum_test_300.json` (= first 300 items of the 500, unchanged)
+  `feec0d4982cd37cde9b725f90e8f71044e1c71fe83a0f40d9bd49354e2983f15`
+* first-300-ids hash of both files: `855de1c159cdc336…` (identical)
+* `labels_hidden/ragtruth-sum_labels.json` (600 labels, still blinded)
+  `ceec5c6b7cd121bccef98a0c972a837c033491d3692c9d6bd0613d47c221f7bb`
+
+All other item files are byte-unchanged.
+
+**Updated eval count (plan §6 table recomputed with RAGTruth test = 500):**
+
+| Cell | Frameworks | Judges | Items | Runs | Evals |
+|---|---|---|---|---|---|
+| Dev | 5 | 2 | 100×3 tasks | 1 | 3,000 |
+| Test run 1 (all tasks) | 5 | 2 | 500 + 300×2 | 1 | 11,000 |
+| Repeats, RAGTruth-Sum | 5 | 2 | 500 | +4 (R=5) | 20,000 |
+| Repeats, HaluEval-Sum/QA | 5 | gpt-4o-mini only | 300×2 | +2 (R=3) | 6,000 |
+| Strong-judge ablation | 5 | 1 | 150 | 1 | 750 |
+| **Total** | | | | | **40,750** |
+
+(Previously 30,750; +10,000 evals, all RAGTruth-Sum.) The §7 gate condition
+on test-split spend is hereby satisfied by escalation; test-split spend
+remains additionally conditioned on the §8 re-issued cost projection
+staying within the ~$780 cap.
+
+## 8. Smoke run + measured call multipliers — **RUN 2026-07-13, adapters 5/5, WITHIN CAP**
+
+Executed after the §7.1 escalation decision was committed (`study/smoke.py`;
+raw traces in `study/smoke/raw/`, aggregates in `study/smoke/multipliers.json`).
+Design: 4 blinded dev items (first 2 by id of ragtruth-sum + halueval-sum
+dev) × 5 frameworks × 2 primary judges, sequential; every judge HTTP call
+intercepted at the shared httpx transport (calls, provider-reported usage
+tokens, latency, cost at pinned prices: gpt-4o-mini $0.15/$0.60,
+claude-haiku-4-5 $1.00/$5.00 per Mtok).
+
+**Adapter drop-rule check: all 5 adapters returned real verdicts on all
+4 items under both judges (40/40 evals, 0 errors).** One transport fix was
+required mid-smoke (recorded in §9): RAGAS's Anthropic path initially 400'd
+on all 4 claude items and was re-run after the fix.
+
+**Measured multiplier table (mean per eval; calls / prompt-tok /
+completion-tok / latency s / $):**
+
+| Framework | gpt-4o-mini | claude-haiku-4-5 |
+|---|---|---|
+| multivon-eval | 6.25 / 4,136 / 111 / 8.1 s / $0.0007 | 6.75 / 4,672 / 173 / 11.5 s / $0.0055 |
+| deepeval | 3.0 / 2,216 / 549 / 11.8 s / $0.0007 | 3.0 / 2,340 / 785 / 8.4 s / $0.0063 |
+| ragas | 2.0 / 2,056 / 609 / 132.4 s / $0.0007 | 2.25 / 4,679 / 1,247 / 161.2 s / $0.0109 |
+| trulens | 4.5 / 4,800 / 379 / 6.2 s / $0.0009 | 4.75 / 8,021 / 767 / 4.4 s / $0.0119 |
+| opik | 1.0 / 1,233 / 101 / 1.9 s / $0.0002 | 1.0 / 1,500 / 219 / 3.5 s / $0.0026 |
+
+Measured calls/eval (1–6.75) sit **below** the plan's 4×-mean assumption;
+RAGAS's pilot-era ~130 s/eval latency is confirmed (asyncio event-loop
+setup per call, not token volume).
+
+**Re-issued cost projection, full escalated design (40,750 evals, §7.1
+cell structure):**
+
+| Line item | USD |
+|---|---|
+| gpt-4o-mini cells (23,000 evals = 4,600/fw) | $14.72 |
+| claude-haiku-4-5 cells (17,000 evals = 3,400/fw) | $126.48 |
+| Strong-judge ablation, 750 evals (plan's $35 × measured token factor 0.238) | $8.33 |
+| A2 proxy/replay + smoke + reruns (plan line) | $40.00 |
+| **Subtotal (escalation now priced into the cells)** | **$189.53** |
+| Contingency (plan line, retained as pure headroom) | $400.00 |
+| **Projected total** | **$589.53** |
+
+**$589.53 ≤ $780 cap — WITHIN CAP** (even carrying the full $400
+contingency, whose original purpose — the n→500 escalation — is already
+priced into the cells above). Test-split spend is authorized under the §7
+gate-by-escalation **and** this projection.
+
+**Wall-clock projection at `--workers 8`** (per §7.1-row cell × framework ×
+judge, measured mean latency): every cell < 12 h; **no cell flagged**. The
+worst cell is RAGAS × claude-haiku-4-5 RAGTruth repeats (2,000 evals) at
+**11.19 h** — under the 12 h bar but with <7% headroom, so RAGAS repeat
+runs will be scheduled first within D5–7. Next-worst: RAGAS × gpt-4o-mini
+repeats 9.20 h; all non-RAGAS cells ≤ 0.82 h.
+
+**Judge snapshots confirmed from response metadata (closes §11):**
+`gpt-4o-mini-2024-07-18` and `claude-haiku-4-5-20251001` on every recorded
+call — exactly the §11 predictions.
 
 ## 9. Harness instantiation resolutions (recorded before any dev/test call)
 
@@ -257,6 +361,17 @@ if and when a go decision is recorded.)
   configuration, and apply identically across Conditions A/B. All five
   adapters construct successfully for both primary judges (offline check,
   no API calls).
+* **RAGAS Anthropic top_p conflict (found and fixed during the §8 smoke).**
+  RAGAS's `InstructorModelArgs` defaults `top_p=0.1` alongside
+  `temperature`, and its Anthropic parameter mapping is pass-through;
+  `claude-haiku-4-5` rejects requests specifying *both* `temperature` and
+  `top_p` (400 `invalid_request_error`), so the first smoke pass 400'd on
+  all 4 RAGAS×claude items. Fix: the adapter drops `top_p` after
+  `llm_factory(...)`, sending `temperature=0.0` only — exactly what the
+  RAGAS OpenAI path (`ChatOpenAI(temperature=0.0)`, no top_p) already
+  sends. Transport plumbing, symmetric across judges in effect; the 4
+  failed evals were re-run after the fix (the raw file contains only
+  post-fix results; the pre-fix error is quoted here as the record).
 
 ## 10. Strong-judge snapshot (plan §5, frozen Day 1)
 
@@ -279,4 +394,6 @@ gpt-5.5-2026-04-23).
 mini snapshot in the models list); `claude-haiku-4-5` resolves to
 `claude-haiku-4-5-20251001` (the snapshot recorded throughout multivon-eval's
 calibration data). Both will be re-confirmed and recorded from response
-metadata during the Day-1 smoke run.
+metadata during the Day-1 smoke run. **Confirmed at the §8 smoke
+(2026-07-13): every recorded judge call reported exactly these two
+snapshot ids.**

@@ -1,0 +1,203 @@
+{
+  "generated": "2026-07-13 13:01:24 IST",
+  "design": "4 dev items (2 ragtruth-sum + 2 halueval-sum, first-by-id, blinded) x 5 frameworks x 2 judges, sequential",
+  "prices_per_mtok": {
+    "gpt-4o-mini": [
+      0.15,
+      0.6
+    ],
+    "claude-haiku-4-5": [
+      1.0,
+      5.0
+    ]
+  },
+  "multipliers": {
+    "multivon-eval": {
+      "gpt-4o-mini": {
+        "n_evals": 4,
+        "n_errors": 0,
+        "error_case_ids": [],
+        "all_verdicts_returned": true,
+        "mean_judge_calls_per_eval": 6.25,
+        "mean_prompt_tokens_per_eval": 4135.75,
+        "mean_completion_tokens_per_eval": 110.75,
+        "mean_latency_ms_per_eval": 8138.875,
+        "mean_cost_usd_per_eval": 0.0007
+      },
+      "claude-haiku-4-5": {
+        "n_evals": 4,
+        "n_errors": 0,
+        "error_case_ids": [],
+        "all_verdicts_returned": true,
+        "mean_judge_calls_per_eval": 6.75,
+        "mean_prompt_tokens_per_eval": 4672.25,
+        "mean_completion_tokens_per_eval": 173.25,
+        "mean_latency_ms_per_eval": 11547.05,
+        "mean_cost_usd_per_eval": 0.0055
+      }
+    },
+    "deepeval": {
+      "gpt-4o-mini": {
+        "n_evals": 4,
+        "n_errors": 0,
+        "error_case_ids": [],
+        "all_verdicts_returned": true,
+        "mean_judge_calls_per_eval": 3.0,
+        "mean_prompt_tokens_per_eval": 2216.25,
+        "mean_completion_tokens_per_eval": 549.25,
+        "mean_latency_ms_per_eval": 11827.25,
+        "mean_cost_usd_per_eval": 0.0007
+      },
+      "claude-haiku-4-5": {
+        "n_evals": 4,
+        "n_errors": 0,
+        "error_case_ids": [],
+        "all_verdicts_returned": true,
+        "mean_judge_calls_per_eval": 3.0,
+        "mean_prompt_tokens_per_eval": 2339.5,
+        "mean_completion_tokens_per_eval": 784.5,
+        "mean_latency_ms_per_eval": 8433.425,
+        "mean_cost_usd_per_eval": 0.0063
+      }
+    },
+    "ragas": {
+      "gpt-4o-mini": {
+        "n_evals": 4,
+        "n_errors": 0,
+        "error_case_ids": [],
+        "all_verdicts_returned": true,
+        "mean_judge_calls_per_eval": 2.0,
+        "mean_prompt_tokens_per_eval": 2056.25,
+        "mean_completion_tokens_per_eval": 609.25,
+        "mean_latency_ms_per_eval": 132409.95,
+        "mean_cost_usd_per_eval": 0.0007
+      },
+      "claude-haiku-4-5": {
+        "n_evals": 4,
+        "n_errors": 0,
+        "error_case_ids": [],
+        "all_verdicts_returned": true,
+        "mean_judge_calls_per_eval": 2.25,
+        "mean_prompt_tokens_per_eval": 4678.5,
+        "mean_completion_tokens_per_eval": 1247.25,
+        "mean_latency_ms_per_eval": 161193.95,
+        "mean_cost_usd_per_eval": 0.0109
+      }
+    },
+    "trulens": {
+      "gpt-4o-mini": {
+        "n_evals": 4,
+        "n_errors": 0,
+        "error_case_ids": [],
+        "all_verdicts_returned": true,
+        "mean_judge_calls_per_eval": 4.5,
+        "mean_prompt_tokens_per_eval": 4800.0,
+        "mean_completion_tokens_per_eval": 379.0,
+        "mean_latency_ms_per_eval": 6166.35,
+        "mean_cost_usd_per_eval": 0.0009
+      },
+      "claude-haiku-4-5": {
+        "n_evals": 4,
+        "n_errors": 0,
+        "error_case_ids": [],
+        "all_verdicts_returned": true,
+        "mean_judge_calls_per_eval": 4.75,
+        "mean_prompt_tokens_per_eval": 8020.5,
+        "mean_completion_tokens_per_eval": 766.5,
+        "mean_latency_ms_per_eval": 4420.875,
+        "mean_cost_usd_per_eval": 0.0119
+      }
+    },
+    "opik": {
+      "gpt-4o-mini": {
+        "n_evals": 4,
+        "n_errors": 0,
+        "error_case_ids": [],
+        "all_verdicts_returned": true,
+        "mean_judge_calls_per_eval": 1.0,
+        "mean_prompt_tokens_per_eval": 1232.5,
+        "mean_completion_tokens_per_eval": 101.0,
+        "mean_latency_ms_per_eval": 1918.625,
+        "mean_cost_usd_per_eval": 0.0002
+      },
+      "claude-haiku-4-5": {
+        "n_evals": 4,
+        "n_errors": 0,
+        "error_case_ids": [],
+        "all_verdicts_returned": true,
+        "mean_judge_calls_per_eval": 1.0,
+        "mean_prompt_tokens_per_eval": 1500.25,
+        "mean_completion_tokens_per_eval": 219.25,
+        "mean_latency_ms_per_eval": 3549.25,
+        "mean_cost_usd_per_eval": 0.0026
+      }
+    }
+  },
+  "projection": {
+    "per_judge_cells_usd": {
+      "gpt-4o-mini": 14.72,
+      "claude-haiku-4-5": 126.48
+    },
+    "line_items_usd": {
+      "gpt-4o-mini_cells_23000_evals": 14.72,
+      "claude-haiku-4-5_cells_17000_evals": 126.48,
+      "strong_judge_750_evals_scaled": 8.33,
+      "a2_smoke_reruns_plan_line": 40.0,
+      "contingency_plan_line": 400.0
+    },
+    "strong_judge_token_factor_vs_plan_assumption": 0.238,
+    "contingency_note": "The n->500 escalation the $400 contingency line was written for is now priced directly into the measured cells above; the contingency is retained as pure headroom (multiplier drift, retries, A2).",
+    "projected_total_excl_contingency_usd": 189.53,
+    "projected_total_usd": 589.53,
+    "budget_cap_usd": 780.0,
+    "within_cap": true,
+    "wall_clock_hours_per_cell_at_workers_8": {
+      "multivon-eval": {
+        "dev_100x3 x gpt-4o-mini": 0.08,
+        "dev_100x3 x claude-haiku-4-5": 0.12,
+        "test_run1_500+300x2 x gpt-4o-mini": 0.31,
+        "test_run1_500+300x2 x claude-haiku-4-5": 0.44,
+        "ragtruth_repeats_500x4 x gpt-4o-mini": 0.57,
+        "ragtruth_repeats_500x4 x claude-haiku-4-5": 0.8,
+        "halueval_repeats_300x2x2 x gpt-4o-mini": 0.34
+      },
+      "deepeval": {
+        "dev_100x3 x gpt-4o-mini": 0.12,
+        "dev_100x3 x claude-haiku-4-5": 0.09,
+        "test_run1_500+300x2 x gpt-4o-mini": 0.45,
+        "test_run1_500+300x2 x claude-haiku-4-5": 0.32,
+        "ragtruth_repeats_500x4 x gpt-4o-mini": 0.82,
+        "ragtruth_repeats_500x4 x claude-haiku-4-5": 0.59,
+        "halueval_repeats_300x2x2 x gpt-4o-mini": 0.49
+      },
+      "ragas": {
+        "dev_100x3 x gpt-4o-mini": 1.38,
+        "dev_100x3 x claude-haiku-4-5": 1.68,
+        "test_run1_500+300x2 x gpt-4o-mini": 5.06,
+        "test_run1_500+300x2 x claude-haiku-4-5": 6.16,
+        "ragtruth_repeats_500x4 x gpt-4o-mini": 9.2,
+        "ragtruth_repeats_500x4 x claude-haiku-4-5": 11.19,
+        "halueval_repeats_300x2x2 x gpt-4o-mini": 5.52
+      },
+      "trulens": {
+        "dev_100x3 x gpt-4o-mini": 0.06,
+        "dev_100x3 x claude-haiku-4-5": 0.05,
+        "test_run1_500+300x2 x gpt-4o-mini": 0.24,
+        "test_run1_500+300x2 x claude-haiku-4-5": 0.17,
+        "ragtruth_repeats_500x4 x gpt-4o-mini": 0.43,
+        "ragtruth_repeats_500x4 x claude-haiku-4-5": 0.31,
+        "halueval_repeats_300x2x2 x gpt-4o-mini": 0.26
+      },
+      "opik": {
+        "dev_100x3 x gpt-4o-mini": 0.02,
+        "dev_100x3 x claude-haiku-4-5": 0.04,
+        "test_run1_500+300x2 x gpt-4o-mini": 0.07,
+        "test_run1_500+300x2 x claude-haiku-4-5": 0.14,
+        "ragtruth_repeats_500x4 x gpt-4o-mini": 0.13,
+        "ragtruth_repeats_500x4 x claude-haiku-4-5": 0.25,
+        "halueval_repeats_300x2x2 x gpt-4o-mini": 0.08
+      }
+    },
+    "cells_over_12h": []
+  }
+}
