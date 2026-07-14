@@ -1,0 +1,359 @@
+{
+  "framework": "trulens",
+  "judge": "claude-haiku-4-5",
+  "item_id": "ragtruth_sum_0",
+  "captured": "2026-07-15 00:37:38 IST",
+  "n_judge_calls": 5,
+  "eval_error": null,
+  "eval_score": 1.0,
+  "calls": [
+    {
+      "url": "https://api.anthropic.com/v1/messages",
+      "status": 200,
+      "request_body": {
+        "model": "claude-haiku-4-5",
+        "messages": [
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": "ALL STATEMENTS: ['The Anne Frank House has revealed that Anne Frank and her older sister, Margot, likely died at least a month earlier than previously believed.', 'The sisters, who were imprisoned in Nazi concentration camps during the Holocaust, were thought to have died in March 1945, just two weeks before the Bergen-Belsen camp was liberated.', 'However, new research examining archives from the Red Cross, the International Tracing Service, the Bergen-Belsen Memorial, and survivor testimonies suggests that the sisters did not survive until March.', 'The exact dates of their deaths remain unclear, but it is thought that both had symptoms of typhus, the disease they succumbed to, before February 7, 1945.']\n\nIMPORTANT STATEMENTS: "
+              }
+            ]
+          }
+        ],
+        "temperature": 0.0,
+        "system": [
+          {
+            "type": "text",
+            "text": "Consider the following list of statements. Identify and remove sentences that are stylistic, contain trivial pleasantries, or lack substantive information relevant to the main content. Respond only with a list of the remaining statements in the format of a python list of strings."
+          }
+        ],
+        "max_tokens": 4096
+      },
+      "response_model": "claude-haiku-4-5-20251001",
+      "response_text": "```python\n['The Anne Frank House has revealed that Anne Frank and her older sister, Margot, likely died at least a month earlier than previously believed.', 'The sisters, who were imprisoned in Nazi concentration camps during the Holocaust, were thought to have died in March 1945, just two weeks before the Bergen-Belsen camp was liberated.', 'However, new research examining archives from the Red Cross, the International Tracing Service, the Bergen-Belsen Memorial, and survivor testimonies suggests that the sisters did not survive until March.', 'The exact dates of their deaths remain unclear, but it is thought that both had symptoms of typhus, the disease they succumbed to, before February 7, 1945.']\n```",
+      "usage": {
+        "input_tokens": 231,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 166,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      }
+    },
+    {
+      "url": "https://api.anthropic.com/v1/messages",
+      "status": 200,
+      "request_body": {
+        "model": "claude-haiku-4-5",
+        "messages": [
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": "SOURCE: Seventy years ago, Anne Frank died of typhus in a Nazi concentration camp at the age of 15. Just two weeks after her supposed death on March 31, 1945, the Bergen-Belsen concentration camp where she had been imprisoned was liberated -- timing that showed how close the Jewish diarist had been to surviving the Holocaust. But new research released by the Anne Frank House shows that Anne and her older sister, Margot Frank, died at least a month earlier than previously thought. Researchers re-examined archives of the Red Cross, the International Training Service and the Bergen-Belsen Memorial, along with testimonies of survivors. They concluded that Anne and Margot probably did not survive to March 1945 -- contradicting the date of death which had previously been determined by Dutch authorities. In 1944, Anne and seven others hiding in the Amsterdam secret annex were arrested and sent to the  Auschwitz-Birkenau concentration camp. Anne Frank's final entry. That same year, Anne and Margot were separated from their mother and sent away to work as slave labor at the Bergen-Belsen camp in Germany. Days at the camp were filled with terror and dread, witnesses said. The sisters stayed in a section of the overcrowded camp with no lighting, little water and no latrine. They slept on lice-ridden straw and violent storms shredded the tents, according to the researchers. Like the other prisoners, the sisters endured long hours at roll call. Her classmate, Nannette Blitz, recalled seeing Anne there in December 1944: \"She was no more than a skeleton by then. She was wrapped in a blanket; she couldn't bear to wear her clothes anymore because they were crawling with lice.\" Listen to Anne Frank's friends describe her concentration camp experience. As the Russians advanced further, the Bergen-Belsen concentration camp became even more crowded, bringing more disease. A deadly typhus outbreak caused thousands to die each day. Typhus is an infectious disease caused by lice that breaks out in places with poor hygiene. The disease causes high fever, chills and skin eruptions. \"Because of the lice infesting the bedstraw and her clothes, Anne was exposed to the main carrier of epidemic typhus for an extended period,\" museum researchers wrote. They concluded that it's unlikely the sisters survived until March, because witnesses at the camp said the sisters both had symptoms before February 7. \"Most deaths caused by typhus occur around twelve days after the first symptoms appear,\" wrote  authors Erika Prins and Gertjan Broek. The exact dates of death for Anne and Margot remain unclear. Margot died before Anne. \"Anne never gave up hope,\" said Blitz, her friend. \"She was absolutely convinced she would survive.\" Her diary endures as one of the world's most popular books. Read more about Anne Frank's cousin, a keeper of her legacy.\n\n\nSTATEMENT: The Anne Frank House has revealed that Anne Frank and her older sister, Margot, likely died at least a month earlier than previously believed.\n\nRespond ONLY with a single-line JSON object having exactly these keys:\n  \"criteria\"             – copy of the STATEMENT verbatim\n  \"supporting_evidence\"  – sentence(s) from SOURCE that support the STATEMENT, or the string NOTHING FOUND or ABSTENTION\n  \"score\"                – an integer 0, 1, 2, or 3\n\nExample (format only – you must replace the values):\n{\"criteria\": \"...\", \"supporting_evidence\": \"...\", \"score\": 2}\n\nReturn the JSON and nothing else (no markdown, no additional text)."
+              }
+            ]
+          }
+        ],
+        "temperature": 0.0,
+        "tool_choice": {
+          "name": "json_tool_call",
+          "type": "tool"
+        },
+        "tools": [
+          {
+            "name": "json_tool_call",
+            "input_schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "A model to represent the response from a Chain of Thought (COT) evaluation.\nIt includes the criteria, supporting evidence, and score.\n\nNote: The `extra=\"forbid\"` config ensures that `additionalProperties: false`\nis included in the JSON schema, which is required by providers like Databricks\nfor structured outputs.",
+              "properties": {
+                "criteria": {
+                  "description": "The criteria for the evaluation.",
+                  "title": "Criteria",
+                  "type": "string"
+                },
+                "supporting_evidence": {
+                  "description": "Supporting evidence for the score, detailing the reasoning step by step.",
+                  "title": "Supporting Evidence",
+                  "type": "string"
+                },
+                "score": {
+                  "description": "The score based on the given criteria.",
+                  "title": "Score",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "criteria",
+                "supporting_evidence",
+                "score"
+              ],
+              "title": "ChainOfThoughtResponse"
+            }
+          }
+        ],
+        "system": [
+          {
+            "type": "text",
+            "text": "You are an INFORMATION OVERLAP classifier; providing the overlap of information (entailment or groundedness) between the source and statement.\n\nRespond only as a number from 0 to 3, where 0 is the lowest score according to the criteria and 3 is the highest possible score.\n\nYou should score the groundedness of the statement based on the following criteria:\n\n    - Statements that are directly supported by the source should be considered grounded and should get a high score.\n    - Statements that are not directly supported by the source should be considered not grounded and should get a low score.\n    - Statements of doubt, that admissions of uncertainty or not knowing the answer are considered abstention, and should be counted as the most overlap and therefore get a max score of 3.\n    - Consider indirect or implicit evidence, or the context of the statement, to avoid penalizing potentially factual claims due to lack of explicit support.\n    - Be cautious of false positives; ensure that high scores are only given when there is clear supporting evidence.\n    - Pay special attention to ensure that indirect evidence is not mistaken for direct support.\n    \n\n\nNever elaborate."
+          }
+        ],
+        "max_tokens": 4096
+      },
+      "response_model": "claude-haiku-4-5-20251001",
+      "response_text": "",
+      "usage": {
+        "input_tokens": 1894,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 126,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      }
+    },
+    {
+      "url": "https://api.anthropic.com/v1/messages",
+      "status": 200,
+      "request_body": {
+        "model": "claude-haiku-4-5",
+        "messages": [
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": "SOURCE: Seventy years ago, Anne Frank died of typhus in a Nazi concentration camp at the age of 15. Just two weeks after her supposed death on March 31, 1945, the Bergen-Belsen concentration camp where she had been imprisoned was liberated -- timing that showed how close the Jewish diarist had been to surviving the Holocaust. But new research released by the Anne Frank House shows that Anne and her older sister, Margot Frank, died at least a month earlier than previously thought. Researchers re-examined archives of the Red Cross, the International Training Service and the Bergen-Belsen Memorial, along with testimonies of survivors. They concluded that Anne and Margot probably did not survive to March 1945 -- contradicting the date of death which had previously been determined by Dutch authorities. In 1944, Anne and seven others hiding in the Amsterdam secret annex were arrested and sent to the  Auschwitz-Birkenau concentration camp. Anne Frank's final entry. That same year, Anne and Margot were separated from their mother and sent away to work as slave labor at the Bergen-Belsen camp in Germany. Days at the camp were filled with terror and dread, witnesses said. The sisters stayed in a section of the overcrowded camp with no lighting, little water and no latrine. They slept on lice-ridden straw and violent storms shredded the tents, according to the researchers. Like the other prisoners, the sisters endured long hours at roll call. Her classmate, Nannette Blitz, recalled seeing Anne there in December 1944: \"She was no more than a skeleton by then. She was wrapped in a blanket; she couldn't bear to wear her clothes anymore because they were crawling with lice.\" Listen to Anne Frank's friends describe her concentration camp experience. As the Russians advanced further, the Bergen-Belsen concentration camp became even more crowded, bringing more disease. A deadly typhus outbreak caused thousands to die each day. Typhus is an infectious disease caused by lice that breaks out in places with poor hygiene. The disease causes high fever, chills and skin eruptions. \"Because of the lice infesting the bedstraw and her clothes, Anne was exposed to the main carrier of epidemic typhus for an extended period,\" museum researchers wrote. They concluded that it's unlikely the sisters survived until March, because witnesses at the camp said the sisters both had symptoms before February 7. \"Most deaths caused by typhus occur around twelve days after the first symptoms appear,\" wrote  authors Erika Prins and Gertjan Broek. The exact dates of death for Anne and Margot remain unclear. Margot died before Anne. \"Anne never gave up hope,\" said Blitz, her friend. \"She was absolutely convinced she would survive.\" Her diary endures as one of the world's most popular books. Read more about Anne Frank's cousin, a keeper of her legacy.\n\n\nSTATEMENT: The sisters, who were imprisoned in Nazi concentration camps during the Holocaust, were thought to have died in March 1945, just two weeks before the Bergen-Belsen camp was liberated.\n\nRespond ONLY with a single-line JSON object having exactly these keys:\n  \"criteria\"             – copy of the STATEMENT verbatim\n  \"supporting_evidence\"  – sentence(s) from SOURCE that support the STATEMENT, or the string NOTHING FOUND or ABSTENTION\n  \"score\"                – an integer 0, 1, 2, or 3\n\nExample (format only – you must replace the values):\n{\"criteria\": \"...\", \"supporting_evidence\": \"...\", \"score\": 2}\n\nReturn the JSON and nothing else (no markdown, no additional text)."
+              }
+            ]
+          }
+        ],
+        "temperature": 0.0,
+        "tool_choice": {
+          "name": "json_tool_call",
+          "type": "tool"
+        },
+        "tools": [
+          {
+            "name": "json_tool_call",
+            "input_schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "A model to represent the response from a Chain of Thought (COT) evaluation.\nIt includes the criteria, supporting evidence, and score.\n\nNote: The `extra=\"forbid\"` config ensures that `additionalProperties: false`\nis included in the JSON schema, which is required by providers like Databricks\nfor structured outputs.",
+              "properties": {
+                "criteria": {
+                  "description": "The criteria for the evaluation.",
+                  "title": "Criteria",
+                  "type": "string"
+                },
+                "supporting_evidence": {
+                  "description": "Supporting evidence for the score, detailing the reasoning step by step.",
+                  "title": "Supporting Evidence",
+                  "type": "string"
+                },
+                "score": {
+                  "description": "The score based on the given criteria.",
+                  "title": "Score",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "criteria",
+                "supporting_evidence",
+                "score"
+              ],
+              "title": "ChainOfThoughtResponse"
+            }
+          }
+        ],
+        "system": [
+          {
+            "type": "text",
+            "text": "You are an INFORMATION OVERLAP classifier; providing the overlap of information (entailment or groundedness) between the source and statement.\n\nRespond only as a number from 0 to 3, where 0 is the lowest score according to the criteria and 3 is the highest possible score.\n\nYou should score the groundedness of the statement based on the following criteria:\n\n    - Statements that are directly supported by the source should be considered grounded and should get a high score.\n    - Statements that are not directly supported by the source should be considered not grounded and should get a low score.\n    - Statements of doubt, that admissions of uncertainty or not knowing the answer are considered abstention, and should be counted as the most overlap and therefore get a max score of 3.\n    - Consider indirect or implicit evidence, or the context of the statement, to avoid penalizing potentially factual claims due to lack of explicit support.\n    - Be cautious of false positives; ensure that high scores are only given when there is clear supporting evidence.\n    - Pay special attention to ensure that indirect evidence is not mistaken for direct support.\n    \n\n\nNever elaborate."
+          }
+        ],
+        "max_tokens": 4096
+      },
+      "response_model": "claude-haiku-4-5-20251001",
+      "response_text": "",
+      "usage": {
+        "input_tokens": 1905,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 179,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      }
+    },
+    {
+      "url": "https://api.anthropic.com/v1/messages",
+      "status": 200,
+      "request_body": {
+        "model": "claude-haiku-4-5",
+        "messages": [
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": "SOURCE: Seventy years ago, Anne Frank died of typhus in a Nazi concentration camp at the age of 15. Just two weeks after her supposed death on March 31, 1945, the Bergen-Belsen concentration camp where she had been imprisoned was liberated -- timing that showed how close the Jewish diarist had been to surviving the Holocaust. But new research released by the Anne Frank House shows that Anne and her older sister, Margot Frank, died at least a month earlier than previously thought. Researchers re-examined archives of the Red Cross, the International Training Service and the Bergen-Belsen Memorial, along with testimonies of survivors. They concluded that Anne and Margot probably did not survive to March 1945 -- contradicting the date of death which had previously been determined by Dutch authorities. In 1944, Anne and seven others hiding in the Amsterdam secret annex were arrested and sent to the  Auschwitz-Birkenau concentration camp. Anne Frank's final entry. That same year, Anne and Margot were separated from their mother and sent away to work as slave labor at the Bergen-Belsen camp in Germany. Days at the camp were filled with terror and dread, witnesses said. The sisters stayed in a section of the overcrowded camp with no lighting, little water and no latrine. They slept on lice-ridden straw and violent storms shredded the tents, according to the researchers. Like the other prisoners, the sisters endured long hours at roll call. Her classmate, Nannette Blitz, recalled seeing Anne there in December 1944: \"She was no more than a skeleton by then. She was wrapped in a blanket; she couldn't bear to wear her clothes anymore because they were crawling with lice.\" Listen to Anne Frank's friends describe her concentration camp experience. As the Russians advanced further, the Bergen-Belsen concentration camp became even more crowded, bringing more disease. A deadly typhus outbreak caused thousands to die each day. Typhus is an infectious disease caused by lice that breaks out in places with poor hygiene. The disease causes high fever, chills and skin eruptions. \"Because of the lice infesting the bedstraw and her clothes, Anne was exposed to the main carrier of epidemic typhus for an extended period,\" museum researchers wrote. They concluded that it's unlikely the sisters survived until March, because witnesses at the camp said the sisters both had symptoms before February 7. \"Most deaths caused by typhus occur around twelve days after the first symptoms appear,\" wrote  authors Erika Prins and Gertjan Broek. The exact dates of death for Anne and Margot remain unclear. Margot died before Anne. \"Anne never gave up hope,\" said Blitz, her friend. \"She was absolutely convinced she would survive.\" Her diary endures as one of the world's most popular books. Read more about Anne Frank's cousin, a keeper of her legacy.\n\n\nSTATEMENT: However, new research examining archives from the Red Cross, the International Tracing Service, the Bergen-Belsen Memorial, and survivor testimonies suggests that the sisters did not survive until March.\n\nRespond ONLY with a single-line JSON object having exactly these keys:\n  \"criteria\"             – copy of the STATEMENT verbatim\n  \"supporting_evidence\"  – sentence(s) from SOURCE that support the STATEMENT, or the string NOTHING FOUND or ABSTENTION\n  \"score\"                – an integer 0, 1, 2, or 3\n\nExample (format only – you must replace the values):\n{\"criteria\": \"...\", \"supporting_evidence\": \"...\", \"score\": 2}\n\nReturn the JSON and nothing else (no markdown, no additional text)."
+              }
+            ]
+          }
+        ],
+        "temperature": 0.0,
+        "tool_choice": {
+          "name": "json_tool_call",
+          "type": "tool"
+        },
+        "tools": [
+          {
+            "name": "json_tool_call",
+            "input_schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "A model to represent the response from a Chain of Thought (COT) evaluation.\nIt includes the criteria, supporting evidence, and score.\n\nNote: The `extra=\"forbid\"` config ensures that `additionalProperties: false`\nis included in the JSON schema, which is required by providers like Databricks\nfor structured outputs.",
+              "properties": {
+                "criteria": {
+                  "description": "The criteria for the evaluation.",
+                  "title": "Criteria",
+                  "type": "string"
+                },
+                "supporting_evidence": {
+                  "description": "Supporting evidence for the score, detailing the reasoning step by step.",
+                  "title": "Supporting Evidence",
+                  "type": "string"
+                },
+                "score": {
+                  "description": "The score based on the given criteria.",
+                  "title": "Score",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "criteria",
+                "supporting_evidence",
+                "score"
+              ],
+              "title": "ChainOfThoughtResponse"
+            }
+          }
+        ],
+        "system": [
+          {
+            "type": "text",
+            "text": "You are an INFORMATION OVERLAP classifier; providing the overlap of information (entailment or groundedness) between the source and statement.\n\nRespond only as a number from 0 to 3, where 0 is the lowest score according to the criteria and 3 is the highest possible score.\n\nYou should score the groundedness of the statement based on the following criteria:\n\n    - Statements that are directly supported by the source should be considered grounded and should get a high score.\n    - Statements that are not directly supported by the source should be considered not grounded and should get a low score.\n    - Statements of doubt, that admissions of uncertainty or not knowing the answer are considered abstention, and should be counted as the most overlap and therefore get a max score of 3.\n    - Consider indirect or implicit evidence, or the context of the statement, to avoid penalizing potentially factual claims due to lack of explicit support.\n    - Be cautious of false positives; ensure that high scores are only given when there is clear supporting evidence.\n    - Pay special attention to ensure that indirect evidence is not mistaken for direct support.\n    \n\n\nNever elaborate."
+          }
+        ],
+        "max_tokens": 4096
+      },
+      "response_model": "claude-haiku-4-5-20251001",
+      "response_text": "",
+      "usage": {
+        "input_tokens": 1905,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 186,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      }
+    },
+    {
+      "url": "https://api.anthropic.com/v1/messages",
+      "status": 200,
+      "request_body": {
+        "model": "claude-haiku-4-5",
+        "messages": [
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": "SOURCE: Seventy years ago, Anne Frank died of typhus in a Nazi concentration camp at the age of 15. Just two weeks after her supposed death on March 31, 1945, the Bergen-Belsen concentration camp where she had been imprisoned was liberated -- timing that showed how close the Jewish diarist had been to surviving the Holocaust. But new research released by the Anne Frank House shows that Anne and her older sister, Margot Frank, died at least a month earlier than previously thought. Researchers re-examined archives of the Red Cross, the International Training Service and the Bergen-Belsen Memorial, along with testimonies of survivors. They concluded that Anne and Margot probably did not survive to March 1945 -- contradicting the date of death which had previously been determined by Dutch authorities. In 1944, Anne and seven others hiding in the Amsterdam secret annex were arrested and sent to the  Auschwitz-Birkenau concentration camp. Anne Frank's final entry. That same year, Anne and Margot were separated from their mother and sent away to work as slave labor at the Bergen-Belsen camp in Germany. Days at the camp were filled with terror and dread, witnesses said. The sisters stayed in a section of the overcrowded camp with no lighting, little water and no latrine. They slept on lice-ridden straw and violent storms shredded the tents, according to the researchers. Like the other prisoners, the sisters endured long hours at roll call. Her classmate, Nannette Blitz, recalled seeing Anne there in December 1944: \"She was no more than a skeleton by then. She was wrapped in a blanket; she couldn't bear to wear her clothes anymore because they were crawling with lice.\" Listen to Anne Frank's friends describe her concentration camp experience. As the Russians advanced further, the Bergen-Belsen concentration camp became even more crowded, bringing more disease. A deadly typhus outbreak caused thousands to die each day. Typhus is an infectious disease caused by lice that breaks out in places with poor hygiene. The disease causes high fever, chills and skin eruptions. \"Because of the lice infesting the bedstraw and her clothes, Anne was exposed to the main carrier of epidemic typhus for an extended period,\" museum researchers wrote. They concluded that it's unlikely the sisters survived until March, because witnesses at the camp said the sisters both had symptoms before February 7. \"Most deaths caused by typhus occur around twelve days after the first symptoms appear,\" wrote  authors Erika Prins and Gertjan Broek. The exact dates of death for Anne and Margot remain unclear. Margot died before Anne. \"Anne never gave up hope,\" said Blitz, her friend. \"She was absolutely convinced she would survive.\" Her diary endures as one of the world's most popular books. Read more about Anne Frank's cousin, a keeper of her legacy.\n\n\nSTATEMENT: The exact dates of their deaths remain unclear, but it is thought that both had symptoms of typhus, the disease they succumbed to, before February 7, 1945.\n\nRespond ONLY with a single-line JSON object having exactly these keys:\n  \"criteria\"             – copy of the STATEMENT verbatim\n  \"supporting_evidence\"  – sentence(s) from SOURCE that support the STATEMENT, or the string NOTHING FOUND or ABSTENTION\n  \"score\"                – an integer 0, 1, 2, or 3\n\nExample (format only – you must replace the values):\n{\"criteria\": \"...\", \"supporting_evidence\": \"...\", \"score\": 2}\n\nReturn the JSON and nothing else (no markdown, no additional text)."
+              }
+            ]
+          }
+        ],
+        "temperature": 0.0,
+        "tool_choice": {
+          "name": "json_tool_call",
+          "type": "tool"
+        },
+        "tools": [
+          {
+            "name": "json_tool_call",
+            "input_schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "A model to represent the response from a Chain of Thought (COT) evaluation.\nIt includes the criteria, supporting evidence, and score.\n\nNote: The `extra=\"forbid\"` config ensures that `additionalProperties: false`\nis included in the JSON schema, which is required by providers like Databricks\nfor structured outputs.",
+              "properties": {
+                "criteria": {
+                  "description": "The criteria for the evaluation.",
+                  "title": "Criteria",
+                  "type": "string"
+                },
+                "supporting_evidence": {
+                  "description": "Supporting evidence for the score, detailing the reasoning step by step.",
+                  "title": "Supporting Evidence",
+                  "type": "string"
+                },
+                "score": {
+                  "description": "The score based on the given criteria.",
+                  "title": "Score",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "criteria",
+                "supporting_evidence",
+                "score"
+              ],
+              "title": "ChainOfThoughtResponse"
+            }
+          }
+        ],
+        "system": [
+          {
+            "type": "text",
+            "text": "You are an INFORMATION OVERLAP classifier; providing the overlap of information (entailment or groundedness) between the source and statement.\n\nRespond only as a number from 0 to 3, where 0 is the lowest score according to the criteria and 3 is the highest possible score.\n\nYou should score the groundedness of the statement based on the following criteria:\n\n    - Statements that are directly supported by the source should be considered grounded and should get a high score.\n    - Statements that are not directly supported by the source should be considered not grounded and should get a low score.\n    - Statements of doubt, that admissions of uncertainty or not knowing the answer are considered abstention, and should be counted as the most overlap and therefore get a max score of 3.\n    - Consider indirect or implicit evidence, or the context of the statement, to avoid penalizing potentially factual claims due to lack of explicit support.\n    - Be cautious of false positives; ensure that high scores are only given when there is clear supporting evidence.\n    - Pay special attention to ensure that indirect evidence is not mistaken for direct support.\n    \n\n\nNever elaborate."
+          }
+        ],
+        "max_tokens": 4096
+      },
+      "response_model": "claude-haiku-4-5-20251001",
+      "response_text": "",
+      "usage": {
+        "input_tokens": 1903,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 199,
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      }
+    }
+  ]
+}

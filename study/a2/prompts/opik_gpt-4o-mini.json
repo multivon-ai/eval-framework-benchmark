@@ -1,0 +1,75 @@
+{
+  "framework": "opik",
+  "judge": "gpt-4o-mini",
+  "item_id": "ragtruth_sum_0",
+  "captured": "2026-07-15 00:34:36 IST",
+  "n_judge_calls": 1,
+  "eval_error": null,
+  "eval_score": 1.0,
+  "calls": [
+    {
+      "url": "https://api.openai.com/v1/chat/completions",
+      "status": 200,
+      "request_body": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert judge tasked with evaluating the faithfulness of an AI-generated answer to the given context. Analyze the provided INPUT, CONTEXT, and OUTPUT to determine if the OUTPUT contains any hallucinations or unfaithful information.\n\nGuidelines:\n1. The OUTPUT must not introduce new information beyond what's provided in the CONTEXT.\n2. The OUTPUT must not contradict any information given in the CONTEXT.\n3. The OUTPUT should not contradict well-established facts or general knowledge.\n4. Ignore the INPUT when evaluating faithfulness; it's provided for context only.\n5. Consider partial hallucinations where some information is correct but other parts are not.\n6. Pay close attention to the subject of statements. Ensure that attributes, actions, or dates are correctly associated with the right entities (e.g., a person vs. a TV show they star in).\n7. Be vigilant for subtle misattributions or conflations of information, even if the date or other details are correct.\n8. Check that the OUTPUT doesn't oversimplify or generalize information in a way that changes its meaning or accuracy.\n\nAnalyze the text thoroughly and assign a hallucination score between 0 and 1, where:\n- 0.0: The OUTPUT is entirely faithful to the CONTEXT\n- 1.0: The OUTPUT is entirely unfaithful to the CONTEXT\n\nIt is crucial that you provide your answer in the following JSON format:\n{\n    \"score\": <your score between 0.0 and 1.0>,\n    \"reason\": [\"reason 1\", \"reason 2\"]\n}\nReasons amount is not restricted. Output must be JSON format only."
+          },
+          {
+            "role": "user",
+            "content": "INPUT (for context only, not to be used for faithfulness evaluation):\nProvide a faithful summary of the document.\n\nCONTEXT:\n['Seventy years ago, Anne Frank died of typhus in a Nazi concentration camp at the age of 15. Just two weeks after her supposed death on March 31, 1945, the Bergen-Belsen concentration camp where she had been imprisoned was liberated -- timing that showed how close the Jewish diarist had been to surviving the Holocaust. But new research released by the Anne Frank House shows that Anne and her older sister, Margot Frank, died at least a month earlier than previously thought. Researchers re-examined archives of the Red Cross, the International Training Service and the Bergen-Belsen Memorial, along with testimonies of survivors. They concluded that Anne and Margot probably did not survive to March 1945 -- contradicting the date of death which had previously been determined by Dutch authorities. In 1944, Anne and seven others hiding in the Amsterdam secret annex were arrested and sent to the  Auschwitz-Birkenau concentration camp. Anne Frank\\'s final entry. That same year, Anne and Margot were separated from their mother and sent away to work as slave labor at the Bergen-Belsen camp in Germany. Days at the camp were filled with terror and dread, witnesses said. The sisters stayed in a section of the overcrowded camp with no lighting, little water and no latrine. They slept on lice-ridden straw and violent storms shredded the tents, according to the researchers. Like the other prisoners, the sisters endured long hours at roll call. Her classmate, Nannette Blitz, recalled seeing Anne there in December 1944: \"She was no more than a skeleton by then. She was wrapped in a blanket; she couldn\\'t bear to wear her clothes anymore because they were crawling with lice.\" Listen to Anne Frank\\'s friends describe her concentration camp experience. As the Russians advanced further, the Bergen-Belsen concentration camp became even more crowded, bringing more disease. A deadly typhus outbreak caused thousands to die each day. Typhus is an infectious disease caused by lice that breaks out in places with poor hygiene. The disease causes high fever, chills and skin eruptions. \"Because of the lice infesting the bedstraw and her clothes, Anne was exposed to the main carrier of epidemic typhus for an extended period,\" museum researchers wrote. They concluded that it\\'s unlikely the sisters survived until March, because witnesses at the camp said the sisters both had symptoms before February 7. \"Most deaths caused by typhus occur around twelve days after the first symptoms appear,\" wrote  authors Erika Prins and Gertjan Broek. The exact dates of death for Anne and Margot remain unclear. Margot died before Anne. \"Anne never gave up hope,\" said Blitz, her friend. \"She was absolutely convinced she would survive.\" Her diary endures as one of the world\\'s most popular books. Read more about Anne Frank\\'s cousin, a keeper of her legacy.\\n']\n\nOUTPUT:\nThe Anne Frank House has revealed that Anne Frank and her older sister, Margot, likely died at least a month earlier than previously believed. The sisters, who were imprisoned in Nazi concentration camps during the Holocaust, were thought to have died in March 1945, just two weeks before the Bergen-Belsen camp was liberated. However, new research examining archives from the Red Cross, the International Tracing Service, the Bergen-Belsen Memorial, and survivor testimonies suggests that the sisters did not survive until March. The exact dates of their deaths remain unclear, but it is thought that both had symptoms of typhus, the disease they succumbed to, before February 7, 1945."
+          }
+        ],
+        "model": "gpt-4o-mini",
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "schema": {
+              "properties": {
+                "score": {
+                  "title": "Score",
+                  "type": "number"
+                },
+                "reason": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "title": "Reason",
+                  "type": "array"
+                }
+              },
+              "required": [
+                "score",
+                "reason"
+              ],
+              "title": "HallucinationResponseFormat",
+              "type": "object",
+              "additionalProperties": false
+            },
+            "name": "HallucinationResponseFormat",
+            "strict": true
+          }
+        },
+        "temperature": 0.0
+      },
+      "response_model": "gpt-4o-mini-2024-07-18",
+      "response_text": "{\"score\":0.0,\"reason\":[\"The OUTPUT accurately reflects the information provided in the CONTEXT without introducing new information or contradicting any details. It correctly states the findings of the Anne Frank House regarding the likely earlier deaths of Anne and Margot Frank, the context of their imprisonment, and the implications of the new research on their dates of death.\"]}",
+      "usage": {
+        "prompt_tokens": 1170,
+        "completion_tokens": 73,
+        "total_tokens": 1243,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      }
+    }
+  ]
+}
