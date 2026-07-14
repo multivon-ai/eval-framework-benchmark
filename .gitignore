@@ -9,6 +9,7 @@ data/halueval_qa_full.json
 data/halueval_sum_full.json
 .venv/
 .venv-study/
+.venv-analysis/
 data/ragtruth_responses_full.jsonl
 data/ragtruth_sources_full.jsonl
 results/smoke/

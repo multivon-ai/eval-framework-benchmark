@@ -1,0 +1,8 @@
+# Analysis-only environment (.venv-analysis) — separate from the frozen
+# .venv-study run environment (study/requirements.lock is untouched).
+# Rebuild: uv venv --python 3.11 .venv-analysis &&
+#          uv pip install --python .venv-analysis/bin/python -r study/analysis/requirements-analysis.txt
+multivon-eval==0.16.0
+numpy==2.4.6
+matplotlib==3.11.0
+scipy==1.17.1

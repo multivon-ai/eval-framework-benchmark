@@ -1,0 +1,806 @@
+{
+  "meta": {
+    "conditions": {
+      "A": "as-shipped default threshold",
+      "B": "locked dev-fitted threshold (study/thresholds_locked.json) applied to scores"
+    },
+    "error_semantics": "errors-as-failures primary (errored record = flagged); complete-case secondary (P4)",
+    "frameworks": [
+      "multivon-eval",
+      "deepeval",
+      "ragas",
+      "trulens",
+      "opik"
+    ],
+    "judges": [
+      "gpt-4o-mini",
+      "claude-haiku-4-5"
+    ],
+    "n_boot": 2000,
+    "runs_per_cell": {
+      "claude-haiku-4-5/halueval-qa": 1,
+      "claude-haiku-4-5/halueval-sum": 1,
+      "claude-haiku-4-5/ragtruth-sum": 1,
+      "gpt-4o-mini/halueval-qa": 1,
+      "gpt-4o-mini/halueval-sum": 1,
+      "gpt-4o-mini/ragtruth-sum": 1
+    },
+    "seed": 42,
+    "split": "dev",
+    "tasks": [
+      "ragtruth-sum",
+      "halueval-sum",
+      "halueval-qa"
+    ]
+  },
+  "p1": [
+    {
+      "condition": "A",
+      "flag_rates": {
+        "deepeval": 0.0,
+        "multivon-eval": 0.34,
+        "opik": 0.09,
+        "ragas": 0.0,
+        "trulens": 0.0
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": true,
+      "judge": "gpt-4o-mini",
+      "median_gwet_ac1": 0.9015,
+      "median_kappa_ci95": [
+        0.0,
+        0.0
+      ],
+      "median_pairwise_kappa": 0.0,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.9015,
+        "deepeval <-> ragas": 1.0,
+        "deepeval <-> trulens": 1.0,
+        "multivon-eval <-> deepeval": 0.5263,
+        "multivon-eval <-> opik": 0.5622,
+        "multivon-eval <-> ragas": 0.5263,
+        "multivon-eval <-> trulens": 0.5263,
+        "ragas <-> opik": 0.9015,
+        "ragas <-> trulens": 1.0,
+        "trulens <-> opik": 0.9015
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.0,
+        "deepeval <-> ragas": 0.0,
+        "deepeval <-> trulens": 0.0,
+        "multivon-eval <-> deepeval": 0.0,
+        "multivon-eval <-> opik": 0.2137,
+        "multivon-eval <-> ragas": 0.0,
+        "multivon-eval <-> trulens": 0.0,
+        "ragas <-> opik": 0.0,
+        "ragas <-> trulens": 0.0,
+        "trulens <-> opik": 0.0
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.09,
+        "deepeval <-> ragas": 0.0,
+        "deepeval <-> trulens": 0.0,
+        "multivon-eval <-> deepeval": 0.34,
+        "multivon-eval <-> opik": 0.29,
+        "multivon-eval <-> ragas": 0.34,
+        "multivon-eval <-> trulens": 0.34,
+        "ragas <-> opik": 0.09,
+        "ragas <-> trulens": 0.0,
+        "trulens <-> opik": 0.09
+      },
+      "task": "ragtruth-sum"
+    },
+    {
+      "condition": "B",
+      "flag_rates": {
+        "deepeval": 0.63,
+        "multivon-eval": 0.41,
+        "opik": 1.0,
+        "ragas": 0.48,
+        "trulens": 0.77
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": true,
+      "judge": "gpt-4o-mini",
+      "median_gwet_ac1": 0.1902,
+      "median_kappa_ci95": [
+        0.0,
+        0.1515
+      ],
+      "median_pairwise_kappa": 0.0607,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.4703,
+        "deepeval <-> ragas": 0.1898,
+        "deepeval <-> trulens": 0.3103,
+        "multivon-eval <-> deepeval": 0.0815,
+        "multivon-eval <-> opik": -0.0102,
+        "multivon-eval <-> ragas": 0.4269,
+        "multivon-eval <-> trulens": -0.0074,
+        "ragas <-> opik": 0.1547,
+        "ragas <-> trulens": 0.1906,
+        "trulens <-> opik": 0.7112
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.0,
+        "deepeval <-> ragas": 0.1884,
+        "deepeval <-> trulens": 0.0693,
+        "multivon-eval <-> deepeval": 0.1211,
+        "multivon-eval <-> opik": 0.0,
+        "multivon-eval <-> ragas": 0.4158,
+        "multivon-eval <-> trulens": 0.0521,
+        "ragas <-> opik": 0.0,
+        "ragas <-> trulens": 0.1582,
+        "trulens <-> opik": 0.0
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.37,
+        "deepeval <-> ragas": 0.41,
+        "deepeval <-> trulens": 0.4,
+        "multivon-eval <-> deepeval": 0.46,
+        "multivon-eval <-> opik": 0.59,
+        "multivon-eval <-> ragas": 0.29,
+        "multivon-eval <-> trulens": 0.52,
+        "ragas <-> opik": 0.52,
+        "ragas <-> trulens": 0.43,
+        "trulens <-> opik": 0.23
+      },
+      "task": "ragtruth-sum"
+    },
+    {
+      "condition": "A",
+      "flag_rates": {
+        "deepeval": 0.01,
+        "multivon-eval": 0.48,
+        "opik": 0.46,
+        "ragas": 0.13,
+        "trulens": 0.09
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": true,
+      "judge": "gpt-4o-mini",
+      "median_gwet_ac1": 0.4098,
+      "median_kappa_ci95": [
+        0.0776,
+        0.3037
+      ],
+      "median_pairwise_kappa": 0.1949,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.2974,
+        "deepeval <-> ragas": 0.839,
+        "deepeval <-> trulens": 0.8895,
+        "multivon-eval <-> deepeval": 0.254,
+        "multivon-eval <-> opik": 0.5616,
+        "multivon-eval <-> ragas": 0.323,
+        "multivon-eval <-> trulens": 0.3417,
+        "ragas <-> opik": 0.435,
+        "ragas <-> trulens": 0.9254,
+        "trulens <-> opik": 0.3846
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.0234,
+        "deepeval <-> ragas": -0.0189,
+        "deepeval <-> trulens": -0.0183,
+        "multivon-eval <-> deepeval": 0.0216,
+        "multivon-eval <-> opik": 0.5586,
+        "multivon-eval <-> ragas": 0.1962,
+        "multivon-eval <-> trulens": 0.1935,
+        "ragas <-> opik": 0.2985,
+        "ragas <-> trulens": 0.6948,
+        "trulens <-> opik": 0.208
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.45,
+        "deepeval <-> ragas": 0.14,
+        "deepeval <-> trulens": 0.1,
+        "multivon-eval <-> deepeval": 0.47,
+        "multivon-eval <-> opik": 0.22,
+        "multivon-eval <-> ragas": 0.39,
+        "multivon-eval <-> trulens": 0.39,
+        "ragas <-> opik": 0.33,
+        "ragas <-> trulens": 0.06,
+        "trulens <-> opik": 0.37
+      },
+      "task": "halueval-sum"
+    },
+    {
+      "condition": "B",
+      "flag_rates": {
+        "deepeval": 0.73,
+        "multivon-eval": 0.48,
+        "opik": 0.46,
+        "ragas": 0.63,
+        "trulens": 0.64
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": false,
+      "judge": "gpt-4o-mini",
+      "median_gwet_ac1": 0.3685,
+      "median_kappa_ci95": [
+        0.2687,
+        0.4745
+      ],
+      "median_pairwise_kappa": 0.3706,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.2472,
+        "deepeval <-> ragas": 0.6105,
+        "deepeval <-> trulens": 0.3491,
+        "multivon-eval <-> deepeval": 0.3679,
+        "multivon-eval <-> opik": 0.5616,
+        "multivon-eval <-> ragas": 0.506,
+        "multivon-eval <-> trulens": 0.3691,
+        "ragas <-> opik": 0.385,
+        "ragas <-> trulens": 0.3476,
+        "trulens <-> opik": 0.3663
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.2477,
+        "deepeval <-> ragas": 0.5002,
+        "deepeval <-> trulens": 0.1506,
+        "multivon-eval <-> deepeval": 0.3519,
+        "multivon-eval <-> opik": 0.5586,
+        "multivon-eval <-> ragas": 0.5051,
+        "multivon-eval <-> trulens": 0.3671,
+        "ragas <-> opik": 0.3926,
+        "ragas <-> trulens": 0.245,
+        "trulens <-> opik": 0.374
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.39,
+        "deepeval <-> ragas": 0.22,
+        "deepeval <-> trulens": 0.37,
+        "multivon-eval <-> deepeval": 0.33,
+        "multivon-eval <-> opik": 0.22,
+        "multivon-eval <-> ragas": 0.25,
+        "multivon-eval <-> trulens": 0.32,
+        "ragas <-> opik": 0.31,
+        "ragas <-> trulens": 0.35,
+        "trulens <-> opik": 0.32
+      },
+      "task": "halueval-sum"
+    },
+    {
+      "condition": "A",
+      "flag_rates": {
+        "deepeval": 0.43,
+        "multivon-eval": 0.43,
+        "opik": 0.41,
+        "ragas": 0.41,
+        "trulens": 0.42
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": false,
+      "judge": "gpt-4o-mini",
+      "median_gwet_ac1": 0.4169,
+      "median_kappa_ci95": [
+        0.2682,
+        0.509
+      ],
+      "median_pairwise_kappa": 0.3822,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.337,
+        "deepeval <-> ragas": 0.22,
+        "deepeval <-> trulens": 0.3154,
+        "multivon-eval <-> deepeval": 0.1369,
+        "multivon-eval <-> opik": 0.532,
+        "multivon-eval <-> ragas": 0.415,
+        "multivon-eval <-> trulens": 0.511,
+        "ragas <-> opik": 0.4188,
+        "ragas <-> trulens": 0.5918,
+        "trulens <-> opik": 0.6696
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.3024,
+        "deepeval <-> ragas": 0.1793,
+        "deepeval <-> trulens": 0.284,
+        "multivon-eval <-> deepeval": 0.1024,
+        "multivon-eval <-> opik": 0.5076,
+        "multivon-eval <-> ragas": 0.3845,
+        "multivon-eval <-> trulens": 0.4885,
+        "ragas <-> opik": 0.3799,
+        "ragas <-> trulens": 0.5675,
+        "trulens <-> opik": 0.6499
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.34,
+        "deepeval <-> ragas": 0.4,
+        "deepeval <-> trulens": 0.35,
+        "multivon-eval <-> deepeval": 0.44,
+        "multivon-eval <-> opik": 0.24,
+        "multivon-eval <-> ragas": 0.3,
+        "multivon-eval <-> trulens": 0.25,
+        "ragas <-> opik": 0.3,
+        "ragas <-> trulens": 0.21,
+        "trulens <-> opik": 0.17
+      },
+      "task": "halueval-qa"
+    },
+    {
+      "condition": "B",
+      "flag_rates": {
+        "deepeval": 0.5,
+        "multivon-eval": 0.43,
+        "opik": 0.42,
+        "ragas": 0.64,
+        "trulens": 0.42
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": false,
+      "judge": "gpt-4o-mini",
+      "median_gwet_ac1": 0.3831,
+      "median_kappa_ci95": [
+        0.2914,
+        0.5091
+      ],
+      "median_pairwise_kappa": 0.3953,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.3641,
+        "deepeval <-> ragas": 0.1761,
+        "deepeval <-> trulens": 0.3243,
+        "multivon-eval <-> deepeval": 0.1044,
+        "multivon-eval <-> opik": 0.511,
+        "multivon-eval <-> ragas": 0.3432,
+        "multivon-eval <-> trulens": 0.511,
+        "ragas <-> opik": 0.4022,
+        "ragas <-> trulens": 0.442,
+        "trulens <-> opik": 0.649
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.36,
+        "deepeval <-> ragas": 0.16,
+        "deepeval <-> trulens": 0.32,
+        "multivon-eval <-> deepeval": 0.1,
+        "multivon-eval <-> opik": 0.4885,
+        "multivon-eval <-> ragas": 0.3649,
+        "multivon-eval <-> trulens": 0.4885,
+        "ragas <-> opik": 0.4257,
+        "ragas <-> trulens": 0.464,
+        "trulens <-> opik": 0.6305
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.32,
+        "deepeval <-> ragas": 0.42,
+        "deepeval <-> trulens": 0.34,
+        "multivon-eval <-> deepeval": 0.45,
+        "multivon-eval <-> opik": 0.25,
+        "multivon-eval <-> ragas": 0.33,
+        "multivon-eval <-> trulens": 0.25,
+        "ragas <-> opik": 0.3,
+        "ragas <-> trulens": 0.28,
+        "trulens <-> opik": 0.18
+      },
+      "task": "halueval-qa"
+    },
+    {
+      "condition": "A",
+      "flag_rates": {
+        "deepeval": 0.01,
+        "multivon-eval": 0.6,
+        "opik": 0.06,
+        "ragas": 0.35,
+        "trulens": 0.01
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": true,
+      "judge": "claude-haiku-4-5",
+      "median_gwet_ac1": 0.4702,
+      "median_kappa_ci95": [
+        -0.0268,
+        0.0093
+      ],
+      "median_pairwise_kappa": -0.0078,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.9464,
+        "deepeval <-> ragas": 0.4892,
+        "deepeval <-> trulens": 0.9796,
+        "multivon-eval <-> deepeval": -0.0242,
+        "multivon-eval <-> opik": -0.0398,
+        "multivon-eval <-> ragas": -0.1372,
+        "multivon-eval <-> trulens": -0.0242,
+        "ragas <-> opik": 0.4511,
+        "ragas <-> trulens": 0.4892,
+        "trulens <-> opik": 0.9249
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.2733,
+        "deepeval <-> ragas": -0.0198,
+        "deepeval <-> trulens": -0.0101,
+        "multivon-eval <-> deepeval": 0.0134,
+        "multivon-eval <-> opik": 0.0136,
+        "multivon-eval <-> ragas": -0.0755,
+        "multivon-eval <-> trulens": 0.0134,
+        "ragas <-> opik": -0.0054,
+        "ragas <-> trulens": -0.0198,
+        "trulens <-> opik": -0.0174
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.05,
+        "deepeval <-> ragas": 0.36,
+        "deepeval <-> trulens": 0.02,
+        "multivon-eval <-> deepeval": 0.59,
+        "multivon-eval <-> opik": 0.58,
+        "multivon-eval <-> ragas": 0.57,
+        "multivon-eval <-> trulens": 0.59,
+        "ragas <-> opik": 0.37,
+        "ragas <-> trulens": 0.36,
+        "trulens <-> opik": 0.07
+      },
+      "task": "ragtruth-sum"
+    },
+    {
+      "condition": "B",
+      "flag_rates": {
+        "deepeval": 0.4,
+        "multivon-eval": 0.67,
+        "opik": 0.61,
+        "ragas": 0.61,
+        "trulens": 0.67
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": false,
+      "judge": "claude-haiku-4-5",
+      "median_gwet_ac1": 0.379,
+      "median_kappa_ci95": [
+        0.1595,
+        0.4119
+      ],
+      "median_pairwise_kappa": 0.2968,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.1001,
+        "deepeval <-> ragas": -0.0599,
+        "deepeval <-> trulens": 0.0646,
+        "multivon-eval <-> deepeval": 0.1044,
+        "multivon-eval <-> opik": 0.5178,
+        "multivon-eval <-> ragas": 0.4065,
+        "multivon-eval <-> trulens": 0.5339,
+        "ragas <-> opik": 0.3514,
+        "ragas <-> trulens": 0.4065,
+        "trulens <-> opik": 0.6662
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.1379,
+        "deepeval <-> ragas": -0.0153,
+        "deepeval <-> trulens": 0.1199,
+        "multivon-eval <-> deepeval": 0.1573,
+        "multivon-eval <-> opik": 0.438,
+        "multivon-eval <-> ragas": 0.3083,
+        "multivon-eval <-> trulens": 0.412,
+        "ragas <-> opik": 0.2854,
+        "ragas <-> trulens": 0.3083,
+        "trulens <-> opik": 0.6109
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.45,
+        "deepeval <-> ragas": 0.53,
+        "deepeval <-> trulens": 0.47,
+        "multivon-eval <-> deepeval": 0.45,
+        "multivon-eval <-> opik": 0.26,
+        "multivon-eval <-> ragas": 0.32,
+        "multivon-eval <-> trulens": 0.26,
+        "ragas <-> opik": 0.34,
+        "ragas <-> trulens": 0.32,
+        "trulens <-> opik": 0.18
+      },
+      "task": "ragtruth-sum"
+    },
+    {
+      "condition": "A",
+      "flag_rates": {
+        "deepeval": 0.01,
+        "multivon-eval": 0.59,
+        "opik": 0.25,
+        "ragas": 0.12,
+        "trulens": 0.14
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": true,
+      "judge": "claude-haiku-4-5",
+      "median_gwet_ac1": 0.6946,
+      "median_kappa_ci95": [
+        0.0842,
+        0.261
+      ],
+      "median_pairwise_kappa": 0.1706,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.6898,
+        "deepeval <-> ragas": 0.852,
+        "deepeval <-> trulens": 0.8258,
+        "multivon-eval <-> deepeval": 0.0,
+        "multivon-eval <-> opik": 0.337,
+        "multivon-eval <-> ragas": 0.096,
+        "multivon-eval <-> trulens": 0.1612,
+        "ragas <-> opik": 0.6993,
+        "ragas <-> trulens": 0.8708,
+        "trulens <-> opik": 0.7814
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.0588,
+        "deepeval <-> ragas": -0.0188,
+        "deepeval <-> trulens": -0.019,
+        "multivon-eval <-> deepeval": 0.0139,
+        "multivon-eval <-> opik": 0.3761,
+        "multivon-eval <-> ragas": 0.1379,
+        "multivon-eval <-> trulens": 0.2033,
+        "ragas <-> opik": 0.3226,
+        "ragas <-> trulens": 0.5583,
+        "trulens <-> opik": 0.5312
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.24,
+        "deepeval <-> ragas": 0.13,
+        "deepeval <-> trulens": 0.15,
+        "multivon-eval <-> deepeval": 0.58,
+        "multivon-eval <-> opik": 0.34,
+        "multivon-eval <-> ragas": 0.49,
+        "multivon-eval <-> trulens": 0.45,
+        "ragas <-> opik": 0.21,
+        "ragas <-> trulens": 0.1,
+        "trulens <-> opik": 0.15
+      },
+      "task": "halueval-sum"
+    },
+    {
+      "condition": "B",
+      "flag_rates": {
+        "deepeval": 0.54,
+        "multivon-eval": 0.6,
+        "opik": 0.7,
+        "ragas": 0.61,
+        "trulens": 0.65
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": false,
+      "judge": "claude-haiku-4-5",
+      "median_gwet_ac1": 0.5565,
+      "median_kappa_ci95": [
+        0.362,
+        0.6068
+      ],
+      "median_pairwise_kappa": 0.456,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.4705,
+        "deepeval <-> ragas": 0.4328,
+        "deepeval <-> trulens": 0.4016,
+        "multivon-eval <-> deepeval": 0.4508,
+        "multivon-eval <-> opik": 0.5229,
+        "multivon-eval <-> ragas": 0.6361,
+        "multivon-eval <-> trulens": 0.6424,
+        "ragas <-> opik": 0.6533,
+        "ragas <-> trulens": 0.8127,
+        "trulens <-> opik": 0.5902
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.4215,
+        "deepeval <-> ragas": 0.4096,
+        "deepeval <-> trulens": 0.3648,
+        "multivon-eval <-> deepeval": 0.4309,
+        "multivon-eval <-> opik": 0.4348,
+        "multivon-eval <-> ragas": 0.6025,
+        "multivon-eval <-> trulens": 0.5957,
+        "ragas <-> opik": 0.5833,
+        "ragas <-> trulens": 0.7859,
+        "trulens <-> opik": 0.4773
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.28,
+        "deepeval <-> ragas": 0.29,
+        "deepeval <-> trulens": 0.31,
+        "multivon-eval <-> deepeval": 0.28,
+        "multivon-eval <-> opik": 0.26,
+        "multivon-eval <-> ragas": 0.19,
+        "multivon-eval <-> trulens": 0.19,
+        "ragas <-> opik": 0.19,
+        "ragas <-> trulens": 0.1,
+        "trulens <-> opik": 0.23
+      },
+      "task": "halueval-sum"
+    },
+    {
+      "condition": "A",
+      "flag_rates": {
+        "deepeval": 0.2,
+        "multivon-eval": 0.48,
+        "opik": 0.44,
+        "ragas": 0.33,
+        "trulens": 0.45
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": false,
+      "judge": "claude-haiku-4-5",
+      "median_gwet_ac1": 0.44,
+      "median_kappa_ci95": [
+        0.2431,
+        0.4751
+      ],
+      "median_pairwise_kappa": 0.3535,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.4688,
+        "deepeval <-> ragas": 0.3939,
+        "deepeval <-> trulens": 0.4833,
+        "multivon-eval <-> deepeval": 0.3832,
+        "multivon-eval <-> opik": 0.6423,
+        "multivon-eval <-> ragas": 0.2858,
+        "multivon-eval <-> trulens": 0.6219,
+        "ragas <-> opik": 0.4112,
+        "ragas <-> trulens": 0.2751,
+        "trulens <-> opik": 0.6245
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.3534,
+        "deepeval <-> ragas": 0.0704,
+        "deepeval <-> trulens": 0.383,
+        "multivon-eval <-> deepeval": 0.3033,
+        "multivon-eval <-> opik": 0.6383,
+        "multivon-eval <-> ragas": 0.2498,
+        "multivon-eval <-> trulens": 0.6185,
+        "ragas <-> opik": 0.3536,
+        "ragas <-> trulens": 0.2133,
+        "trulens <-> opik": 0.6154
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.3,
+        "deepeval <-> ragas": 0.37,
+        "deepeval <-> trulens": 0.29,
+        "multivon-eval <-> deepeval": 0.34,
+        "multivon-eval <-> opik": 0.18,
+        "multivon-eval <-> ragas": 0.37,
+        "multivon-eval <-> trulens": 0.19,
+        "ragas <-> opik": 0.31,
+        "ragas <-> trulens": 0.38,
+        "trulens <-> opik": 0.19
+      },
+      "task": "halueval-qa"
+    },
+    {
+      "condition": "B",
+      "flag_rates": {
+        "deepeval": 0.24,
+        "multivon-eval": 0.48,
+        "opik": 0.5,
+        "ragas": 0.63,
+        "trulens": 0.55
+      },
+      "frameworks": [
+        "multivon-eval",
+        "deepeval",
+        "ragas",
+        "trulens",
+        "opik"
+      ],
+      "h_bar_0.40_upper_lt": false,
+      "judge": "claude-haiku-4-5",
+      "median_gwet_ac1": 0.5193,
+      "median_kappa_ci95": [
+        0.3804,
+        0.5961
+      ],
+      "median_pairwise_kappa": 0.5025,
+      "n_boot": 2000,
+      "n_items": 100,
+      "pairwise_gwet_ac1": {
+        "deepeval <-> opik": 0.438,
+        "deepeval <-> ragas": 0.1543,
+        "deepeval <-> trulens": 0.3296,
+        "multivon-eval <-> deepeval": 0.3694,
+        "multivon-eval <-> opik": 0.6002,
+        "multivon-eval <-> ragas": 0.585,
+        "multivon-eval <-> trulens": 0.6203,
+        "ragas <-> opik": 0.587,
+        "ragas <-> trulens": 0.4576,
+        "trulens <-> opik": 0.581
+      },
+      "pairwise_kappa": {
+        "deepeval <-> opik": 0.4,
+        "deepeval <-> ragas": 0.2424,
+        "deepeval <-> trulens": 0.3346,
+        "multivon-eval <-> deepeval": 0.3056,
+        "multivon-eval <-> opik": 0.6,
+        "multivon-eval <-> ragas": 0.5843,
+        "multivon-eval <-> trulens": 0.6215,
+        "ragas <-> opik": 0.58,
+        "ragas <-> trulens": 0.4251,
+        "trulens <-> opik": 0.58
+      },
+      "pairwise_raw_disagreement": {
+        "deepeval <-> opik": 0.3,
+        "deepeval <-> ragas": 0.43,
+        "deepeval <-> trulens": 0.35,
+        "multivon-eval <-> deepeval": 0.34,
+        "multivon-eval <-> opik": 0.2,
+        "multivon-eval <-> ragas": 0.21,
+        "multivon-eval <-> trulens": 0.19,
+        "ragas <-> opik": 0.21,
+        "ragas <-> trulens": 0.28,
+        "trulens <-> opik": 0.21
+      },
+      "task": "halueval-qa"
+    }
+  ]
+}

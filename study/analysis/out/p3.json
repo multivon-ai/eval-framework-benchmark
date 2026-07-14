@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "conditions": {
+      "A": "as-shipped default threshold",
+      "B": "locked dev-fitted threshold (study/thresholds_locked.json) applied to scores"
+    },
+    "error_semantics": "errors-as-failures primary (errored record = flagged); complete-case secondary (P4)",
+    "frameworks": [
+      "multivon-eval",
+      "deepeval",
+      "ragas",
+      "trulens",
+      "opik"
+    ],
+    "judges": [
+      "gpt-4o-mini",
+      "claude-haiku-4-5"
+    ],
+    "n_boot": 2000,
+    "runs_per_cell": {
+      "claude-haiku-4-5/halueval-qa": 1,
+      "claude-haiku-4-5/halueval-sum": 1,
+      "claude-haiku-4-5/ragtruth-sum": 1,
+      "gpt-4o-mini/halueval-qa": 1,
+      "gpt-4o-mini/halueval-sum": 1,
+      "gpt-4o-mini/ragtruth-sum": 1
+    },
+    "seed": 42,
+    "split": "dev",
+    "tasks": [
+      "ragtruth-sum",
+      "halueval-sum",
+      "halueval-qa"
+    ]
+  },
+  "p3": [
+    {
+      "R": 1,
+      "batch": 50,
+      "cross_flip_closed_form": 0.1162,
+      "cross_flip_mc": 0.1104,
+      "flip_difference": {
+        "skipped": "[gpt-4o-mini/ragtruth-sum] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
+      },
+      "gate": "fail if flagged rate > 20% (count > 10 of 50)",
+      "gate_fail_prob_mc": {
+        "deepeval": 0.0,
+        "multivon-eval": 0.276,
+        "opik": 0.0,
+        "ragas": 0.0,
+        "trulens": 0.0
+      },
+      "judge": "gpt-4o-mini",
+      "n_batches": 1000,
+      "n_faithful": 50,
+      "task": "ragtruth-sum",
+      "within_flip": null
+    },
+    {
+      "R": 1,
+      "batch": 50,
+      "cross_flip_closed_form": 0.4852,
+      "cross_flip_mc": 0.4826,
+      "flip_difference": {
+        "skipped": "[gpt-4o-mini/halueval-sum] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
+      },
+      "gate": "fail if flagged rate > 20% (count > 10 of 50)",
+      "gate_fail_prob_mc": {
+        "deepeval": 0.0,
+        "multivon-eval": 0.924,
+        "opik": 0.547,
+        "ragas": 0.0,
+        "trulens": 0.0
+      },
+      "judge": "gpt-4o-mini",
+      "n_batches": 1000,
+      "n_faithful": 50,
+      "task": "halueval-sum",
+      "within_flip": null
+    },
+    {
+      "R": 1,
+      "batch": 50,
+      "cross_flip_closed_form": 0.5128,
+      "cross_flip_mc": 0.509,
+      "flip_difference": {
+        "skipped": "[gpt-4o-mini/halueval-qa] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
+      },
+      "gate": "fail if flagged rate > 20% (count > 10 of 50)",
+      "gate_fail_prob_mc": {
+        "deepeval": 0.96,
+        "multivon-eval": 0.079,
+        "opik": 0.0,
+        "ragas": 0.526,
+        "trulens": 0.085
+      },
+      "judge": "gpt-4o-mini",
+      "n_batches": 1000,
+      "n_faithful": 50,
+      "task": "halueval-qa",
+      "within_flip": null
+    },
+    {
+      "R": 1,
+      "batch": 50,
+      "cross_flip_closed_form": 0.5934,
+      "cross_flip_mc": 0.5946,
+      "flip_difference": {
+        "skipped": "[claude-haiku-4-5/ragtruth-sum] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
+      },
+      "gate": "fail if flagged rate > 20% (count > 10 of 50)",
+      "gate_fail_prob_mc": {
+        "deepeval": 0.0,
+        "multivon-eval": 0.994,
+        "opik": 0.0,
+        "ragas": 0.979,
+        "trulens": 0.0
+      },
+      "judge": "claude-haiku-4-5",
+      "n_batches": 1000,
+      "n_faithful": 50,
+      "task": "ragtruth-sum",
+      "within_flip": null
+    },
+    {
+      "R": 1,
+      "batch": 50,
+      "cross_flip_closed_form": 0.4007,
+      "cross_flip_mc": 0.4016,
+      "flip_difference": {
+        "skipped": "[claude-haiku-4-5/halueval-sum] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
+      },
+      "gate": "fail if flagged rate > 20% (count > 10 of 50)",
+      "gate_fail_prob_mc": {
+        "deepeval": 0.0,
+        "multivon-eval": 0.999,
+        "opik": 0.01,
+        "ragas": 0.0,
+        "trulens": 0.0
+      },
+      "judge": "claude-haiku-4-5",
+      "n_batches": 1000,
+      "n_faithful": 50,
+      "task": "halueval-sum",
+      "within_flip": null
+    },
+    {
+      "R": 1,
+      "batch": 50,
+      "cross_flip_closed_form": 0.1518,
+      "cross_flip_mc": 0.1514,
+      "flip_difference": {
+        "skipped": "[claude-haiku-4-5/halueval-qa] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
+      },
+      "gate": "fail if flagged rate > 20% (count > 10 of 50)",
+      "gate_fail_prob_mc": {
+        "deepeval": 0.0,
+        "multivon-eval": 0.092,
+        "opik": 0.0,
+        "ragas": 0.269,
+        "trulens": 0.035
+      },
+      "judge": "claude-haiku-4-5",
+      "n_batches": 1000,
+      "n_faithful": 50,
+      "task": "halueval-qa",
+      "within_flip": null
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "conditions": {
+    "A": "as-shipped default threshold",
+    "B": "locked dev-fitted threshold (study/thresholds_locked.json) applied to scores"
+  },
+  "error_semantics": "errors-as-failures primary (errored record = flagged); complete-case secondary (P4)",
+  "frameworks": [
+    "multivon-eval",
+    "deepeval",
+    "ragas",
+    "trulens",
+    "opik"
+  ],
+  "judges": [
+    "gpt-4o-mini",
+    "claude-haiku-4-5"
+  ],
+  "n_boot": 2000,
+  "runs_per_cell": {
+    "claude-haiku-4-5/halueval-qa": 1,
+    "claude-haiku-4-5/halueval-sum": 1,
+    "claude-haiku-4-5/ragtruth-sum": 1,
+    "gpt-4o-mini/halueval-qa": 1,
+    "gpt-4o-mini/halueval-sum": 1,
+    "gpt-4o-mini/ragtruth-sum": 1
+  },
+  "seed": 42,
+  "split": "dev",
+  "tasks": [
+    "ragtruth-sum",
+    "halueval-sum",
+    "halueval-qa"
+  ]
+}

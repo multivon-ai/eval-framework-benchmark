@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "conditions": {
+      "A": "as-shipped default threshold",
+      "B": "locked dev-fitted threshold (study/thresholds_locked.json) applied to scores"
+    },
+    "error_semantics": "errors-as-failures primary (errored record = flagged); complete-case secondary (P4)",
+    "frameworks": [
+      "multivon-eval",
+      "deepeval",
+      "ragas",
+      "trulens",
+      "opik"
+    ],
+    "judges": [
+      "gpt-4o-mini",
+      "claude-haiku-4-5"
+    ],
+    "n_boot": 2000,
+    "runs_per_cell": {
+      "claude-haiku-4-5/halueval-qa": 1,
+      "claude-haiku-4-5/halueval-sum": 1,
+      "claude-haiku-4-5/ragtruth-sum": 1,
+      "gpt-4o-mini/halueval-qa": 1,
+      "gpt-4o-mini/halueval-sum": 1,
+      "gpt-4o-mini/ragtruth-sum": 1
+    },
+    "seed": 42,
+    "split": "dev",
+    "tasks": [
+      "ragtruth-sum",
+      "halueval-sum",
+      "halueval-qa"
+    ]
+  },
+  "p2": [
+    {
+      "judge": "gpt-4o-mini",
+      "skipped": "repeated-cell analysis requires R >= 2 runs; this cell has R=1 (dev split, gpt-4o-mini/ragtruth-sum)",
+      "task": "ragtruth-sum"
+    },
+    {
+      "judge": "gpt-4o-mini",
+      "skipped": "repeated-cell analysis requires R >= 2 runs; this cell has R=1 (dev split, gpt-4o-mini/halueval-sum)",
+      "task": "halueval-sum"
+    },
+    {
+      "judge": "gpt-4o-mini",
+      "skipped": "repeated-cell analysis requires R >= 2 runs; this cell has R=1 (dev split, gpt-4o-mini/halueval-qa)",
+      "task": "halueval-qa"
+    },
+    {
+      "judge": "claude-haiku-4-5",
+      "skipped": "repeated-cell analysis requires R >= 2 runs; this cell has R=1 (dev split, claude-haiku-4-5/ragtruth-sum)",
+      "task": "ragtruth-sum"
+    },
+    {
+      "judge": "claude-haiku-4-5",
+      "skipped": "repeated-cell analysis requires R >= 2 runs; this cell has R=1 (dev split, claude-haiku-4-5/halueval-sum)",
+      "task": "halueval-sum"
+    },
+    {
+      "judge": "claude-haiku-4-5",
+      "skipped": "repeated-cell analysis requires R >= 2 runs; this cell has R=1 (dev split, claude-haiku-4-5/halueval-qa)",
+      "task": "halueval-qa"
+    }
+  ]
+}

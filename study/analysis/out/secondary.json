@@ -1,0 +1,970 @@
+{
+  "meta": {
+    "conditions": {
+      "A": "as-shipped default threshold",
+      "B": "locked dev-fitted threshold (study/thresholds_locked.json) applied to scores"
+    },
+    "error_semantics": "errors-as-failures primary (errored record = flagged); complete-case secondary (P4)",
+    "frameworks": [
+      "multivon-eval",
+      "deepeval",
+      "ragas",
+      "trulens",
+      "opik"
+    ],
+    "judges": [
+      "gpt-4o-mini",
+      "claude-haiku-4-5"
+    ],
+    "n_boot": 2000,
+    "runs_per_cell": {
+      "claude-haiku-4-5/halueval-qa": 1,
+      "claude-haiku-4-5/halueval-sum": 1,
+      "claude-haiku-4-5/ragtruth-sum": 1,
+      "gpt-4o-mini/halueval-qa": 1,
+      "gpt-4o-mini/halueval-sum": 1,
+      "gpt-4o-mini/ragtruth-sum": 1
+    },
+    "seed": 42,
+    "split": "dev",
+    "tasks": [
+      "ragtruth-sum",
+      "halueval-sum",
+      "halueval-qa"
+    ]
+  },
+  "secondary": {
+    "kappa_self_cross": [
+      {
+        "judge": "gpt-4o-mini",
+        "skipped": "requires repeated runs (R=1)",
+        "task": "ragtruth-sum"
+      },
+      {
+        "judge": "gpt-4o-mini",
+        "skipped": "requires repeated runs (R=1)",
+        "task": "halueval-sum"
+      },
+      {
+        "judge": "gpt-4o-mini",
+        "skipped": "requires repeated runs (R=1)",
+        "task": "halueval-qa"
+      },
+      {
+        "judge": "claude-haiku-4-5",
+        "skipped": "requires repeated runs (R=1)",
+        "task": "ragtruth-sum"
+      },
+      {
+        "judge": "claude-haiku-4-5",
+        "skipped": "requires repeated runs (R=1)",
+        "task": "halueval-sum"
+      },
+      {
+        "judge": "claude-haiku-4-5",
+        "skipped": "requires repeated runs (R=1)",
+        "task": "halueval-qa"
+      }
+    ],
+    "mcnemar": [
+      {
+        "family": "all framework pairs within judge x task",
+        "judge": "gpt-4o-mini",
+        "pairs": {
+          "deepeval <-> opik": {
+            "b_only_first_flags": 0,
+            "c_only_second_flags": 9,
+            "p_exact": 0.003906,
+            "p_holm": 0.023438,
+            "significant_.05": true
+          },
+          "deepeval <-> ragas": {
+            "b_only_first_flags": 0,
+            "c_only_second_flags": 0,
+            "p_exact": 1.0,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "deepeval <-> trulens": {
+            "b_only_first_flags": 0,
+            "c_only_second_flags": 0,
+            "p_exact": 1.0,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "multivon-eval <-> deepeval": {
+            "b_only_first_flags": 34,
+            "c_only_second_flags": 0,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "multivon-eval <-> opik": {
+            "b_only_first_flags": 27,
+            "c_only_second_flags": 2,
+            "p_exact": 2e-06,
+            "p_holm": 1.1e-05,
+            "significant_.05": true
+          },
+          "multivon-eval <-> ragas": {
+            "b_only_first_flags": 34,
+            "c_only_second_flags": 0,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "multivon-eval <-> trulens": {
+            "b_only_first_flags": 34,
+            "c_only_second_flags": 0,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "ragas <-> opik": {
+            "b_only_first_flags": 0,
+            "c_only_second_flags": 9,
+            "p_exact": 0.003906,
+            "p_holm": 0.023438,
+            "significant_.05": true
+          },
+          "ragas <-> trulens": {
+            "b_only_first_flags": 0,
+            "c_only_second_flags": 0,
+            "p_exact": 1.0,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "trulens <-> opik": {
+            "b_only_first_flags": 0,
+            "c_only_second_flags": 9,
+            "p_exact": 0.003906,
+            "p_holm": 0.023438,
+            "significant_.05": true
+          }
+        },
+        "task": "ragtruth-sum"
+      },
+      {
+        "family": "all framework pairs within judge x task",
+        "judge": "gpt-4o-mini",
+        "pairs": {
+          "deepeval <-> opik": {
+            "b_only_first_flags": 0,
+            "c_only_second_flags": 45,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "deepeval <-> ragas": {
+            "b_only_first_flags": 1,
+            "c_only_second_flags": 13,
+            "p_exact": 0.001831,
+            "p_holm": 0.007324,
+            "significant_.05": true
+          },
+          "deepeval <-> trulens": {
+            "b_only_first_flags": 1,
+            "c_only_second_flags": 9,
+            "p_exact": 0.021484,
+            "p_holm": 0.064453,
+            "significant_.05": false
+          },
+          "multivon-eval <-> deepeval": {
+            "b_only_first_flags": 47,
+            "c_only_second_flags": 0,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "multivon-eval <-> opik": {
+            "b_only_first_flags": 12,
+            "c_only_second_flags": 10,
+            "p_exact": 0.831812,
+            "p_holm": 0.831812,
+            "significant_.05": false
+          },
+          "multivon-eval <-> ragas": {
+            "b_only_first_flags": 37,
+            "c_only_second_flags": 2,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "multivon-eval <-> trulens": {
+            "b_only_first_flags": 39,
+            "c_only_second_flags": 0,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "ragas <-> opik": {
+            "b_only_first_flags": 0,
+            "c_only_second_flags": 33,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "ragas <-> trulens": {
+            "b_only_first_flags": 5,
+            "c_only_second_flags": 1,
+            "p_exact": 0.21875,
+            "p_holm": 0.4375,
+            "significant_.05": false
+          },
+          "trulens <-> opik": {
+            "b_only_first_flags": 0,
+            "c_only_second_flags": 37,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          }
+        },
+        "task": "halueval-sum"
+      },
+      {
+        "family": "all framework pairs within judge x task",
+        "judge": "gpt-4o-mini",
+        "pairs": {
+          "deepeval <-> opik": {
+            "b_only_first_flags": 18,
+            "c_only_second_flags": 16,
+            "p_exact": 0.864166,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "deepeval <-> ragas": {
+            "b_only_first_flags": 21,
+            "c_only_second_flags": 19,
+            "p_exact": 0.874629,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "deepeval <-> trulens": {
+            "b_only_first_flags": 18,
+            "c_only_second_flags": 17,
+            "p_exact": 1.0,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "multivon-eval <-> deepeval": {
+            "b_only_first_flags": 22,
+            "c_only_second_flags": 22,
+            "p_exact": 1.0,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "multivon-eval <-> opik": {
+            "b_only_first_flags": 13,
+            "c_only_second_flags": 11,
+            "p_exact": 0.83882,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "multivon-eval <-> ragas": {
+            "b_only_first_flags": 16,
+            "c_only_second_flags": 14,
+            "p_exact": 0.855536,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "multivon-eval <-> trulens": {
+            "b_only_first_flags": 13,
+            "c_only_second_flags": 12,
+            "p_exact": 1.0,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "ragas <-> opik": {
+            "b_only_first_flags": 15,
+            "c_only_second_flags": 15,
+            "p_exact": 1.0,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "ragas <-> trulens": {
+            "b_only_first_flags": 10,
+            "c_only_second_flags": 11,
+            "p_exact": 1.0,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "trulens <-> opik": {
+            "b_only_first_flags": 9,
+            "c_only_second_flags": 8,
+            "p_exact": 1.0,
+            "p_holm": 1.0,
+            "significant_.05": false
+          }
+        },
+        "task": "halueval-qa"
+      },
+      {
+        "family": "all framework pairs within judge x task",
+        "judge": "claude-haiku-4-5",
+        "pairs": {
+          "deepeval <-> opik": {
+            "b_only_first_flags": 0,
+            "c_only_second_flags": 5,
+            "p_exact": 0.0625,
+            "p_holm": 0.1875,
+            "significant_.05": false
+          },
+          "deepeval <-> ragas": {
+            "b_only_first_flags": 1,
+            "c_only_second_flags": 35,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "deepeval <-> trulens": {
+            "b_only_first_flags": 1,
+            "c_only_second_flags": 1,
+            "p_exact": 1.0,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "multivon-eval <-> deepeval": {
+            "b_only_first_flags": 59,
+            "c_only_second_flags": 0,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "multivon-eval <-> opik": {
+            "b_only_first_flags": 56,
+            "c_only_second_flags": 2,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "multivon-eval <-> ragas": {
+            "b_only_first_flags": 41,
+            "c_only_second_flags": 16,
+            "p_exact": 0.001264,
+            "p_holm": 0.005054,
+            "significant_.05": true
+          },
+          "multivon-eval <-> trulens": {
+            "b_only_first_flags": 59,
+            "c_only_second_flags": 0,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "ragas <-> opik": {
+            "b_only_first_flags": 33,
+            "c_only_second_flags": 4,
+            "p_exact": 1e-06,
+            "p_holm": 5e-06,
+            "significant_.05": true
+          },
+          "ragas <-> trulens": {
+            "b_only_first_flags": 35,
+            "c_only_second_flags": 1,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "trulens <-> opik": {
+            "b_only_first_flags": 1,
+            "c_only_second_flags": 6,
+            "p_exact": 0.125,
+            "p_holm": 0.25,
+            "significant_.05": false
+          }
+        },
+        "task": "ragtruth-sum"
+      },
+      {
+        "family": "all framework pairs within judge x task",
+        "judge": "claude-haiku-4-5",
+        "pairs": {
+          "deepeval <-> opik": {
+            "b_only_first_flags": 0,
+            "c_only_second_flags": 24,
+            "p_exact": 0.0,
+            "p_holm": 1e-06,
+            "significant_.05": true
+          },
+          "deepeval <-> ragas": {
+            "b_only_first_flags": 1,
+            "c_only_second_flags": 12,
+            "p_exact": 0.003418,
+            "p_holm": 0.013672,
+            "significant_.05": true
+          },
+          "deepeval <-> trulens": {
+            "b_only_first_flags": 1,
+            "c_only_second_flags": 14,
+            "p_exact": 0.000977,
+            "p_holm": 0.004883,
+            "significant_.05": true
+          },
+          "multivon-eval <-> deepeval": {
+            "b_only_first_flags": 58,
+            "c_only_second_flags": 0,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "multivon-eval <-> opik": {
+            "b_only_first_flags": 34,
+            "c_only_second_flags": 0,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "multivon-eval <-> ragas": {
+            "b_only_first_flags": 48,
+            "c_only_second_flags": 1,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "multivon-eval <-> trulens": {
+            "b_only_first_flags": 45,
+            "c_only_second_flags": 0,
+            "p_exact": 0.0,
+            "p_holm": 0.0,
+            "significant_.05": true
+          },
+          "ragas <-> opik": {
+            "b_only_first_flags": 4,
+            "c_only_second_flags": 17,
+            "p_exact": 0.007197,
+            "p_holm": 0.021592,
+            "significant_.05": true
+          },
+          "ragas <-> trulens": {
+            "b_only_first_flags": 4,
+            "c_only_second_flags": 6,
+            "p_exact": 0.753906,
+            "p_holm": 0.753906,
+            "significant_.05": false
+          },
+          "trulens <-> opik": {
+            "b_only_first_flags": 2,
+            "c_only_second_flags": 13,
+            "p_exact": 0.007385,
+            "p_holm": 0.021592,
+            "significant_.05": true
+          }
+        },
+        "task": "halueval-sum"
+      },
+      {
+        "family": "all framework pairs within judge x task",
+        "judge": "claude-haiku-4-5",
+        "pairs": {
+          "deepeval <-> opik": {
+            "b_only_first_flags": 3,
+            "c_only_second_flags": 27,
+            "p_exact": 8e-06,
+            "p_holm": 6.7e-05,
+            "significant_.05": true
+          },
+          "deepeval <-> ragas": {
+            "b_only_first_flags": 12,
+            "c_only_second_flags": 25,
+            "p_exact": 0.047031,
+            "p_holm": 0.282186,
+            "significant_.05": false
+          },
+          "deepeval <-> trulens": {
+            "b_only_first_flags": 2,
+            "c_only_second_flags": 27,
+            "p_exact": 2e-06,
+            "p_holm": 1.5e-05,
+            "significant_.05": true
+          },
+          "multivon-eval <-> deepeval": {
+            "b_only_first_flags": 31,
+            "c_only_second_flags": 3,
+            "p_exact": 1e-06,
+            "p_holm": 8e-06,
+            "significant_.05": true
+          },
+          "multivon-eval <-> opik": {
+            "b_only_first_flags": 11,
+            "c_only_second_flags": 7,
+            "p_exact": 0.480682,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "multivon-eval <-> ragas": {
+            "b_only_first_flags": 26,
+            "c_only_second_flags": 11,
+            "p_exact": 0.020074,
+            "p_holm": 0.140517,
+            "significant_.05": false
+          },
+          "multivon-eval <-> trulens": {
+            "b_only_first_flags": 11,
+            "c_only_second_flags": 8,
+            "p_exact": 0.647606,
+            "p_holm": 1.0,
+            "significant_.05": false
+          },
+          "ragas <-> opik": {
+            "b_only_first_flags": 10,
+            "c_only_second_flags": 21,
+            "p_exact": 0.070756,
+            "p_holm": 0.353778,
+            "significant_.05": false
+          },
+          "ragas <-> trulens": {
+            "b_only_first_flags": 13,
+            "c_only_second_flags": 25,
+            "p_exact": 0.072951,
+            "p_holm": 0.353778,
+            "significant_.05": false
+          },
+          "trulens <-> opik": {
+            "b_only_first_flags": 10,
+            "c_only_second_flags": 9,
+            "p_exact": 1.0,
+            "p_holm": 1.0,
+            "significant_.05": false
+          }
+        },
+        "task": "halueval-qa"
+      }
+    ],
+    "ops": [
+      {
+        "R": 1,
+        "frameworks": {
+          "deepeval": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 0.0,
+            "mean_cost_usd": 0.0,
+            "mean_judge_calls": 0.0,
+            "mean_latency_ms": 10810.83,
+            "mean_prompt_tokens": 0.0,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.0
+          },
+          "multivon-eval": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 150.87,
+            "mean_cost_usd": 0.000998,
+            "mean_judge_calls": 8.77,
+            "mean_latency_ms": 8730.408,
+            "mean_prompt_tokens": 6048.87,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.09979
+          },
+          "opik": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 67.2,
+            "mean_cost_usd": 0.00023,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 1605.851,
+            "mean_prompt_tokens": 1263.9,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.022988
+          },
+          "ragas": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 800.8,
+            "mean_cost_usd": 0.0008,
+            "mean_judge_calls": 2.0,
+            "mean_latency_ms": 132018.366,
+            "mean_prompt_tokens": 2130.98,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.08001
+          },
+          "trulens": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 117.27,
+            "mean_cost_usd": 0.000102,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 40906.155,
+            "mean_prompt_tokens": 211.46,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.010209
+          }
+        },
+        "judge": "gpt-4o-mini",
+        "task": "ragtruth-sum"
+      },
+      {
+        "R": 1,
+        "frameworks": {
+          "deepeval": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 0.0,
+            "mean_cost_usd": 0.0,
+            "mean_judge_calls": 0.0,
+            "mean_latency_ms": 9931.218,
+            "mean_prompt_tokens": 0.0,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.0
+          },
+          "multivon-eval": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 95.86,
+            "mean_cost_usd": 0.000716,
+            "mean_judge_calls": 6.44,
+            "mean_latency_ms": 6794.089,
+            "mean_prompt_tokens": 4391.37,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.071619
+          },
+          "opik": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 86.89,
+            "mean_cost_usd": 0.000237,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 2173.596,
+            "mean_prompt_tokens": 1234.45,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.02373
+          },
+          "ragas": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 487.35,
+            "mean_cost_usd": 0.000598,
+            "mean_judge_calls": 2.0,
+            "mean_latency_ms": 128934.516,
+            "mean_prompt_tokens": 2035.08,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.059764
+          },
+          "trulens": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 65.47,
+            "mean_cost_usd": 6.2e-05,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 28821.156,
+            "mean_prompt_tokens": 148.23,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.006153
+          }
+        },
+        "judge": "gpt-4o-mini",
+        "task": "halueval-sum"
+      },
+      {
+        "R": 1,
+        "frameworks": {
+          "deepeval": {
+            "api_error_rate": 0.17,
+            "error_rate_warning_ge_10pct": true,
+            "mean_completion_tokens": 0.0,
+            "mean_cost_usd": 0.0,
+            "mean_judge_calls": 0.0,
+            "mean_latency_ms": 45290.479,
+            "mean_prompt_tokens": 0.0,
+            "n_errors": 17,
+            "n_evals": 100,
+            "total_cost_usd": 0.0
+          },
+          "multivon-eval": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 19.38,
+            "mean_cost_usd": 4.2e-05,
+            "mean_judge_calls": 2.25,
+            "mean_latency_ms": 2066.155,
+            "mean_prompt_tokens": 205.82,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.004248
+          },
+          "opik": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 50.83,
+            "mean_cost_usd": 0.000112,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 1807.41,
+            "mean_prompt_tokens": 545.83,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.011239
+          },
+          "ragas": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 173.41,
+            "mean_cost_usd": 0.000296,
+            "mean_judge_calls": 2.0,
+            "mean_latency_ms": 124400.62,
+            "mean_prompt_tokens": 1278.22,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.029581
+          },
+          "trulens": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 11.0,
+            "mean_cost_usd": 1.9e-05,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 14680.574,
+            "mean_prompt_tokens": 82.76,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.001899
+          }
+        },
+        "judge": "gpt-4o-mini",
+        "task": "halueval-qa"
+      },
+      {
+        "R": 1,
+        "frameworks": {
+          "deepeval": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 0.0,
+            "mean_cost_usd": 0.0,
+            "mean_judge_calls": 0.0,
+            "mean_latency_ms": 8212.853,
+            "mean_prompt_tokens": 0.0,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.0
+          },
+          "multivon-eval": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 198.73,
+            "mean_cost_usd": 0.007631,
+            "mean_judge_calls": 8.69,
+            "mean_latency_ms": 10385.146,
+            "mean_prompt_tokens": 6637.8,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.763145
+          },
+          "opik": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 214.2,
+            "mean_cost_usd": 0.00261,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 3482.148,
+            "mean_prompt_tokens": 1538.91,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.260991
+          },
+          "ragas": {
+            "api_error_rate": 0.35,
+            "error_rate_warning_ge_10pct": true,
+            "mean_completion_tokens": 1907.19,
+            "mean_cost_usd": 0.015777,
+            "mean_judge_calls": 2.75,
+            "mean_latency_ms": 143480.732,
+            "mean_prompt_tokens": 6240.91,
+            "n_errors": 35,
+            "n_evals": 100,
+            "total_cost_usd": 1.577686
+          },
+          "trulens": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 151.72,
+            "mean_cost_usd": 0.000992,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 47872.321,
+            "mean_prompt_tokens": 233.49,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.099209
+          }
+        },
+        "judge": "claude-haiku-4-5",
+        "task": "ragtruth-sum"
+      },
+      {
+        "R": 1,
+        "frameworks": {
+          "deepeval": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 0.0,
+            "mean_cost_usd": 0.0,
+            "mean_judge_calls": 0.0,
+            "mean_latency_ms": 8572.523,
+            "mean_prompt_tokens": 0.0,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.0
+          },
+          "multivon-eval": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 147.0,
+            "mean_cost_usd": 0.006032,
+            "mean_judge_calls": 6.98,
+            "mean_latency_ms": 9936.161,
+            "mean_prompt_tokens": 5296.97,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.603197
+          },
+          "opik": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 202.83,
+            "mean_cost_usd": 0.002532,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 4199.41,
+            "mean_prompt_tokens": 1517.84,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.253199
+          },
+          "ragas": {
+            "api_error_rate": 0.04,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 883.48,
+            "mean_cost_usd": 0.008496,
+            "mean_judge_calls": 2.09,
+            "mean_latency_ms": 156424.77,
+            "mean_prompt_tokens": 4078.69,
+            "n_errors": 4,
+            "n_evals": 100,
+            "total_cost_usd": 0.849609
+          },
+          "trulens": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 91.41,
+            "mean_cost_usd": 0.000619,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 32956.519,
+            "mean_prompt_tokens": 162.06,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.061911
+          }
+        },
+        "judge": "claude-haiku-4-5",
+        "task": "halueval-sum"
+      },
+      {
+        "R": 1,
+        "frameworks": {
+          "deepeval": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 0.0,
+            "mean_cost_usd": 0.0,
+            "mean_judge_calls": 0.0,
+            "mean_latency_ms": 4460.663,
+            "mean_prompt_tokens": 0.0,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.0
+          },
+          "multivon-eval": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 43.82,
+            "mean_cost_usd": 0.000518,
+            "mean_judge_calls": 2.67,
+            "mean_latency_ms": 3394.678,
+            "mean_prompt_tokens": 298.94,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.051804
+          },
+          "opik": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 129.27,
+            "mean_cost_usd": 0.001399,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 3361.884,
+            "mean_prompt_tokens": 753.06,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.139941
+          },
+          "ragas": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 305.71,
+            "mean_cost_usd": 0.004498,
+            "mean_judge_calls": 2.0,
+            "mean_latency_ms": 154648.339,
+            "mean_prompt_tokens": 2969.26,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.449781
+          },
+          "trulens": {
+            "api_error_rate": 0.0,
+            "error_rate_warning_ge_10pct": false,
+            "mean_completion_tokens": 40.31,
+            "mean_cost_usd": 0.000287,
+            "mean_judge_calls": 1.0,
+            "mean_latency_ms": 14702.217,
+            "mean_prompt_tokens": 85.89,
+            "n_errors": 0,
+            "n_evals": 100,
+            "total_cost_usd": 0.028744
+          }
+        },
+        "judge": "claude-haiku-4-5",
+        "task": "halueval-qa"
+      }
+    ],
+    "passk": [
+      {
+        "judge": "gpt-4o-mini",
+        "skipped": "pass@k/pass^k need repeated runs; R=1",
+        "task": "ragtruth-sum"
+      },
+      {
+        "judge": "gpt-4o-mini",
+        "skipped": "pass@k/pass^k need repeated runs; R=1",
+        "task": "halueval-sum"
+      },
+      {
+        "judge": "gpt-4o-mini",
+        "skipped": "pass@k/pass^k need repeated runs; R=1",
+        "task": "halueval-qa"
+      },
+      {
+        "judge": "claude-haiku-4-5",
+        "skipped": "pass@k/pass^k need repeated runs; R=1",
+        "task": "ragtruth-sum"
+      },
+      {
+        "judge": "claude-haiku-4-5",
+        "skipped": "pass@k/pass^k need repeated runs; R=1",
+        "task": "halueval-sum"
+      },
+      {
+        "judge": "claude-haiku-4-5",
+        "skipped": "pass@k/pass^k need repeated runs; R=1",
+        "task": "halueval-qa"
+      }
+    ]
+  }
+}
