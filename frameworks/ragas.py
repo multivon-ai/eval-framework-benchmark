@@ -38,6 +38,24 @@ class RagasFaithfulness(FrameworkRunner):
     def _make_openai_llm(self) -> Any:
         from ragas.llms import LangchainLLMWrapper  # noqa
         from langchain_openai import ChatOpenAI  # noqa
+        m = self._judge_model.lower()
+        if m.startswith("gpt-5") and "chat" not in m:
+            # (import the real class — ragas.llms.LangchainLLMWrapper is a
+            # DeprecationHelper shim that cannot be subclassed)
+            from ragas.llms.base import LangchainLLMWrapper  # noqa
+            # Reasoning-tier OpenAI judges (gpt-5.x) accept ONLY their
+            # default temperature (1): explicit 0/0.01 is a 400
+            # invalid_request_error. RAGAS hardwires a call-time judge
+            # temperature via BaseRagasLLM.get_temperature (0.01 for n=1),
+            # which bypasses langchain's own init-time gpt-5 temperature
+            # drop. Override get_temperature to return the provider's sole
+            # accepted value — the shipped prompts and parser are untouched
+            # (transport plumbing, same class of fix as the Anthropic top_p
+            # drop below; PREREG_ADDENDUM.md §11).
+            class _DefaultTemperatureWrapper(LangchainLLMWrapper):
+                def get_temperature(self, n: int) -> float:
+                    return 1.0
+            return _DefaultTemperatureWrapper(ChatOpenAI(model=self._judge_model))
         return LangchainLLMWrapper(ChatOpenAI(
             model=self._judge_model, temperature=0.0,
         ))

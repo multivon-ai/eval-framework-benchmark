@@ -438,3 +438,113 @@ snapshot ids.**
 | trulens | gpt-4o-mini | halueval-qa | — | 0.5 | nan | 0.761 | 0 |
 | trulens | gpt-4o-mini | halueval-sum | — | 0.7889 | nan | 0.737 | 0 |
 | trulens | gpt-4o-mini | ragtruth-sum | — | 0.9028 | nan | 0.709 | 0 |
+
+## §11 — Strong-judge ablation (plan §5 judge 3 / A1) + A2 fallback decision (2026-07-15)
+
+### §11.1 Ablation subset rule
+
+`study/items/ragtruth-sum_ablation_150.json` = the **FIRST 150 items of the
+committed `ragtruth-sum_test_500.json`** — a deterministic prefix; **no new
+sampling decisions** were taken. The file is byte-derived
+(`json.dumps(items[:150], indent=2, ensure_ascii=False)`) from the committed
+500-item file (sha256 `9145e0aa…`, unchanged, §7.1) and verified byte-exact
+by `sample_items.py --verify`. sha256 of the subset file:
+`20453c0fc70105ec07e838e8036107703ea11af2660942e5211a8c4180c23a3d`; sha256 of
+its id list: `c25ea5da29ba349f…`. Labels stay hidden; because the prefix is
+id-sorted within the original 300-item draw, the subset's label balance is
+**unknown by construction** (labels were never read) and will be reported at
+unblinding. Runner: `run_study.py --split ablation` accepts **exactly one
+cell shape** — ragtruth-sum × gpt-5.5 × run 0, all 5 frameworks — and refuses
+every other ablation address and any non-ablation use of the gpt-5.5 judge.
+(Operational addition: `--stop-after N` batches one invocation's submissions
+for foreground execution; unlike `--limit` it changes no item set and stamps
+nothing.)
+
+### §11.2 Snapshot probe + forced temperature deviation
+
+One-probe verification (raw chat completion, before any cell spend): the API
+**accepts `gpt-5.5-2026-04-23` and echoes exactly that id** in response
+metadata. However the snapshot is reasoning-tier: it **rejects
+`temperature=0`** (400 `unsupported_value` — "Only the default (1) value is
+supported") and **rejects `max_tokens`** (requires `max_completion_tokens`).
+Plan §5's "temperature = 0 everywhere" is therefore **unsatisfiable on this
+judge**; the effective ablation judge temperature is the provider default
+(1) for all five frameworks — symmetric, and consistent with plan §5's rule
+that framework-hardcoded judge params are "part of the framework". Per-
+framework instantiation (verified with one off-cell dev-item probe each,
+item `ragtruth_sum_0`):
+
+* **multivon-eval** — judge path already omits temperature and uses
+  `max_completion_tokens`; no change.
+* **deepeval** — ships a model registry that knows `gpt-5.5-2026-04-23`
+  (`supports_temperature=False` → auto-adjusts to 1); no change.
+* **ragas** — hardwires a call-time judge temperature of **0.01**
+  (`BaseRagasLLM.get_temperature(n=1)`), which bypasses langchain's own
+  init-time gpt-5 temperature drop → 400 on every call. Adapter fix
+  (transport plumbing, same class as the §9 top_p drop): on the gpt-5.x
+  OpenAI path only, the wrapper's `get_temperature` returns the provider's
+  sole accepted value (1.0). The primary-judge path is byte-unchanged
+  (still 0.01).
+* **trulens** — native reasoning-model handling (`gpt-5` prefix →
+  temperature dropped, `reasoning_effort="medium"` added, OpenAI Responses
+  API); no change; recorded as framework property.
+* **opik** — LiteLLM drops `temperature=0.0` with a logged warning ("only
+  supports temperature=1"); no change.
+
+### §11.3 Run + error census (750 evals, run 2026-07-14→15, workers 4)
+
+All 5 cells complete, 150/150 records each, no duplicate ids, no
+limit-stamps, **no 429s observed** (main test lanes ran concurrently).
+**Judge snapshot `gpt-5.5-2026-04-23` confirmed on all 600 thread-attributed
+records** (deepeval's calls are never thread-attributable in this runner —
+same as every deepeval cell; its model id is the pinned snapshot and the
+probe confirmed the API echo).
+
+| framework | records | errors | error classes |
+|---|---|---|---|
+| multivon-eval | 150 | **71 (47.3%)** | 67 ValueError empty-claims-reply (internal claims call hardcodes `max_tokens=512`; reasoning tokens exhaust it, ct=512 exactly); 3 JudgeUnavailable 400 "could not finish message: output limit reached" (same cause, API-side); 1 JudgeUnavailable verdict coverage 4/10 |
+| deepeval | 150 | 0 | — |
+| ragas | 150 | 0 | — |
+| trulens | 150 | 0 | — |
+| opik | 150 | 0 | — |
+
+The multivon-eval errors are **systematic** (framework-internal token budget
+vs reasoning-token accounting — a framework property under a stronger judge,
+directly analogous to the ragas×claude parse degradation in §10): per the
+triage protocol they are **kept as data, no repair pass** (errors-as-failures
+is the preregistered primary). Overall ablation error rate 71/750 = 9.5%,
+concentrated 100% in one framework — the api_error_rate secondary endpoint
+will carry this.
+
+**Ablation spend.** Attributed tokens: 1,178,272 prompt + 564,763
+completion → **$22.84** at the registry price $5/$30 per Mtok (deepeval and
+litellm registries agree; no public price sheet existed at freeze, §8).
+Adding unattributed deepeval (~$9 est. from its call profile) and the
+retried error attempts (~$5, last-attempt-only tokens are in the records),
+total ≈ **$35–38 vs the §8 scaled estimate of $8.33**. Cause: reasoning
+tokens billed as completion tokens — the §8 scaling used the gpt-4o-mini
+token profile, which a reasoning tier does not follow. The ~$29 overrun is
+absorbed by the untouched $400 contingency line; projected study total
+rises to ≈ $620, still **within the $780 cap**.
+
+### §11.4 A2 fallback decision (preregistered)
+
+**Decision: the A2 logging-proxy replay is NOT attempted — the plan §8
+fallback is the outcome.** The proxy's preregistered 1-day time-box was
+consumed; per the plan's explicit clause ("if the proxy is not working
+within 1 day, use standalone prompt extraction + a shared minimal parser,
+and report the parsing confound as a limitation") the fallback instrument
+was built and executed (`study/a2_prompts.py`): (a) exact judge request
+bodies captured at the shared httpx transport for one fixed dev item
+(`ragtruth_sum_0`) for all 5 frameworks × both primary judges →
+`study/a2/prompts/{framework}_{judge}.json`; (b) RAGAS's canonical NLI
+judge prompt sent once per primary judge (2 calls, temperature 0) and the
+identical raw completion offered to each framework's own parse path where
+standalone-reachable (trulens: primary parse path NOT-REACHABLE standalone,
+terminal regex fallback exercised and labelled; opik's parser rejects the
+foreign completion format — format coupling, both judges). Report with the
+prompt-scaffold fingerprint table (call counts 1–8, prompt sizes 5.2k–22k
+chars, Responses-API/structured-output/system-message splits, rubric
+wording markers) and the paper's limitation paragraph:
+`study/a2/A2_REPORT.md`. Part A+B spend: 10 evals + 2 completions ≈ $0.06,
+under the $1 JOB-2 budget.

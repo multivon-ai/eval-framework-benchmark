@@ -62,6 +62,14 @@ SEED_DEV = 20260714   # drawn FIRST (plan §3)
 SEED_TEST = 20260713
 N_TEST, N_DEV = 300, 100
 
+# Strong-judge ablation subset (plan §5 judge 3, PREREG_ADDENDUM.md §11):
+# the FIRST 150 items of the committed ragtruth-sum_test_500.json — a
+# deterministic prefix, no new sampling decisions. The file
+# study/items/ragtruth-sum_ablation_150.json is byte-derived from the
+# committed 500-item file (json.dumps(items[:150], indent=2)); labels
+# stay hidden.
+N_ABLATION = 150
+
 # §7 escalation (PREREG_ADDENDUM.md, 2026-07-13): RAGTruth-Sum test split
 # escalated 300 → 500 (250/250) per the plan's sole preregistered escalation.
 # The extension is PREFIX-STABLE: the original 300-item draw is reproduced
@@ -294,7 +302,8 @@ def load_study_items(task: str, split: str) -> list[Case]:
     run.py never reads Case.label; analysis must go through the guarded
     unblind path in study/analyze_study.py.
     """
-    n = n_test_for(task) if split == "test" else N_DEV
+    n = (n_test_for(task) if split == "test"
+         else N_ABLATION if split == "ablation" else N_DEV)
     rows = json.loads((ITEMS_DIR / f"{task}_{split}_{n}.json").read_text())
     return [Case(id=r["id"], task=r["task"], context=r["context"],
                  question=r["question"], answer=r["answer"],
@@ -354,8 +363,20 @@ def verify() -> None:
         print(f"{task}: disjoint, balanced, exclusion-clean, label-free "
               f"({len(test)} test / {len(dev)} dev)")
 
+    # Strong-judge ablation subset (addendum §11): derived, not sampled —
+    # must equal json.dumps(first 150 items of the committed 500 file).
+    abl_path = ITEMS_DIR / f"ragtruth-sum_ablation_{N_ABLATION}.json"
+    if abl_path.exists():
+        full = json.loads((ITEMS_DIR / "ragtruth-sum_test_500.json").read_text())
+        expect = json.dumps(full[:N_ABLATION], indent=2, ensure_ascii=False) + "\n"
+        assert abl_path.read_text() == expect, \
+            "ablation_150 file is NOT the byte-exact first-150 prefix of the 500"
+        print(f"ragtruth-sum: ablation subset verified — byte-exact first-"
+              f"{N_ABLATION} prefix of the committed 500-item file")
+
     committed = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
-                 for p in sorted(ITEMS_DIR.glob("*.json"))}
+                 for p in sorted(ITEMS_DIR.glob("*.json"))
+                 if p.name != abl_path.name}
     for name, digest in committed.items():
         assert h1[name] == digest, f"{name}: committed file differs from deterministic re-sample"
     print("committed item files match deterministic re-sample byte-for-byte")

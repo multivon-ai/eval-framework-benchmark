@@ -16,8 +16,19 @@ test escalated to n=500):
                                                                  40,000 evals
 
 The strong-judge ablation (gpt-5.5-2026-04-23, RAGTruth-Sum n=150 subset,
-750 evals) is NOT addressable by this runner: no 150-item file exists yet
-and its subset rule is not preregistered here. It gets its own entry point.
+750 evals; addendum §10/§11) is addressed as its own split:
+
+    python study/run_study.py --task ragtruth-sum --split ablation \\
+        --framework ragas --judge gpt-5.5 --run 0
+
+Subset rule: study/items/ragtruth-sum_ablation_150.json = the FIRST 150
+items of the committed ragtruth-sum_test_500.json (deterministic prefix,
+no new sampling decisions; labels stay hidden). Only that exact cell shape
+(ragtruth-sum x gpt-5.5 x run 0, all 5 frameworks) is accepted — any other
+ablation address, or any non-ablation use of gpt-5.5, is refused. The
+record "judge" field and output directory use the series tag "gpt-5.5";
+adapters receive the pinned snapshot id gpt-5.5-2026-04-23. Output:
+study/runs/raw/gpt-5.5/ragtruth-sum_ablation/{framework}_run0.jsonl.
 
 Output: study/runs/raw/{judge}/{task}_{split}/{framework}_run{R}.jsonl —
 one JSON record per item (schema in _record()).
@@ -100,14 +111,28 @@ from sample_items import load_study_items  # noqa: E402
 # ── Design constants (plan §6 + PREREG_ADDENDUM.md §7.1) ─────────────────────
 
 TASKS = ("ragtruth-sum", "halueval-sum", "halueval-qa")
-SPLITS = ("dev", "test")
+SPLITS = ("dev", "test", "ablation")
 FRAMEWORKS = ("multivon-eval", "deepeval", "ragas", "trulens", "opik")
-JUDGES = ("gpt-4o-mini", "claude-haiku-4-5")
+PRIMARY_JUDGES = ("gpt-4o-mini", "claude-haiku-4-5")
+JUDGES = ("gpt-4o-mini", "claude-haiku-4-5", "gpt-5.5")
 SEED = 42
+
+# Strong-judge ablation (plan §5 judge 3, PREREG_ADDENDUM.md §10/§11):
+# EXACTLY ONE cell shape is preregistered — ragtruth-sum x gpt-5.5 x run 0
+# on the 150-item deterministic prefix subset. Any other --split ablation
+# address, and any non-ablation use of the gpt-5.5 judge, is refused.
+# The adapter receives the exact pinned snapshot id; the record's "judge"
+# field and the output directory use the series tag "gpt-5.5".
+ABLATION_JUDGE = "gpt-5.5"
+ABLATION_SNAPSHOT = "gpt-5.5-2026-04-23"   # frozen Day 1, addendum §10
+ABLATION_TASK = "ragtruth-sum"
+N_ABLATION = 150
 
 
 def runs_for(task: str, split: str, judge: str) -> int:
     """Preregistered run count for a (task, split, judge) — §7.1 table."""
+    if split == "ablation":
+        return 1                                   # strong judge: R=1
     if split == "dev":
         return 1                                   # dev: R=1, both judges
     if task == "ragtruth-sum":
@@ -116,6 +141,8 @@ def runs_for(task: str, split: str, judge: str) -> int:
 
 
 def items_count(task: str, split: str) -> int:
+    if split == "ablation":
+        return N_ABLATION
     if split == "dev":
         return 100
     return 500 if task == "ragtruth-sum" else 300  # §7.1 escalation
@@ -156,10 +183,13 @@ def all_cells() -> list[tuple[str, str, str, str, int]]:
     cells = []
     for split in ("dev", "test"):
         for task in TASKS:
-            for judge in JUDGES:
+            for judge in PRIMARY_JUDGES:
                 for fw in FRAMEWORKS:
                     for r in range(runs_for(task, split, judge)):
                         cells.append((task, split, fw, judge, r))
+    # Strong-judge ablation: the single preregistered cell shape x 5 fws.
+    for fw in FRAMEWORKS:
+        cells.append((ABLATION_TASK, "ablation", fw, ABLATION_JUDGE, 0))
     return cells
 
 
@@ -240,7 +270,11 @@ def make_runner(framework: str, judge: str):
         from frameworks.opik import OpikHallucination as Cls
     else:
         raise ValueError(framework)
-    kwargs: dict = {"judge_model": judge}
+    # The ablation judge is addressed by its series tag ("gpt-5.5" — record
+    # field + output directory) but the adapter must receive the exact
+    # pinned snapshot id (addendum §10).
+    adapter_model = ABLATION_SNAPSHOT if judge == ABLATION_JUDGE else judge
+    kwargs: dict = {"judge_model": adapter_model}
     seed_passed = False
     if "seed" in inspect.signature(Cls.__init__).parameters:
         kwargs["seed"] = SEED
@@ -323,8 +357,6 @@ def mode_cell_list() -> int:
               f"{st['state']:<9}{st['done']}/{st['total']:<10} {' '.join(flags)}")
     print(f"\n{len(cells)} cells: {counts['done']} done, {counts['partial']} "
           f"partial, {counts['pending']} pending | evals {done_evals}/{total_evals}")
-    print("(strong-judge ablation, 750 evals, is out of scope for this "
-          "runner — see module docstring)")
     return 0
 
 
@@ -339,7 +371,12 @@ def mode_estimate() -> int:
     per_judge: dict[str, float] = {}
     print(f"{'framework':<15}{'judge':<19}{'remaining':<11}projected $")
     for (fw, judge), rem in sorted(remaining_by.items()):
-        usd = rem * MEASURED_COST_PER_EVAL[fw][judge]
+        cost = MEASURED_COST_PER_EVAL[fw].get(judge)
+        if cost is None:                 # gpt-5.5 ablation: no public price;
+            print(f"{fw:<15}{judge:<19}{rem:<11}(unpriced — §8 scaled "
+                  f"estimate covers the 750-eval ablation at ~$8.33 total)")
+            continue
+        usd = rem * cost
         total_usd += usd
         per_judge[judge] = per_judge.get(judge, 0.0) + usd
         print(f"{fw:<15}{judge:<19}{rem:<11}${usd:.2f}")
@@ -348,8 +385,9 @@ def mode_estimate() -> int:
         print(f"  {judge}: ${usd:.2f}")
     print(f"projected remaining spend: ${total_usd:.2f}")
     print("(per-eval costs = §8 smoke-measured means, "
-          "study/smoke/multipliers.json; excludes the 750-eval strong-judge "
-          "ablation, priced separately at ~$8.33 in §8)")
+          "study/smoke/multipliers.json; the 750-eval strong-judge ablation "
+          "has no public per-token price and is carried at the §8 scaled "
+          "estimate of ~$8.33 total)")
     return 0
 
 
@@ -415,6 +453,20 @@ def run_cell(args: argparse.Namespace) -> int:
     task, split, framework, judge, run = (
         args.task, args.split, args.framework, args.judge, args.run)
 
+    # Strong-judge ablation guard (addendum §10/§11): exactly ONE cell shape
+    # is preregistered. Refuse everything else, in both directions.
+    if split == "ablation" and (task != ABLATION_TASK or judge != ABLATION_JUDGE):
+        raise SystemExit(
+            f"ABORT: the strong-judge ablation is preregistered ONLY as "
+            f"{ABLATION_TASK} x {ABLATION_JUDGE} (snapshot "
+            f"{ABLATION_SNAPSHOT}) x run 0 on the 150-item prefix subset. "
+            f"Refusing {task} x {judge}.")
+    if split != "ablation" and judge == ABLATION_JUDGE:
+        raise SystemExit(
+            f"ABORT: judge {ABLATION_JUDGE} ({ABLATION_SNAPSHOT}) is "
+            f"preregistered ONLY for --split ablation (plan §5 judge 3). "
+            f"Refusing {task}/{split}.")
+
     n_runs = runs_for(task, split, judge)
     if not (0 <= run < n_runs):
         raise SystemExit(
@@ -457,6 +509,16 @@ def run_cell(args: argparse.Namespace) -> int:
         print(f"### cell already complete: {cell_label} — {scope} items "
               f"present in {path}. Use --fresh to redo.", file=sys.stderr)
         return 0
+    if args.stop_after is not None and len(todo) > args.stop_after:
+        # Invocation batching ONLY: submit the first N pending items and
+        # exit cleanly; the cell resumes on the next invocation. Unlike
+        # --limit this does NOT change the item set and stamps nothing —
+        # the finished cell is indistinguishable from a single-invocation
+        # run (append-resume is already the design).
+        print(f"NOTE: --stop-after {args.stop_after} — running "
+              f"{args.stop_after}/{len(todo)} pending items this invocation",
+              file=sys.stderr)
+        todo = todo[:args.stop_after]
 
     runner, seed_passed = make_runner(framework, judge)
     install_interceptor()
@@ -513,9 +575,9 @@ def repair_cell(args: argparse.Namespace) -> int:
     """
     task, split, framework, judge, run = (
         args.task, args.split, args.framework, args.judge, args.run)
-    if args.limit is not None or args.fresh:
+    if args.limit is not None or args.fresh or args.stop_after is not None:
         raise SystemExit("ABORT: --repair-errors is incompatible with "
-                         "--limit/--fresh.")
+                         "--limit/--fresh/--stop-after.")
     path = cell_path(task, split, framework, judge, run)
     cell_label = f"{task}/{split} {framework} x {judge} run{run}"
     records = read_cell_records(path)
@@ -610,6 +672,10 @@ def main() -> int:
     p.add_argument("--limit", type=int, default=None,
                    help="VALIDATION ONLY: run first N items; stamps 'limit' "
                         "into every record so partial cells are detectable")
+    p.add_argument("--stop-after", type=int, default=None,
+                   help="invocation batching: submit at most N pending items "
+                        "then exit cleanly (cell resumes next invocation; "
+                        "no stamping — item set is unchanged)")
     p.add_argument("--fresh", action="store_true",
                    help="explicitly redo the cell: existing file is moved to "
                         ".bak (default behaviour is append-mode resume)")
