@@ -1,4 +1,9 @@
-"""P3 — CI-gate flip simulation (plan §7, H3).
+"""P3 — false-positive-batch gate-flip rate (plan §7, H3).
+
+Relabeled per addendum §12.5 (construction byte-unchanged): batches are
+drawn only from the faithful-labeled half, so P3 estimates the flip
+probability of a false-positive CONTROL batch under framework
+substitution — not generic deployed release-gate behavior.
 
 Gate: "fail the build if flagged rate > 20%" on batches of 50 items
 bootstrap-resampled from the faithful-labeled half (Condition A verdicts,
@@ -88,6 +93,8 @@ def p3_cell(cell: Cell, frameworks: list[str], gold: np.ndarray) -> dict:
 
     out = {"judge": cell.judge, "task": cell.task, "R": R,
            "n_faithful": m, "batch": BATCH, "n_batches": N_BATCHES,
+           "endpoint": "false-positive-batch gate-flip rate (addendum "
+                       "§12.5 relabel; construction unchanged)",
            "gate": "fail if flagged rate > 20% (count > 10 of 50)",
            "gate_fail_prob_mc": {
                fw: round(float(fail[[i for i, (f, _) in enumerate(cols)

@@ -548,3 +548,97 @@ chars, Responses-API/structured-output/system-message splits, rubric
 wording markers) and the paper's limitation paragraph:
 `study/a2/A2_REPORT.md`. Part A+B spend: 10 evals + 2 completions ≈ $0.06,
 under the $1 JOB-2 budget.
+
+## §12 — Pre-unblind endpoint clarifications (2026-07-15)
+
+Recorded **before** the `study/FREEZE` manifest exists and therefore before
+any test-label access is mechanically possible (the §2/§5 guard). Every item
+below closes an audited piece of decision-rule wiggle-room found in the
+results-blind manuscript review (reviewers R1/R4); none touches a test
+label, a raw test record's content, or any already-computed number. Where a
+rule is encoded in `study/analysis/`, the pipeline was updated in this same
+commit and re-validated on the dev split (deterministic double-run).
+
+1. **H2 falsification condition (c), made symmetric with confirmation.**
+   Condition (c) fires iff **≥6/10 Δ_fg BCa CIs include zero AND pooled
+   B ≤ W** (point estimates, per repeated cell). On the P5 kill-switch set
+   (4 frameworks = 6 pairs) the analogue is **≥4/6**; both instantiate the
+   same strict-majority rule (count > n_pairs/2) that
+   `analysis/decomposition.py` now computes (`h2_falsification_c`).
+   *Rationale:* confirmation said "≥6/10" while falsification said "most" —
+   an asymmetric escape hatch (R4, Results Finding 1).
+
+2. **Kill-switch (P5) pair rule for H2.** On the reduced 4-framework set,
+   H2's confirmation bar is **≥4/6 of the remaining pairs** with Δ_fg CI
+   excluding zero from above (strict majority of the 6 third-party pairs),
+   pooled B−W criterion unchanged. This is what the pipeline's existing
+   `h2_majority_positive` (n_pos > n_pairs/2) already evaluates on the
+   6-pair set. *Rationale:* "≥6/10" cannot be carried over literally to 6
+   pairs; as written P5 was not mechanically executable for H2 (R1 top
+   issue 5, scribe-verified).
+
+3. **H5 descriptive endpoint fixed.** H5 (mechanism, exploratory) =
+   (a) the A2 fallback prompt-scaffold fingerprint table (§11.4,
+   `study/a2/A2_REPORT.md`) and (b) the **proportion of framework pairs
+   whose disagreement pattern is consistent with scaffold differences**
+   (pair disagrees AND the pair's scaffold fingerprints differ on ≥1
+   recorded axis), reported **descriptively — no hypothesis test, no
+   confirmation/falsification bar**. *Rationale:* "disagreement localizes
+   to the scaffolds" had no defined metric, leaving post-unblind
+   discretion (R4, Design Finding 1).
+
+4. **Mixed-judge F1 falsification fires per-judge arm.** Falsification
+   condition (b) — default-τ F1 spread within 0.05 — **fires separately
+   for each primary-judge arm**: spread ≤ 0.05 for one judge fires (b) for
+   that arm and is reported as such; there is no both-judges conjunction
+   and no undefined mixed state. Encoded as
+   `falsification_b_fires_this_judge_arm` in `analysis/performance.py`
+   (Condition A). *Rationale:* the both-judges requirement made
+   falsification needlessly hard and left mixed results in a gray area
+   (R4, Results Finding 3).
+
+5. **P3 relabeled "false-positive-batch gate-flip rate".** Construction
+   byte-unchanged (1,000 batches of 50 resampled from the faithful-labeled
+   half; gate fail iff flagged rate > 20%; H3 statistic T = p_cross −
+   p_within with jackknife 95% CI). The label in `ANALYSIS.md` and the
+   JSON `endpoint` field now say what the estimand is: flip probability of
+   a **false-positive control batch**, not generic deployed release-gate
+   behavior. *Rationale:* the old label invited a broader deployed-gate
+   reading the estimand does not support (R1 top issue 3,
+   scribe-verified).
+
+6. **Δ_fg's stated model = conditional Bernoulli (framing only; math
+   unchanged).** For each item i, framework f's runs are modeled iid
+   Bernoulli(p_if), independent across runs given the item; under this
+   model Δ_fg = E_i[(p_if − p_ig)²] ≥ 0, with equality iff p_if = p_ig
+   a.s. — the null "exchangeable wrappers" is formally p_if = p_ig for all
+   i. Outside the model, Δ_fg is read descriptively as cross-framework
+   mismatch in excess of the mean within-framework mismatch, not as an
+   assumption-free variance decomposition. Estimator, CI, and decision
+   rule are byte-unchanged. *Rationale:* the "assumption-light" framing
+   overclaimed (R1 top issue 1).
+
+7. **B−W normalization convention = what `analysis/decomposition.py`
+   implements (stated, not changed).** Per item: W_i = mean over
+   frameworks of the **ddof=1** (unbiased, denominator R−1) sample
+   variance across the R runs; B_i = **ddof=1** (denominator F−1) sample
+   variance across the F framework run-means **minus W_i/R** — the
+   unbiased finite-run correction *under the ddof=1 convention with
+   independent run noise* (with population normalization the correction
+   would instead be (1−1/F)·W/R; we use ddof=1 throughout). Pooling =
+   unweighted mean over items; negative B_i not truncated; B/W and B−W
+   CIs from the same item bootstrap. B is dispersion among the five
+   *selected* framework configurations, not a population variance
+   component. *Rationale:* the correction's validity depends on the
+   normalization convention, which was previously unstated (R1 top
+   issue 2).
+
+8. **Test-split error policy: errors-as-failures primary, NO test repair
+   pass.** The §10 dev repair pass was dev-only. On the test split,
+   terminal errors (after the runner's built-in retries) are kept as data
+   — errored record = flagged — in every primary analysis; there is no
+   post-hoc re-attempt of errored test ids. Complete-case is the
+   preregistered secondary sensitivity (P4 table; repository JSON).
+   *Rationale:* a dev-style repair pass on test would be a post-hoc,
+   outcome-adjacent intervention (R1, Execution-Trail major issue 4);
+   fixing the policy before data access removes the degree of freedom.

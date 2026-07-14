@@ -52,7 +52,15 @@ def _p2_section(lines, entries, pid: str) -> None:
         lines.append(f"- R={e['R']}, n={e['n_items']}, B={e['n_boot']}")
         lines.append(f"- H2 pairs with Δ>0 and BCa CI excluding 0: "
                      f"**{e['h2_pairs_positive_ci_excl0']}** "
-                     f"(majority: {e['h2_majority_positive']})")
+                     f"(strict majority — ≥6/10 full set / ≥4/6 "
+                     f"kill-switch set, addendum §12: "
+                     f"{e['h2_majority_positive']})")
+        fc = e["h2_falsification_c"]
+        lines.append(f"- H2 falsification (c) (addendum §12.1): CIs "
+                     f"including 0 = {fc['pairs_ci_including_0']} "
+                     f"(majority: {fc['majority_include_0']}), pooled "
+                     f"B ≤ W: {fc['pooled_B_le_W']} → fires: "
+                     f"**{fc['fires']}**")
         bw = e["pooled_BW"]
         lines.append(f"- **[{tag}] pooled B−W = {bw['B_minus_W']:.4f}** "
                      f"{_ci(bw['B_minus_W_ci95'])}; B = {bw['B']:.4f} "
@@ -87,6 +95,8 @@ def _p3_section(lines, entries, pid: str) -> None:
         tag = f"{pid}/A/{e['task']}/{e['judge']}"
         lines.append(f"### [{tag}]")
         lines.append("")
+        lines.append(f"- endpoint: false-positive-batch gate-flip rate "
+                     f"(addendum §12.5 relabel; construction unchanged)")
         lines.append(f"- gate: {e['gate']}; {e['n_batches']} batches of "
                      f"{e['batch']} from the faithful half "
                      f"(n={e['n_faithful']}); R={e['R']}")
@@ -123,6 +133,11 @@ def _p4_section(lines, entries, pid: str) -> None:
                          f"{_ci(c['f1_spread_ci95'])} (descriptive-with-CI "
                          f"per addendum §7; max {c['f1_max_framework']}, "
                          f"min {c['f1_min_framework']})")
+            if cond == "A":
+                lines.append(f"- falsification (b), per-judge arm "
+                             f"(addendum §12.4; spread ≤ 0.05 at "
+                             f"defaults): fires for this arm: "
+                             f"**{c['falsification_b_fires_this_judge_arm']}**")
             lines.append("")
             lines.append("| framework | P (EaF) | R (EaF) | F1 (EaF) | "
                          "bal.acc | F1 (complete-case) | n_err |")
@@ -231,14 +246,17 @@ def write_markdown(res, figures: list[Path], path: Path) -> None:
     lines += ["## P2 — Δ_fg decomposition + pooled B−W (H2; repeated cells "
               "only)", ""]
     _p2_section(lines, res["p2"], "P2")
-    lines += ["## P3 — CI-gate flip simulation (H3)", ""]
+    lines += ["## P3 — false-positive-batch gate-flip rate (H3; "
+              "addendum §12.5 relabel, construction unchanged)", ""]
     _p3_section(lines, res["p3"], "P3")
     lines += ["## P4 — default-τ precision/recall/F1 vs gold + F1 spread", ""]
     _p4_section(lines, res["p4"], "P4")
 
     lines += ["## P5 — kill-switch: P1–P4 excluding multivon-eval",
               "",
-              f"Frameworks: {', '.join(res['p5']['frameworks'])}", ""]
+              f"Frameworks: {', '.join(res['p5']['frameworks'])} — H2 "
+              "pair bar on this reduced set: ≥4/6 pairs (strict majority; "
+              "addendum §12.2)", ""]
     _p1_section(lines, res["p5"]["p1"], "P5.1")
     _p2_section(lines, res["p5"]["p2"], "P5.2")
     _p3_section(lines, res["p5"]["p3"], "P5.3")

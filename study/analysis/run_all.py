@@ -70,7 +70,9 @@ def analyze(split: str, n_boot: int) -> dict:
                        "B": "locked dev-fitted threshold "
                             "(study/thresholds_locked.json) applied to scores"},
         "error_semantics": "errors-as-failures primary (errored record = "
-                           "flagged); complete-case secondary (P4)",
+                           "flagged); complete-case secondary (P4); "
+                           "test-split policy: NO repair pass (addendum "
+                           "§12.8)",
         "runs_per_cell": {f"{j}/{t}": cells[(j, t)].R
                           for j in data.JUDGES for t in data.TASKS},
     }}

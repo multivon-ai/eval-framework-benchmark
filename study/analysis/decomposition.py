@@ -7,6 +7,25 @@ v_ifr ∈ {0,1}:
   Δ_fg = δ_fg − (π_f + π_g)/2                    BCa item-cluster CI
   B/W  (Design 2 finite-run bias-corrected): per item W_i = mean_f
   var_r(Y_ifr), B_i = var_f(mean_r Y_ifr) − W_i/R; negatives NOT truncated.
+
+Stated model (addendum §12.6, framing only — math unchanged): per item i,
+framework f's runs are iid Bernoulli(p_if) given the item; then
+Δ_fg = E_i[(p_if − p_ig)²] ≥ 0, zero iff p_if = p_ig a.s. Outside that
+model Δ_fg reads descriptively as cross-framework mismatch in excess of
+the mean within-framework mismatch.
+
+Normalization convention (addendum §12.7, stated not changed): all sample
+variances use ddof=1 (denominators R−1 across runs, F−1 across
+frameworks); under ddof=1 with independent run noise the unbiased
+finite-run correction is exactly W_i/R. Pooling = unweighted mean over
+items; B is dispersion among the selected configurations, not a
+population variance component.
+
+Decision rules (addendum §12.1–.2): H2 confirmation and falsification (c)
+both use the strict-majority pair count (> n_pairs/2), i.e. ≥6/10 on the
+full 5-framework set and ≥4/6 on the P5 kill-switch set; falsification (c)
+additionally requires pooled B ≤ W.
+
 Plus pass@k / pass^k via multivon-eval 0.16.0's passk module (success =
 verdict matches gold), and per-item flip probability across runs vs across
 frameworks. All of these SKIP with a reason when R = 1.
@@ -53,6 +72,7 @@ def p2_cell(cell: Cell, frameworks: list[str], n_boot: int) -> dict:
         out["pi_f"][fw] = {"estimate": round(est, 4),
                            "ci95": [round(x, 4) for x in ci]}
     n_pos = 0
+    n_incl0 = 0
     for (fa, fb), d in terms["delta"].items():
         w = d - (terms["pi"][fa] + terms["pi"][fb]) / 2.0
         theta, ci = stats.bca_ci_mean(
@@ -60,6 +80,7 @@ def p2_cell(cell: Cell, frameworks: list[str], n_boot: int) -> dict:
                 [stats.SEED, 22, _code(cell), _fwcode(fa), _fwcode(fb)]))
         excl0 = ci[0] > 0 or ci[1] < 0
         n_pos += int(theta > 0 and ci[0] > 0)
+        n_incl0 += int(not excl0)
         out["pairs"][f"{fa} <-> {fb}"] = {
             "delta_fg": round(float(d.mean()), 4),
             "pi_mean": round(float(((terms["pi"][fa]
@@ -69,9 +90,21 @@ def p2_cell(cell: Cell, frameworks: list[str], n_boot: int) -> dict:
             "ci_excludes_0": bool(excl0),
         }
     n_pairs = len(terms["delta"])
+    # Strict majority (> n_pairs/2) = ≥6/10 full set, ≥4/6 kill-switch set
+    # (addendum §12.1–.2).
     out["h2_pairs_positive_ci_excl0"] = f"{n_pos}/{n_pairs}"
     out["h2_majority_positive"] = bool(n_pos > n_pairs / 2)
     out["pooled_BW"] = _pooled_bw(cell, frameworks, n_boot)
+    bw = out["pooled_BW"]
+    out["h2_falsification_c"] = {
+        "rule": "fires iff strict majority of Delta_fg CIs include zero "
+                "(>=6/10 full set, >=4/6 kill-switch set) AND pooled "
+                "B <= W (addendum §12.1)",
+        "pairs_ci_including_0": f"{n_incl0}/{n_pairs}",
+        "majority_include_0": bool(n_incl0 > n_pairs / 2),
+        "pooled_B_le_W": bool(bw["B"] <= bw["W"]),
+        "fires": bool(n_incl0 > n_pairs / 2 and bw["B"] <= bw["W"]),
+    }
     out["per_item_flip"] = _flip_probs(terms, frameworks)
     return out
 

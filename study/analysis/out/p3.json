@@ -4,7 +4,7 @@
       "A": "as-shipped default threshold",
       "B": "locked dev-fitted threshold (study/thresholds_locked.json) applied to scores"
     },
-    "error_semantics": "errors-as-failures primary (errored record = flagged); complete-case secondary (P4)",
+    "error_semantics": "errors-as-failures primary (errored record = flagged); complete-case secondary (P4); test-split policy: NO repair pass (addendum \u00a712.8)",
     "frameworks": [
       "multivon-eval",
       "deepeval",
@@ -39,6 +39,7 @@
       "batch": 50,
       "cross_flip_closed_form": 0.1162,
       "cross_flip_mc": 0.1104,
+      "endpoint": "false-positive-batch gate-flip rate (addendum \u00a712.5 relabel; construction unchanged)",
       "flip_difference": {
         "skipped": "[gpt-4o-mini/ragtruth-sum] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
       },
@@ -61,6 +62,7 @@
       "batch": 50,
       "cross_flip_closed_form": 0.4852,
       "cross_flip_mc": 0.4826,
+      "endpoint": "false-positive-batch gate-flip rate (addendum \u00a712.5 relabel; construction unchanged)",
       "flip_difference": {
         "skipped": "[gpt-4o-mini/halueval-sum] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
       },
@@ -83,6 +85,7 @@
       "batch": 50,
       "cross_flip_closed_form": 0.5128,
       "cross_flip_mc": 0.509,
+      "endpoint": "false-positive-batch gate-flip rate (addendum \u00a712.5 relabel; construction unchanged)",
       "flip_difference": {
         "skipped": "[gpt-4o-mini/halueval-qa] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
       },
@@ -105,6 +108,7 @@
       "batch": 50,
       "cross_flip_closed_form": 0.5934,
       "cross_flip_mc": 0.5946,
+      "endpoint": "false-positive-batch gate-flip rate (addendum \u00a712.5 relabel; construction unchanged)",
       "flip_difference": {
         "skipped": "[claude-haiku-4-5/ragtruth-sum] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
       },
@@ -127,6 +131,7 @@
       "batch": 50,
       "cross_flip_closed_form": 0.4007,
       "cross_flip_mc": 0.4016,
+      "endpoint": "false-positive-batch gate-flip rate (addendum \u00a712.5 relabel; construction unchanged)",
       "flip_difference": {
         "skipped": "[claude-haiku-4-5/halueval-sum] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
       },
@@ -149,6 +154,7 @@
       "batch": 50,
       "cross_flip_closed_form": 0.1518,
       "cross_flip_mc": 0.1514,
+      "endpoint": "false-positive-batch gate-flip rate (addendum \u00a712.5 relabel; construction unchanged)",
       "flip_difference": {
         "skipped": "[claude-haiku-4-5/halueval-qa] within-framework flips need R >= 2 runs; R=1 (dev split) \u2014 confirmatory H3 difference not computable"
       },

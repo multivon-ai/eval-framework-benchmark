@@ -45,7 +45,11 @@ def p4_cell(cell: Cell, frameworks: list[str], gold: np.ndarray,
             entry["complete_case"] = _vs_gold(pred[keep], gold[keep])
             by_fw[fw] = entry
         f1s = {fw: by_fw[fw]["errors_as_failures"]["f1"] for fw in frameworks}
-        spread, ci = _spread_ci(cell, frameworks, cond, gold, n_boot, rng)
+        spread, ci, fw_cis = _spread_ci(cell, frameworks, cond, gold,
+                                        n_boot, rng)
+        for fw in frameworks:
+            by_fw[fw]["errors_as_failures"]["f1_ci95"] = [
+                round(x, 4) for x in fw_cis[fw]]
         out["conditions"][cond] = {
             "per_framework": by_fw,
             "f1_spread_max_minus_min": round(spread, 4),
@@ -53,27 +57,39 @@ def p4_cell(cell: Cell, frameworks: list[str], gold: np.ndarray,
             "f1_max_framework": max(f1s, key=f1s.get),
             "f1_min_framework": min(f1s, key=f1s.get),
         }
+        if cond == "A":
+            # Addendum §12.4: falsification (b) fires per-judge arm —
+            # default-τ F1 spread within 0.05 for THIS judge's arm.
+            out["conditions"]["A"]["falsification_b_fires_this_judge_arm"] \
+                = bool(spread <= 0.05)
     return out
 
 
 def _spread_ci(cell: Cell, frameworks: list[str], cond: str,
-               gold: np.ndarray, n_boot: int,
-               rng: np.random.Generator) -> tuple[float, list[float]]:
+               gold: np.ndarray, n_boot: int, rng: np.random.Generator
+               ) -> tuple[float, list[float], dict[str, list[float]]]:
     """max−min F1 across frameworks (errors-as-failures), percentile
     item-cluster bootstrap. Descriptive-with-CI per addendum §7 (the F1-gap
-    test was demoted)."""
+    test was demoted). Also returns per-framework F1 CIs from the SAME
+    bootstrap draws (figure whiskers; no extra rng consumption)."""
     P = np.stack([cell.v[cond][fw][0] for fw in frameworks]).astype(bool)
     G = gold.astype(bool)
     point = float(stats.f1_vec(P, G).max() - stats.f1_vec(P, G).min())
     n = cell.n
     idx = rng.integers(0, n, size=(n_boot, n))
     boots = np.empty(n_boot)
+    boots_fw = np.empty((len(frameworks), n_boot))
     for lo in range(0, n_boot, 1000):
         sl = slice(lo, min(lo + 1000, n_boot))
         f1 = stats.f1_vec(P[:, idx[sl]], G[idx[sl]])   # (F, chunk)
         boots[sl] = f1.max(axis=0) - f1.min(axis=0)
+        boots_fw[:, sl] = f1
     lo_, hi_ = np.percentile(boots, [2.5, 97.5])
-    return point, [float(lo_), float(hi_)]
+    fw_cis = {}
+    for i, fw in enumerate(frameworks):
+        flo, fhi = np.percentile(boots_fw[i], [2.5, 97.5])
+        fw_cis[fw] = [float(flo), float(fhi)]
+    return point, [float(lo_), float(hi_)], fw_cis
 
 
 def ops_cell(cell: Cell, frameworks: list[str]) -> dict:
