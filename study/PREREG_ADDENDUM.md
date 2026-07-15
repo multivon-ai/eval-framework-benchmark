@@ -642,3 +642,9 @@ commit and re-validated on the dev split (deterministic double-run).
    *Rationale:* a dev-style repair pass on test would be a post-hoc,
    outcome-adjacent intervention (R1, Execution-Trail major issue 4);
    fixing the policy before data access removes the degree of freedom.
+
+## §13 — Mid-run operational notes (no measurement changes)
+
+- Two runner processes wedged on single items without a per-item timeout (RAGAS cells, 2026-07-14/15); killed and resumed via the runner's item-level append-resume. No records lost or altered.
+- Discovered 2026-07-15: LangChain-internal LangSmith tracing was active for RAGAS cells throughout (a `lsv2_` key present in the local environment; LangChain auto-traces when one is found). Implication is latency overhead and third-party trace upload of prompts/completions only — gold labels never enter the runner and were not exposed. Tracing was uniformly ON for all RAGAS cells up to this note and is uniformly OFF for the remaining 28 cells (24 non-RAGAS + 4 RAGAS), disabled via LANGCHAIN_TRACING_V2=false et al. Judge model, temperature, prompts, and parsing are unaffected; recorded as an operational covariate (affects latency metrics only; latency is a secondary descriptive endpoint).
+- Remaining 28 cells re-scheduled from one serial lane into two parallel lanes (24 fast-framework cells; 4 RAGAS cells) to cut wall-clock. Concurrency of API calls per cell (workers=8) unchanged.
