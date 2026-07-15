@@ -1,0 +1,83 @@
+Package jsonschema not present in requirements.
+  halueval-sum/test trulens x gpt-4o-mini run2: 10/300 new (10/300 total, 0 errors)
+
+Pace has a long delay of 53.493082 seconds. There might have been a burst of
+requests which may become a problem for the receiver of whatever is being paced.
+Consider reducing the `seconds_per_period` (currently 60.0 [seconds]) over which to
+maintain pace to reduce burstiness. " Alternatively reduce `marks_per_second`
+(currently 1.0 [1/second]) to reduce the number of marks
+per second in that period.
+
+  halueval-sum/test trulens x gpt-4o-mini run2: 20/300 new (20/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 30/300 new (30/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 40/300 new (40/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 50/300 new (50/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 60/300 new (60/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 70/300 new (70/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 80/300 new (80/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 90/300 new (90/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 100/300 new (100/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 110/300 new (110/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 120/300 new (120/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 130/300 new (130/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 140/300 new (140/300 total, 0 errors)
+/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/trulens/feedback/llm_provider.py:2857: UserWarning: Failed to process and remove trivial statements. Proceeding with all statements.
+  warnings.warn(
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 320 [type=json_invalid, input_value='{"criteria":"Guilty plea...sentence. That will run', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=3.
+  halueval-sum/test trulens x gpt-4o-mini run2: 150/300 new (150/300 total, 0 errors)
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 288 [type=json_invalid, input_value='{"criteria":"Guilty plea...uilty plea included an ', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=2.
+  halueval-sum/test trulens x gpt-4o-mini run2: 160/300 new (160/300 total, 0 errors)
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 305 [type=json_invalid, input_value='{"criteria":"Guilty plea...ed an 18-month sentence', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=1.
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 331 [type=json_invalid, input_value='{"criteria":"Guilty plea...hat will run concurrent', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=0.
+  halueval-sum/test trulens x gpt-4o-mini run2: 170/300 new (170/300 total, 0 errors)
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 320 [type=json_invalid, input_value='{"criteria":"Guilty plea...sentence. That will run', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=3.
+  halueval-sum/test trulens x gpt-4o-mini run2: 180/300 new (180/300 total, 0 errors)
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 320 [type=json_invalid, input_value='{"criteria":"Guilty plea...sentence. That will run', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=2.
+  halueval-sum/test trulens x gpt-4o-mini run2: 190/300 new (190/300 total, 0 errors)
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 320 [type=json_invalid, input_value='{"criteria":"Guilty plea...sentence. That will run', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=1.
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 331 [type=json_invalid, input_value='{"criteria":"Guilty plea...hat will run concurrent', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=0.
+  halueval-sum/test trulens x gpt-4o-mini run2: 200/300 new (200/300 total, 0 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 210/300 new (210/300 total, 0 errors)
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 331 [type=json_invalid, input_value='{"criteria":"Guilty plea...hat will run concurrent', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=3.
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 320 [type=json_invalid, input_value='{"criteria":"Guilty plea...sentence. That will run', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=2.
+  halueval-sum/test trulens x gpt-4o-mini run2: 220/300 new (220/300 total, 0 errors)
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 320 [type=json_invalid, input_value='{"criteria":"Guilty plea...sentence. That will run', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=1.
+  halueval-sum/test trulens x gpt-4o-mini run2: 230/300 new (230/300 total, 0 errors)
+OpenAIEndpoint request failed <class 'pydantic_core._pydantic_core.ValidationError'>=1 validation error for ChainOfThoughtResponse
+  Invalid JSON: EOF while parsing a string at line 1 column 331 [type=json_invalid, input_value='{"criteria":"Guilty plea...hat will run concurrent', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid. Retries remaining=0.
+  halueval-sum/test trulens x gpt-4o-mini run2: 240/300 new (240/300 total, 1 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 250/300 new (250/300 total, 1 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 260/300 new (260/300 total, 1 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 270/300 new (270/300 total, 1 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 280/300 new (280/300 total, 1 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 290/300 new (290/300 total, 1 errors)
+  halueval-sum/test trulens x gpt-4o-mini run2: 300/300 new (300/300 total, 1 errors)
+[done] halueval-sum/test trulens x gpt-4o-mini run2 -> /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/gpt-4o-mini/halueval-sum_test/trulens_run2.jsonl (+300 records, 1 errors, 1207s)
+WARNING: 1/300 evals recorded errors (errors-as-failures per plan §7 P4; inspect before repeats).
+### RESUMING halueval-sum/test trulens x gpt-4o-mini run2: 300/300 done in /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/gpt-4o-mini/halueval-sum_test/trulens_run2.jsonl
+### RESUMING halueval-sum/test trulens x gpt-4o-mini run2: 300/300 done in /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/gpt-4o-mini/halueval-sum_test/trulens_run2.jsonl
+### cell already complete: halueval-sum/test trulens x gpt-4o-mini run2 — all 300 items present in /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/gpt-4o-mini/halueval-sum_test/trulens_run2.jsonl. Use --fresh to redo.
+### cell already complete: halueval-sum/test trulens x gpt-4o-mini run2 — all 300 items present in /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/gpt-4o-mini/halueval-sum_test/trulens_run2.jsonl. Use --fresh to redo.

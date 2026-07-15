@@ -1,0 +1,22 @@
+Package jsonschema not present in requirements.
+  halueval-sum/dev trulens x gpt-4o-mini run0: 10/100 new (10/100 total, 0 errors)
+
+Pace has a long delay of 50.017705 seconds. There might have been a burst of
+requests which may become a problem for the receiver of whatever is being paced.
+Consider reducing the `seconds_per_period` (currently 60.0 [seconds]) over which to
+maintain pace to reduce burstiness. " Alternatively reduce `marks_per_second`
+(currently 1.0 [1/second]) to reduce the number of marks
+per second in that period.
+
+  halueval-sum/dev trulens x gpt-4o-mini run0: 20/100 new (20/100 total, 0 errors)
+  halueval-sum/dev trulens x gpt-4o-mini run0: 30/100 new (30/100 total, 0 errors)
+  halueval-sum/dev trulens x gpt-4o-mini run0: 40/100 new (40/100 total, 0 errors)
+  halueval-sum/dev trulens x gpt-4o-mini run0: 50/100 new (50/100 total, 0 errors)
+/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/trulens/feedback/llm_provider.py:2857: UserWarning: Failed to process and remove trivial statements. Proceeding with all statements.
+  warnings.warn(
+  halueval-sum/dev trulens x gpt-4o-mini run0: 60/100 new (60/100 total, 0 errors)
+  halueval-sum/dev trulens x gpt-4o-mini run0: 70/100 new (70/100 total, 0 errors)
+  halueval-sum/dev trulens x gpt-4o-mini run0: 80/100 new (80/100 total, 0 errors)
+  halueval-sum/dev trulens x gpt-4o-mini run0: 90/100 new (90/100 total, 0 errors)
+  halueval-sum/dev trulens x gpt-4o-mini run0: 100/100 new (100/100 total, 0 errors)
+[done] halueval-sum/dev trulens x gpt-4o-mini run0 -> /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/gpt-4o-mini/halueval-sum_dev/trulens_run0.jsonl (+100 records, 0 errors, 370s)

@@ -1,0 +1,249 @@
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 10/500 new (10/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 20/500 new (20/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 30/500 new (30/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 40/500 new (40/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 50/500 new (50/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 60/500 new (60/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 70/500 new (70/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 80/500 new (80/500 total, 0 errors)
+Task exception was never retrieved
+future: <Task finished name='Task-829' coro=<AsyncClient.aclose() done, defined at /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/streams/tls.py", line 248, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 1397, in aclose
+    self._transport.close()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/selector_events.py", line 864, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 762, in call_soon
+    self._check_closed()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 520, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-830' coro=<AsyncClient.aclose() done, defined at /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/streams/tls.py", line 248, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 1397, in aclose
+    self._transport.close()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/selector_events.py", line 864, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 762, in call_soon
+    self._check_closed()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 520, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-831' coro=<AsyncClient.aclose() done, defined at /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/streams/tls.py", line 248, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 1397, in aclose
+    self._transport.close()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/selector_events.py", line 864, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 762, in call_soon
+    self._check_closed()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 520, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-832' coro=<AsyncClient.aclose() done, defined at /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/streams/tls.py", line 248, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 1397, in aclose
+    self._transport.close()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/selector_events.py", line 864, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 762, in call_soon
+    self._check_closed()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 520, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-833' coro=<AsyncClient.aclose() done, defined at /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/streams/tls.py", line 248, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 1397, in aclose
+    self._transport.close()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/selector_events.py", line 864, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 762, in call_soon
+    self._check_closed()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 520, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-834' coro=<AsyncClient.aclose() done, defined at /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/streams/tls.py", line 248, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 1397, in aclose
+    self._transport.close()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/selector_events.py", line 864, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 762, in call_soon
+    self._check_closed()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 520, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Task exception was never retrieved
+future: <Task finished name='Task-835' coro=<AsyncClient.aclose() done, defined at /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py:1978> exception=RuntimeError('Event loop is closed')>
+Traceback (most recent call last):
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_client.py", line 1985, in aclose
+    await self._transport.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpx/_transports/default.py", line 406, in aclose
+    await self._pool.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 353, in aclose
+    await self._close_connections(closing_connections)
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/streams/tls.py", line 248, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 1397, in aclose
+    self._transport.close()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/selector_events.py", line 864, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 762, in call_soon
+    self._check_closed()
+  File "/Users/siddharthsrivastava/.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 520, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 90/500 new (90/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 100/500 new (100/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 110/500 new (110/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 120/500 new (120/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 130/500 new (130/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 140/500 new (140/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 150/500 new (150/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 160/500 new (160/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 170/500 new (170/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 180/500 new (180/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 190/500 new (190/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 200/500 new (200/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 210/500 new (210/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 220/500 new (220/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 230/500 new (230/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 240/500 new (240/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 250/500 new (250/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 260/500 new (260/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 270/500 new (270/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 280/500 new (280/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 290/500 new (290/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 300/500 new (300/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 310/500 new (310/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 320/500 new (320/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 330/500 new (330/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 340/500 new (340/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 350/500 new (350/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 360/500 new (360/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 370/500 new (370/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 380/500 new (380/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 390/500 new (390/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 400/500 new (400/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 410/500 new (410/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 420/500 new (420/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 430/500 new (430/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 440/500 new (440/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 450/500 new (450/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 460/500 new (460/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 470/500 new (470/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 480/500 new (480/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 490/500 new (490/500 total, 0 errors)
+  ragtruth-sum/test ragas x gpt-4o-mini run2: 500/500 new (500/500 total, 0 errors)
+[done] ragtruth-sum/test ragas x gpt-4o-mini run2 -> /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/gpt-4o-mini/ragtruth-sum_test/ragas_run2.jsonl (+500 records, 0 errors, 8445s)
+### RESUMING ragtruth-sum/test ragas x gpt-4o-mini run2: 500/500 done in /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/gpt-4o-mini/ragtruth-sum_test/ragas_run2.jsonl
+### cell already complete: ragtruth-sum/test ragas x gpt-4o-mini run2 — all 500 items present in /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/gpt-4o-mini/ragtruth-sum_test/ragas_run2.jsonl. Use --fresh to redo.

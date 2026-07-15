@@ -1,0 +1,69 @@
+Package jsonschema not present in requirements.
+/Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/.venv-study/lib/python3.11/site-packages/trulens/feedback/llm_provider.py:2857: UserWarning: Failed to process and remove trivial statements. Proceeding with all statements.
+  warnings.warn(
+
+Pace has a long delay of 54.557052 seconds. There might have been a burst of
+requests which may become a problem for the receiver of whatever is being paced.
+Consider reducing the `seconds_per_period` (currently 60.0 [seconds]) over which to
+maintain pace to reduce burstiness. " Alternatively reduce `marks_per_second`
+(currently 1.0 [1/second]) to reduce the number of marks
+per second in that period.
+
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 10/500 new (10/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 20/500 new (20/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 30/500 new (30/500 total, 0 errors)
+LiteLLMEndpoint request failed <class 'litellm.exceptions.InternalServerError'>=litellm.InternalServerError: AnthropicException - [Errno 51] Network is unreachable. Handle with `litellm.InternalServerError`.. Retries remaining=3.
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 40/500 new (40/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 50/500 new (50/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 60/500 new (60/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 70/500 new (70/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 80/500 new (80/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 90/500 new (90/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 100/500 new (100/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 110/500 new (110/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 120/500 new (120/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 130/500 new (130/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 140/500 new (140/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 150/500 new (150/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 160/500 new (160/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 170/500 new (170/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 180/500 new (180/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 190/500 new (190/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 200/500 new (200/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 210/500 new (210/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 220/500 new (220/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 230/500 new (230/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 240/500 new (240/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 250/500 new (250/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 260/500 new (260/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 270/500 new (270/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 280/500 new (280/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 290/500 new (290/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 300/500 new (300/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 310/500 new (310/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 320/500 new (320/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 330/500 new (330/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 340/500 new (340/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 350/500 new (350/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 360/500 new (360/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 370/500 new (370/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 380/500 new (380/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 390/500 new (390/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 400/500 new (400/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 410/500 new (410/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 420/500 new (420/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 430/500 new (430/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 440/500 new (440/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 450/500 new (450/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 460/500 new (460/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 470/500 new (470/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 480/500 new (480/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 490/500 new (490/500 total, 0 errors)
+  ragtruth-sum/test trulens x claude-haiku-4-5 run2: 500/500 new (500/500 total, 0 errors)
+[done] ragtruth-sum/test trulens x claude-haiku-4-5 run2 -> /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/claude-haiku-4-5/ragtruth-sum_test/trulens_run2.jsonl (+500 records, 0 errors, 3249s)
+
+[1;31mGive Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new[0m
+LiteLLM.Info: If you need to debug this error, use `litellm._turn_on_debug()'.
+
+### RESUMING ragtruth-sum/test trulens x claude-haiku-4-5 run2: 500/500 done in /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/claude-haiku-4-5/ragtruth-sum_test/trulens_run2.jsonl
+### cell already complete: ragtruth-sum/test trulens x claude-haiku-4-5 run2 — all 500 items present in /Users/siddharthsrivastava/Projects/personal/eval-framework-benchmark/study/runs/raw/claude-haiku-4-5/ragtruth-sum_test/trulens_run2.jsonl. Use --fresh to redo.
