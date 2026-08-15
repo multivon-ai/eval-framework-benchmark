@@ -10,7 +10,38 @@
 Reproducible head-to-head benchmark of open-source LLM evaluation frameworks
 on hallucination detection.
 
-## Headline result (ragtruth-sum n=100, judge: gpt-4o-mini)
+## Headline result: the frameworks barely agree with each other (ragtruth-sum n=100, judge: gpt-4o-mini)
+
+Given the **same items, same judge (gpt-4o-mini, temp 0), same seed**, the
+three frameworks' binary hallucinated/faithful verdicts agree only marginally
+above chance. Cohen's κ:
+
+| Pair | Cases flipped | Cohen's κ |
+|---|---|---|
+| multivon-eval ↔ DeepEval | 33/100 (33%) | 0.038 |
+| multivon-eval ↔ RAGAS | 33/100 (33%) | 0.038 |
+| DeepEval ↔ RAGAS | 2/100 (2%) | -0.010 |
+
+κ ≈ 0 means "no better than chance agreement" (κ = 1 is perfect, κ = 0 is
+random). So *which framework you pick changes which cases get flagged*, not
+just the headline number. This is the finding that doesn't depend on trusting
+any one framework's adapter — it holds no matter whose scoring you believe,
+because it's a comparison *between* them on identical inputs. If you're
+choosing an eval framework, this is the result that should worry you: they are
+not interchangeable. (The DeepEval ↔ RAGAS pair agrees more only because at
+their default 0.5 threshold both flag almost nothing — agreement on "nothing
+is a hallucination" is cheap.)
+
+Full agreement tables, including the HaluEval Sum run, are in
+[`results/RESULTS.md`](results/RESULTS.md).
+
+### And when you *do* score against human labels, calibrated defaults matter
+
+Only after the agreement question do the accuracy numbers become useful — and
+here the story is about **default thresholds**, not about any framework
+"winning." multivon-eval is one of the frameworks under test (we maintain it),
+so read this table as "calibrated defaults beat uncalibrated ones," not as an
+endorsement:
 
 | Framework | Threshold | F1 | Precision | Recall | Errors |
 |---|---|---|---|---|---|
@@ -18,7 +49,7 @@ on hallucination detection.
 | DeepEval 4.0.2 | 0.50 (default) | 0.038 | 1.000 | 0.020 | 0 |
 | RAGAS 0.4.3 | 0.50 (default) | 0.038 | 1.000 | 0.020 | 4 |
 
-At best-tuned thresholds (0.95), multivon-eval F1 reaches **0.837** vs DeepEval **0.609** vs RAGAS **0.812**. At their default 0.5 threshold both DeepEval and RAGAS flag almost nothing (recall 0.02): F1 0.04, not a literal zero, but effectively no signal until you tune the threshold. multivon-eval ships a calibrated default (0.90) and needs no tuning. All numbers are reproducible from the code in this repo. n=100, single run; Wilson 95% CI on F1 at this size is ≈ ±10pp.
+At best-tuned thresholds (0.95), multivon-eval F1 reaches **0.837** vs DeepEval **0.609** vs RAGAS **0.812** — so the gap at defaults is mostly a calibration gap, not a fundamental accuracy gap. At their default 0.5 threshold both DeepEval and RAGAS flag almost nothing (recall 0.02): F1 0.04, not a literal zero, but effectively no signal until you tune the threshold. multivon-eval ships a calibrated default (0.90) and needs no tuning. All numbers are reproducible from the code in this repo. n=100, single run; Wilson 95% CI on F1 at this size is ≈ ±10pp.
 
 Snapshot: multivon-eval 0.15.1 / DeepEval 4.0.2 / RAGAS 0.4.3, run 2026-06-26 (git tag `results-0.15.1-2026-06-26`). RAGAS errored on every case in the prior 0.9.8 harness; with ragas 0.4.3 it now completes (4/100 cases still error, and it runs ~15x slower than the others).
 

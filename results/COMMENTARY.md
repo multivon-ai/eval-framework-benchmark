@@ -6,13 +6,24 @@
 > [`RESULTS.md`](RESULTS.md) (multivon-eval 0.15.1 / DeepEval 4.0.2 /
 > RAGAS 0.4.3, run 2026-06-26, tag `results-0.15.1-2026-06-26`). On that
 > refresh RAGAS **completes** (it errored on every case in the older 0.9.8
-> harness; ragas 0.4.3 fixed that), and multivon-eval's headline F1 on
-> ragtruth-sum is unchanged at 0.744. The hand-written notes below are kept
-> for history: the "v2" section is the ragtruth-sum 0.9.8 run (2026-06-05),
-> and everything under it is the **v1 pilot** (HaluEval Sum, n=50, 3 runs,
-> multivon-eval 0.8.x, 2026-05-13, where RAGAS ran at F1 0.500).
+> harness; ragas 0.4.3 fixed that). The **current** default F1 for
+> multivon-eval on ragtruth-sum is **0.729** (0.90 threshold, gpt-4o-mini) —
+> see `RESULTS.md` and the README. The `0.744` figure cited in the notes
+> below is from the **superseded 0.9.8 run** (2026-06-05) and is kept only
+> for history; it is **not** the current number.
+>
+> **Everything below this line is historical / superseded.** The "v2"
+> section describes the ragtruth-sum **0.9.8** run (2026-06-05), and
+> everything under it is the **v1 pilot** (HaluEval Sum, n=50, 3 runs,
+> multivon-eval 0.8.x, 2026-05-13, where RAGAS ran at F1 0.500). None of the
+> F1 numbers in these sections are current; for the live numbers use
+> `RESULTS.md`.
 
-## v2 (ragtruth-sum, 0.9.8): where multivon-eval loses
+## v2 (ragtruth-sum, 0.9.8 — SUPERSEDED): where multivon-eval loses
+
+> Historical notes from the 0.9.8 run (2026-06-05). The F1 values here
+> (0.744 default, 0.833 tuned) are the **old** 0.9.8 numbers; the current
+> 0.15.1 equivalents are 0.729 default / 0.837 tuned (see `RESULTS.md`).
 
 - Recall is the weak spot (0.627). At its calibrated 0.90
   threshold with gpt-4o-mini, multivon-eval misses 19 of the 51
@@ -26,14 +37,15 @@
   claims as grounded. Plausible-sounding fabricated specifics slip
   through claim-level verification. (DeepEval at its default caught
   none of these 19 either.)
-- The 0.90 calibration is not the RAGTruth optimum; the sweep
-  peaks at 0.95: F1 0.833 vs 0.744, trading precision 0.914 → 0.889
-  for recall 0.627 → 0.784. Cross-dataset, the shipped threshold
-  leaves ~9 F1 points on the table.
+- The 0.90 calibration is not the RAGTruth optimum; in the 0.9.8 run the
+  sweep peaked at 0.95: F1 0.833 vs 0.744 (both 0.9.8, historical),
+  trading precision 0.914 → 0.889 for recall 0.627 → 0.784. Cross-dataset,
+  the shipped threshold left ~9 F1 points on the table.
 - Precision is judge-sensitive. Swap the judge to
   claude-haiku-4-5 and precision drops 0.914 → 0.613 (24 false
-  positives vs 3), F1 0.744 → 0.673. The framework ranking holds, but
-  the headline precision does not transfer across judges.
+  positives vs 3), F1 0.744 → 0.673 (all 0.9.8, historical). The
+  framework ranking holds, but the headline precision does not transfer
+  across judges.
 
 ---
 
