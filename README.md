@@ -2,7 +2,8 @@
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Last run](https://img.shields.io/badge/last%20run-2026--06--26-emerald)](results/RESULTS.md)
-[![multivon-eval](https://img.shields.io/badge/multivon--eval-0.15.1-emerald)](https://github.com/multivon-ai/multivon-eval)
+[![multivon-eval (tagged run)](https://img.shields.io/badge/multivon--eval%20(tagged%20run)-0.15.1-emerald)](https://github.com/multivon-ai/multivon-eval)
+[![current release](https://img.shields.io/badge/current%20release-0.16.0-blue)](https://github.com/multivon-ai/multivon-eval/releases)
 
 **[Live results page](https://multivon.ai/benchmark)** · [RESULTS.md](results/RESULTS.md) · [multivon-eval (engine)](https://github.com/multivon-ai/multivon-eval)
 

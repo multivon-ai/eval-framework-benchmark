@@ -19,3 +19,13 @@ results/smoke/
 study/analysis/figures/
 study/analysis/out/
 study/ANALYSIS.md
+
+# ruflo / coverage litter — never commit auto-generated coverage-gap probes or OS cruft
+test_coverage_gaps_*
+test_coverage_gaps_*.py
+*.DS_Store
+.DS_Store
+.ruflo/
+.coverage
+htmlcov/
+.pytest_cache/
